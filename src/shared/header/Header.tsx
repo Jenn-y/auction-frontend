@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as React from 'react'
 import './Header.scss'
 import logo from '../../assets/logo.png'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const Header = () => {
   return (
@@ -29,7 +29,7 @@ const Header = () => {
       <div className="container">
         <div className="row">
           <div className="col-3 logo">
-            <img src={logo} alt="" />
+            <Link to="/"><img src={logo} alt="" /></Link>
           </div>
           <div className="col-4">
             {/* search bar to be added later here */}
