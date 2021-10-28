@@ -37,10 +37,7 @@ const Footer = () => (
 						</div>
 					</div>
 				</div>
-				<div className="col-12 col-sm-6 col-lg">
-					<div className="general-info">
-					</div>
-				</div>
+				<div className="col-12 col-sm-6 col-lg"></div>
 			</div>
 		</div>
 	</footer>
