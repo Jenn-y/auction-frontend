@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import Footer from '../../shared/footer/Footer'
-import Header from '../../shared/header/Header'
-import '../common_style/Text_Style.scss'
+import Footer from 'shared/footer/Footer'
+import Header from 'shared/header/Header'
+import 'common_style/Text_Style.scss'
 
 const Terms_Conditions = () => {
 	return (

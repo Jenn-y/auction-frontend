@@ -1,5 +1,5 @@
 import * as React from 'react'
-import './Footer.scss'
+import 'Footer.scss'
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFacebook, faInstagram, faTwitter, faSkype } from "@fortawesome/free-brands-svg-icons"
