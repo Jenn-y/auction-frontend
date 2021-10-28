@@ -1,14 +1,16 @@
+@import './../../utils/Colors.scss';
+
 .about {
 	padding-top: 60px;
 	padding-bottom: 120px;
 
 	h2 {
 		margin-bottom: 60px;
-		color: #000000;
+		color: $black;
 	}
 
 	p {
-		color: #857f7f;
+		color: $light-gray;
 	}
 }
 

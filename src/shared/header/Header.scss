@@ -1,14 +1,16 @@
+@import './../../utils/Colors.scss';
+
 .header-area {
 	width: 100%;
 	padding: 5px 0;
 }
 
 .black-header {
-	background-color: #252525;
+	background-color: $black;
 }
 
 .white-header {
-	background-color: #FFFFFF;
+	background-color: $white;
 
 	.row {
 		align-items: center;
@@ -19,14 +21,14 @@
 .header-right {
 	justify-content: flex-end;
 	align-items: baseline;
-	color: #9B9B9B;
+	color: $light-gray;
 	text-align: right;
 	padding-top: 3px;
 	padding-right: 0 !important;
 
 	a {
 		text-decoration: none;
-		color: #FFFFFF;
+		color: $white;
 		font-style: normal;
 		font-weight: bold;
 		font-size: 14px;
@@ -36,7 +38,7 @@
 	a:hover,
 	a:focus {
 		text-decoration: underline;
-		color: #FFFFFF;
+		color: $white;
 	}
 }
 
@@ -60,18 +62,18 @@
 		font-family: Lato;
 		font-size: 16px;
 		line-height: 19px;
-		color: #252525;
+		color: $black;
 		margin-left: 45px;
 	}
 
 	a:hover,
 	a:focus {
-		color: #8367D8;
+		color: $purple;
 	}
 
 	.active {
 		font-weight: bold;
-		color: #8367D8;
+		color: $purple;
 	}
 
 	.row .col-4 {
