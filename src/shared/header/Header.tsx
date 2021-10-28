@@ -1,9 +1,10 @@
-import { faFacebook, faInstagram, faSkype, faTwitter } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import * as React from 'react'
-import 'Header.scss'
-import logo from 'assets/logo.png'
 import { Link, NavLink } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook, faInstagram, faSkype, faTwitter } from '@fortawesome/free-brands-svg-icons'
+
+import logo from 'assets/logo.png'
+
+import './Header.scss'
 
 const Header = () => {
 	return (

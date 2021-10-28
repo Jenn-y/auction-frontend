@@ -1,8 +1,8 @@
-import * as React from 'react'
-import 'Footer.scss'
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFacebook, faInstagram, faTwitter, faSkype } from "@fortawesome/free-brands-svg-icons"
+
+import './Footer.scss'
 
 const Footer = () => (
 	<footer className="footer_area">
@@ -38,15 +38,8 @@ const Footer = () => (
 					</div>
 				</div>
 				<div className="col-12 col-sm-6 col-lg">
-					{/* newsletter section to be added later here
 					<div className="general-info">
-						<h5 className="title">NEWSLETTER</h5>
-						<div className="footer_menu">
-						<ul>
-							<li>Enter your email adress and get notified about new products. We hate spam!</li>
-						</ul>
-						</div>
-					</div> */}
+					</div>
 				</div>
 			</div>
 		</div>

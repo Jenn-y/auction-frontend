@@ -1,6 +1,6 @@
-import * as React from 'react'
 import Footer from 'shared/footer/Footer'
 import Header from 'shared/header/Header'
+
 import 'common_style/Text_Style.scss'
 
 const Privacy_Policy = () => {

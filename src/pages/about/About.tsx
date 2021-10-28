@@ -1,7 +1,7 @@
-import * as React from 'react'
 import Footer from 'shared/footer/Footer'
 import Header from 'shared/header/Header'
-import 'About.scss'
+
+import './About.scss'
 
 let images = [
 	'https://image.shutterstock.com/image-photo/happy-cheerful-young-woman-wearing-600w-613759379.jpg',

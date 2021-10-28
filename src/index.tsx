@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'index.scss';
-import App from 'components/App/App';
 import reportWebVitals from 'reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import App from 'components/App/App';
 import About from 'pages/about/About';
 import Terms_Conditions from 'pages/terms_conditions/Terms_Conditions';
 import Privacy_Policy from 'pages/privacy_policy/Privacy_Policy';
+
+import './index.scss';
 
 ReactDOM.render(
 	<React.StrictMode>
