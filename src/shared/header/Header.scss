@@ -9,6 +9,11 @@
 
 .white-header {
 	background-color: #FFF;
+
+	.row {
+		align-items: center;
+		justify-content: space-between;
+	}
 }
 
 .header-right {
@@ -18,30 +23,25 @@
 	text-align: right;
 	padding-top: 3px;
 	padding-right: 0 !important;
-}
 
-.header-right a {
-	text-decoration: none;
-	color: #FFF;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 14px;
-	line-height: 17px;
+	a {
+		text-decoration: none;
+		color: #FFF;
+		font-style: normal;
+		font-weight: bold;
+		font-size: 14px;
+		line-height: 17px;
+	}
+
+	a:hover,
+	a:focus {
+		text-decoration: underline;
+		color: #FFF;
+	}
 }
 
 .or-span {
 	margin: 0 20px;
-}
-
-.header-right a:hover,
-.header-right a:focus {
-	text-decoration: underline;
-	color: #FFF;
-}
-
-.white-header .row {
-	align-items: center;
-	justify-content: space-between;
 }
 
 .logo img {
@@ -52,29 +52,29 @@
 .wr-header {
 	padding-right: 0 !important;
 	text-align: right;
-}
 
-.wr-header a {
-	text-decoration: none;
-	font-style: normal;
-	font-weight: 300;
-	font-family: Lato;
-	font-size: 16px;
-	line-height: 19px;
-	color: #252525;
-	margin-left: 45px;
-}
+	a {
+		text-decoration: none;
+		font-style: normal;
+		font-weight: 300;
+		font-family: Lato;
+		font-size: 16px;
+		line-height: 19px;
+		color: #252525;
+		margin-left: 45px;
+	}
 
-.wr-header a:hover,
-.wr-header a:focus {
-	color: #8367D8;
-}
+	a:hover,
+	a:focus {
+		color: #8367D8;
+	}
 
-.wr-header .active {
-	font-weight: bold;
-	color: #8367D8;
-}
+	.active {
+		font-weight: bold;
+		color: #8367D8;
+	}
 
-.wr-header .row .col-4 {
-	padding-right: 0;
+	.row .col-4 {
+		padding-right: 0;
+	}
 }
