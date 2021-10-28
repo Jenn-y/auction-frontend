@@ -4,15 +4,15 @@ import Header from "../../shared/header/Header";
 import './App.scss';
 
 function App() {
-  return (
-    <div className="App">
-      <Router>
-				<Header />
-        <div className="main"></div>
-				<Footer />
-			</Router>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Router>
+                <Header />
+                <div className="main"></div>
+                <Footer />
+            </Router>
+        </div>
+    );
 }
 
 export default App;

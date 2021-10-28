@@ -10,17 +10,17 @@ import Terms_Conditions from './pages/terms_conditions/Terms_Conditions';
 import Privacy_Policy from './pages/privacy_policy/Privacy_Policy';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/terms_conditions" component={Terms_Conditions} />
-        <Route exact path="/about" component={About} />
-        <Route exact path="/privacy_policy" component={Privacy_Policy} />
-        <Route exact path="/" component={App} />
-      </Switch>
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<BrowserRouter>
+			<Switch>
+				<Route exact path="/terms_conditions" component={Terms_Conditions} />
+				<Route exact path="/about" component={About} />
+				<Route exact path="/privacy_policy" component={Privacy_Policy} />
+				<Route exact path="/" component={App} />
+			</Switch>
+		</BrowserRouter>
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
