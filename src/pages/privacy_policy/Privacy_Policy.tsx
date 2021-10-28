@@ -1,12 +1,8 @@
-import Footer from 'shared/footer/Footer'
-import Header from 'shared/header/Header'
-
 import '../common_style/Text_Style.scss'
 
 const Privacy_Policy = () => {
 	return (
 		<>
-			<Header />
 			<div className="text-container">
 				<h2>Privacy Policy Template</h2>
 
@@ -87,7 +83,6 @@ const Privacy_Policy = () => {
 
 				<p>[name] will not lease, sell or distribute your personal information to any third parties, unless we have your permission. We might do so if the law forces us. Your personal information will be used when we need to send you promotional materials if you agree to this privacy policy.</p>
 			</div>
-			<Footer />
 		</>
 	)
 }

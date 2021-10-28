@@ -1,4 +1,5 @@
 import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "routes/Routes";
 
 import Footer from "shared/footer/Footer";
 import Header from "shared/header/Header";
@@ -10,7 +11,7 @@ function App() {
         <div className="App">
             <Router>
                 <Header />
-                <div className="main"></div>
+                <Routes />
                 <Footer />
             </Router>
         </div>

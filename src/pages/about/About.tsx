@@ -1,6 +1,3 @@
-import Footer from 'shared/footer/Footer'
-import Header from 'shared/header/Header'
-
 import './About.scss'
 
 let images = [
@@ -12,7 +9,6 @@ let images = [
 const About = () => {
 	return (
 		<>
-			<Header />
 			<div className="container about">
 				<div className="row">
 					<div className="col-12 col-sm-6 col-lg">
@@ -37,7 +33,6 @@ const About = () => {
 					</div>
 				</div>
 			</div>
-			<Footer />
 		</>
 	)
 }

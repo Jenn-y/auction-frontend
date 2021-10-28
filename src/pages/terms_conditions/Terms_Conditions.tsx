@@ -1,14 +1,10 @@
 import { Link } from 'react-router-dom'
 
-import Footer from 'shared/footer/Footer'
-import Header from 'shared/header/Header'
-
 import '../common_style/Text_Style.scss'
 
 const Terms_Conditions = () => {
 	return (
 		<>
-			<Header />
 			<div className="text-container">
 				<h2>Terms and Conditions</h2>
 
@@ -77,7 +73,6 @@ const Terms_Conditions = () => {
 
 				<p>These Terms will be governed by and interpreted in accordance with the laws of the State of ba, and you submit to the non-exclusive jurisdiction of the state and federal courts located in ba for the resolution of any disputes.</p>
 			</div>
-			<Footer />
 		</>
 	)
 }
