@@ -19,7 +19,7 @@ const Header = () => {
 							<a href="https://join.skype.com/invite/nHXgfPkkV7sM" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faSkype} /></a>
 						</div>
 						<div className="col-6 header-right">
-							<span><NavLink to="/">Login</NavLink></span>
+							<span><NavLink to="/login">Login</NavLink></span>
 							<span className="or-span">or</span>
 							<span><NavLink to="/">Create and account</NavLink></span>
 						</div>
