@@ -5,6 +5,7 @@ import Terms_Conditions from 'pages/terms_conditions/Terms_Conditions';
 import Privacy_Policy from 'pages/privacy_policy/Privacy_Policy';
 import ScrollToTop from "utils/ScrollToTop";
 import Login from "components/Login/Login";
+import Registration from "components/Registration/Registration";
 
 const Routes = () => {
 	return (
@@ -15,6 +16,7 @@ const Routes = () => {
 				<Route exact path="/about" component={About} />
 				<Route exact path="/privacy_policy" component={Privacy_Policy} />
 				<Route exact path="/login" component={Login} />
+				<Route exact path="/register" component={Registration} />
 			</Switch>
 		</>
 	);

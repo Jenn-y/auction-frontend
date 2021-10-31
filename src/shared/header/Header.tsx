@@ -21,7 +21,7 @@ const Header = () => {
 						<div className="col-6 header-right">
 							<span><NavLink to="/login">Login</NavLink></span>
 							<span className="or-span">or</span>
-							<span><NavLink to="/">Create and account</NavLink></span>
+							<span><NavLink to="/register">Create and account</NavLink></span>
 						</div>
 					</div>
 				</div>
