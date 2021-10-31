@@ -1,4 +1,3 @@
-import './Login.scss';
 import LoginForm from './LoginForm';
 
 const Login = () => {
