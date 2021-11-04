@@ -6,10 +6,14 @@ import Privacy_Policy from 'pages/privacy_policy/Privacy_Policy';
 import ScrollToTop from "utils/ScrollToTop";
 import Login from "components/Login/Login";
 import Registration from "components/Registration/Registration";
+import { ToastContainer } from "react-toastify";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const Routes = () => {
 	return (
 		<>
+			<ToastContainer />
 			<ScrollToTop />
 			<Switch>
 				<Route exact path="/terms_conditions" component={Terms_Conditions} />
