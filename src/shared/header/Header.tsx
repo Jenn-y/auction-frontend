@@ -1,12 +1,29 @@
 import { Link, NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faInstagram, faSkype, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react'
 
+import AuthService from 'services/AuthService'
 import logo from 'assets/logo.png'
 
 import './Header.scss'
 
+
 const Header = () => {
+	const [loggedUser, setIsLogged] = useState(false)
+
+	useEffect(() => {
+		const user = AuthService.getCurrentUser()
+		if (user != null) setIsLogged(true)
+	}, [])
+
+	const logout = () => {
+		AuthService.logout()
+		toast.success("Logout sucessful!", { hideProgressBar: true });
+		window.location.replace("/")
+	}
+
 	return (
 		<>
 			<div className="header-area black-header">
@@ -18,11 +35,16 @@ const Header = () => {
 							<a href="https://twitter.com/" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faTwitter} /></a>
 							<a href="https://join.skype.com/invite/nHXgfPkkV7sM" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faSkype} /></a>
 						</div>
-						<div className="col-6 header-right">
-							<span><NavLink to="/login">Login</NavLink></span>
-							<span className="or-span">or</span>
-							<span><NavLink to="/register">Create and account</NavLink></span>
-						</div>
+						{!loggedUser ?
+							<div className="col-6 header-right">
+								<span><NavLink to="/login">Login</NavLink></span>
+								<span className="or-span">or</span>
+								<span><NavLink to="/register">Create an account</NavLink></span>
+							</div> :
+							<div className="col-6 header-right">
+								<span><button onClick={logout}>Logout</button></span>
+							</div>
+						}
 					</div>
 				</div>
 			</div>
