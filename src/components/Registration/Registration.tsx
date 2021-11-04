@@ -42,8 +42,7 @@ const Registration = () => {
 						password: '',
 						isError: true
 					})
-				}
-				);
+				});
 		}
 	};
 

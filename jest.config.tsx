@@ -16,4 +16,5 @@ const config: Config.InitialOptions = {
 		"^@Registration/(.*)": "<rootDir>/src/components/Registration/Registration/$1",
 	},
 };
+
 export default config;

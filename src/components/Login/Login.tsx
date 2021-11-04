@@ -29,8 +29,7 @@ const Login = () => {
 			)
 				.catch(() => {
 					toast.error("Wrong email or password!", { hideProgressBar: true });
-				}
-				);
+				});
 		}
 
 	};
