@@ -1,0 +1,42 @@
+@import 'utils/Colors.scss';
+
+.section {
+	margin: 40px 0 80px;
+
+	.col-sm-3:first-child,
+	.col-sm-3:nth-child(5) {
+		padding-left: 0;
+	}
+
+	.col-sm-3:nth-child(4) {
+		padding-right: 0;
+	}
+
+	h4 {
+		font-weight: bold;
+		font-size: 19px;
+		line-height: 29px;
+		letter-spacing: 0.84px;
+		color: $black;
+		margin: 0;
+	}
+
+	p {
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 19px;
+		letter-spacing: 0.84px;
+		color: $light-gray;
+		margin-bottom: 30px;
+	}
+
+	p span {
+		color: $purple;
+		font-weight: bold;
+	}
+
+	img {
+		width: 262px;
+		height: 262px;
+	}
+}
