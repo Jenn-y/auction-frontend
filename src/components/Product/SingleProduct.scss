@@ -4,7 +4,7 @@
 	margin: 100px 0;
 
 	.main-img {
-		width: 530px;
+		width: 521px;
 		height: 600px;
 		margin: 0px 0 30px;
 	}
@@ -20,21 +20,9 @@
 		padding-right: 0;
 	}
 
-	input[type=number] {
-		-moz-appearance: textfield;
-		appearance: textfield;
-		margin: 0;
-	}
-
-	input[type=number]::-webkit-inner-spin-button,
-	input[type=number]::-webkit-outer-spin-button {
-		-webkit-appearance: none;
-		margin: 0;
-	}
-
 	.prod-title {
 		font-weight: 500;
-		font-size: 32px;
+		font-size: 40px;
 		line-height: 51px;
 		letter-spacing: 0.84px;
 		color: $black;
@@ -46,10 +34,6 @@
 		line-height: 19px;
 		color: $purple;
 		margin-top: 25px;
-
-		span {
-			font-weight: bold;
-		}
 	}
 
 	.bid-section {
@@ -58,7 +42,7 @@
 		input {
 			width: 220px;
 			height: 54px;
-			border: 1px solid #E3E3E3;
+			border: 1px solid $dirty-white;
 			font-weight: 300;
 			font-size: 16px;
 			line-height: 19px;
@@ -111,12 +95,12 @@
 	}
 
 	.watchlist {
-		margin-bottom: 50px;
+		margin-bottom: 60px;
 
 		button {
 			width: 140px;
 			height: 34px;
-			border: 1px solid #E3E3E3;
+			border: 1px solid $dirty-white;
 			font-weight: 500;
 			font-size: 16px;
 			line-height: 19px;
@@ -126,9 +110,100 @@
 		}
 
 		.heart {
-			color: #E3E3E3;
+			color: $dirty-white;
 			margin-left: 5px;
 		}
 	}
 
+	.details-section {
+		border-bottom: 1px solid $border-color;
+		margin-bottom: 40px;
+
+		button {
+			border: none;
+			background-color: $white;
+			font-weight: normal;
+			font-size: 16px;
+			line-height: 24px;
+			color: $black;
+			padding: 10px 32px;
+			letter-spacing: 0.84px;
+		}
+
+		button.active {
+			border-bottom: 3px solid $purple;
+			font-weight: 700;
+		}
+
+		button:hover {
+			color: $purple;
+		}
+	}
+
+	.item-details {
+		color: $black;
+	}
+}
+
+.bidders {
+	margin: 200px 0;
+
+	.table {
+
+		td,
+		th {
+			padding: 15px;
+			display: table-cell;
+		}
+
+		border: 1px solid $border-color;
+		padding: 20px;
+
+		tbody,
+		td,
+		tfoot,
+		th,
+		thead,
+		tr {
+			border: none;
+			vertical-align: middle;
+		}
+
+		thead {
+			background-color: $extra-light-gray;
+
+			th {
+				font-weight: bold;
+				font-size: 18px;
+				line-height: 27px;
+				color: $black;
+				border-bottom: none;
+			}
+		}
+
+		.bidders-list {
+
+			font-size: 18px;
+			line-height: 27px;
+			letter-spacing: 0.63px;
+
+			.title {
+				display: flex;
+				justify-content: flex-start;
+				align-items: center;
+			}
+
+			img {
+				border-radius: 80px;
+				width: 64px;
+				height: 64px;
+				margin-right: 10px;
+			}
+
+			.bid-amount {
+				color: $green;
+				font-weight: bold;
+			}
+		}
+	}
 }
