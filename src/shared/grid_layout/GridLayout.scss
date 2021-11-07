@@ -2,15 +2,7 @@
 
 .section {
 	margin: 40px 0 80px;
-
-	.col-sm-3:first-child,
-	.col-sm-3:nth-child(5) {
-		padding-left: 0;
-	}
-
-	.col-sm-3:nth-child(4) {
-		padding-right: 0;
-	}
+	justify-content: flex-start;
 
 	h4 {
 		font-weight: bold;
