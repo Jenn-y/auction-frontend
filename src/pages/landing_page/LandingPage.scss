@@ -1,0 +1,145 @@
+@import 'utils/Colors.scss';
+
+.heading {
+	background-color: $extra-light-gray;
+
+	.highlight {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+
+		.cat-title {
+			font-weight: bold;
+			font-size: 16px;
+			line-height: 24px;
+			color: $purple;
+			padding: 16px;
+		}
+
+		.cat-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.category {
+			padding: 16px;
+			background-color: $white;
+			border-bottom: 1px solid $border-color;
+			width: 262px;
+		}
+
+		a {
+			text-decoration: none;
+			color: $black;
+			font-weight: normal;
+			font-size: 16px;
+			line-height: 24px;
+			font-weight: 400;
+		}
+
+		a:hover,
+		a:focus {
+			color: $purple;
+			font-weight: bold;
+		}
+
+		img,
+		.product-desc {
+			width: 357px;
+			height: 420px;
+			font-size: 32px;
+			line-height: 51px;
+			letter-spacing: 0.84px;
+		}
+
+		.prod-title {
+			font-weight: normal;
+			font-size: 32px;
+			line-height: 51px;
+			letter-spacing: 0.84px;
+			color: $black;
+			font-weight: 400;
+		}
+
+		.price {
+			font-weight: normal;
+			font-size: 32px;
+			line-height: 51px;
+			font-weight: 400;
+			color: $purple;
+			letter-spacing: 0.84px;
+		}
+
+		p {
+			font-weight: normal;
+			font-size: 16px;
+			line-height: 24px;
+			color: $light-gray;
+			margin: 16px 0px;
+			padding-bottom: 30px;
+			min-height: 220px;
+		}
+
+		.bid-btn {
+			border: 3px solid $purple;
+			padding: 8px 32px;
+			font-weight: 700;
+			font-size: 18px;
+			line-height: 27px;
+			color: $black;
+			letter-spacing: 0.63px;
+			text-transform: capitalize;
+			background-color: $white;
+		}
+
+		.bid-btn:hover,
+		.bid-btn:focus {
+			background-color: $purple;
+			color: $white;
+			transition: all 0.3s;
+		}
+	}
+}
+
+.main {
+	background-color: $white;
+	margin-top: 50px;
+	min-height: 700px;
+
+	.tab-navs {
+
+		.list {
+			border-bottom: 1px solid $border-color;
+
+			button:first-child {
+				padding-left: 0;
+			}
+
+			button:last-child {
+				padding-right: 0;
+			}
+
+			button {
+				border: none;
+				background-color: $white;
+				font-weight: normal;
+				font-size: 19px;
+				line-height: 24px;
+				color: $black;
+				padding: 10px 30px;
+				letter-spacing: 0.84px;
+			}
+
+			button.active {
+				border-bottom: 3px solid $purple;
+				font-weight: 700;
+			}
+
+			button:hover {
+				color: $purple;
+			}
+		}
+	}
+}
