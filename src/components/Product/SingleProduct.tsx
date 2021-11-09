@@ -97,16 +97,23 @@ const SingleProduct = (props: any) => {
 									<button className={customerRevActive ? 'active' : ''}
 										onClick={handleCustomerRev}>Customer Reviews</button>
 								</div>
-								<div className="item-details">
-									<p>{item.item.description}</p>
-									<ul>
-										<li>Duis aute irure dolor in reprehenderit in voluptate</li>
-										<li>Voluptate velit esse cillum dolore eu fugiat nulla pariatur</li>
-										<li>Excepteur sint occaecat cupidatat non proident</li>
-										<li>Sunt in culpa qui officia deserunt mollit anim id est laborum</li>
-										<li>Sed ut perspiciatis unde omnis iste natus error sit</li>
-									</ul>
-								</div>
+								{detailsActive ?
+									<div className="item-details">
+										<p>{item.item.description}</p>
+										<ul>
+											<li>Duis aute irure dolor in reprehenderit in voluptate</li>
+											<li>Voluptate velit esse cillum dolore eu fugiat nulla pariatur</li>
+											<li>Excepteur sint occaecat cupidatat non proident</li>
+											<li>Sunt in culpa qui officia deserunt mollit anim id est laborum</li>
+											<li>Sed ut perspiciatis unde omnis iste natus error sit</li>
+										</ul>
+									</div> : ''
+								}
+								{sellerInfoActive ?
+									<div className="item-details">
+										<p>{item.seller.firstName} {item.seller.lastName}</p>
+									</div> : ''
+								}
 							</div>
 						</> : ''
 					}
