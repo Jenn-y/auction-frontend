@@ -21,6 +21,16 @@ class AuctionService {
 			})
 			.catch(() => console.log("An error occured while fetching the auctions"));
 	}
+
+	getItem = (uuid: any) => {
+		// console.log(uuid)
+		return axios
+			.get(API_URL + `auctions/${uuid}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the item."));
+	}
 }
 
 export default new AuctionService();
