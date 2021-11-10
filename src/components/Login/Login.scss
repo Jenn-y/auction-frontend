@@ -1,7 +1,8 @@
 @import 'utils/Colors.scss';
 
 .remember-box {
-	display: -webkit-inline-box;
+	display: flex;
+	flex-direction: row;
 
 	label {
 		margin-left: 10px;
