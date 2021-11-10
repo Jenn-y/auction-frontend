@@ -17,6 +17,7 @@ const Login = () => {
 
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
+		
 		if (validate()) {
 			AuthService.login(
 				user.email,

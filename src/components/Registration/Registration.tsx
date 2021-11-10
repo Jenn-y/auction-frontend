@@ -20,9 +20,8 @@ const Registration = () => {
 
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
-		validate()
 
-		if (!errors.isError) {
+		if (validate()) {
 			console.log(errors.isError)
 			AuthService.register(
 				user.firstName,
@@ -56,6 +55,7 @@ const Registration = () => {
 			password: validateRegisterData(user).password,
 			isError: validateRegisterData(user).isError
 		})
+		return !errors.isError
 	}
 
 	return (
