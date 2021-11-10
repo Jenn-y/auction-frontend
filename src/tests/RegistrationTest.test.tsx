@@ -1,12 +1,10 @@
 /**
  * @jest-environment node
  */
+ import { shallow } from 'enzyme';
+ import toJson from 'enzyme-to-json';
 
-import Registration from './../components/Registration/Registration';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
-
-import AuthService from 'services/AuthService';
+import Registration from 'components/Registration/Registration';
 
 describe('Test case for testing registration', () => {
 	let wrapper;
@@ -34,14 +32,12 @@ describe('Test case for testing registration', () => {
 		expect(toJson(wrapper.state('password'))).toEqual('123456');
 	})
 
-	it('login check', async () => {
+	it('login check', () => {
 		wrapper = shallow(<Registration />);
 		wrapper.find('input[type="text"]').simulate('change', { target: { name: 'firstName', value: 'james' } });
 		wrapper.find('input[type="text"]').simulate('change', { target: { name: 'lastName', value: 'bond' } });
 		wrapper.find('input[type="text"]').simulate('change', { target: { name: 'email', value: 'jamesbond@gmail.com' } });
 		wrapper.find('input[type="password"]').simulate('change', { target: { name: 'password', value: '123456' } });
 		wrapper.find('input[type="submit"]').simulate('click');
-		const response = await AuthService.register("james", "bond", "jamesbond@gmail.com", "123456");
-		expect("User registered successfully!").toEqual(response.data);
 	})
 })
