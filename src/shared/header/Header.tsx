@@ -9,7 +9,6 @@ import logo from 'assets/logo.png'
 
 import './Header.scss'
 
-
 const Header = () => {
 	const [loggedUser, setIsLogged] = useState(false)
 
