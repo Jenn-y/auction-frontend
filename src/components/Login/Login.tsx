@@ -50,14 +50,14 @@ const Login = () => {
 				<div className="input_wrap">
 					<label>Email</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" />
+						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" required />
 						<span>{errors.email}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
 					<label>Password</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" />
+						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" required />
 						<span>{errors.password}</span>
 					</div>
 				</div>

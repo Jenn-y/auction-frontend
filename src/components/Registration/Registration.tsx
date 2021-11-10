@@ -20,8 +20,10 @@ const Registration = () => {
 
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
+		validate()
 
-		if (validate()) {
+		if (!errors.isError) {
+			console.log(errors.isError)
 			AuthService.register(
 				user.firstName,
 				user.lastName,
@@ -54,7 +56,6 @@ const Registration = () => {
 			password: validateRegisterData(user).password,
 			isError: validateRegisterData(user).isError
 		})
-		return !errors.isError
 	}
 
 	return (
@@ -64,28 +65,28 @@ const Registration = () => {
 				<div className="input_wrap">
 					<label>First Name</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.firstName} name="firstName" type="text" className="input" placeholder="Enter your first name" />
+						<input onChange={handleChange} value={user.firstName} name="firstName" type="text" className="input" placeholder="Enter your first name" required />
 						<span>{errors.firstName}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
 					<label>Last Name</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.lastName} name="lastName" type="text" className="input" placeholder="Enter your last name" />
+						<input onChange={handleChange} value={user.lastName} name="lastName" type="text" className="input" placeholder="Enter your last name" required />
 						<span>{errors.lastName}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
 					<label>Email</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" />
+						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" required />
 						<span>{errors.email}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
 					<label>Password</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" />
+						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" required />
 						<span>{errors.password}</span>
 					</div>
 				</div>
