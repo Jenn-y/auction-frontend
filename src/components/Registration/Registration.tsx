@@ -22,7 +22,6 @@ const Registration = () => {
 		e.preventDefault();
 
 		if (validate()) {
-			console.log(errors.isError)
 			AuthService.register(
 				user.firstName,
 				user.lastName,

@@ -1,4 +1,4 @@
-import { EMAIL_EMPTY, EMAIL_INVALID, FIRST_NAME_EMPTY, LAST_NAME_EMPTY, PASSWORD_EMPTY, PASSWORD_LENGTH } from "constants/ErrorMessages"
+import { EMAIL_EMPTY, EMAIL_INVALID, FIRST_NAME_EMPTY, LAST_NAME_EMPTY, PASSWORD_EMPTY, PASSWORD_LENGTH } from "constants/ErrorMessages";
 
 export const validateEmail = (email: string) => {
 	return RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i).test(email)
@@ -8,17 +8,17 @@ export const validateRegisterData = (registerData: any) => {
 
 	const validateErrors = { firstName: '', lastName: '', email: '', password: '', isError: false };
 
-	if (!registerData.firstName || registerData.firstName.length == 0) {
+	if (!registerData.firstName || registerData.firstName.length === 0) {
 		validateErrors.firstName = FIRST_NAME_EMPTY
 		validateErrors.isError = true
 	}
 
-	if (!registerData.lastName || registerData.lastName.length == 0) {
+	if (!registerData.lastName || registerData.lastName.length === 0) {
 		validateErrors.lastName = LAST_NAME_EMPTY
 		validateErrors.isError = true
 	}
 
-	if (!registerData.email || registerData.email.length == 0) {
+	if (!registerData.email || registerData.email.length === 0) {
 		validateErrors.email = EMAIL_EMPTY
 		validateErrors.isError = true
 	}
@@ -28,7 +28,7 @@ export const validateRegisterData = (registerData: any) => {
 		validateErrors.isError = true
 	}
 
-	if (!registerData.password || registerData.password.length == 0) {
+	if (!registerData.password || registerData.password.length === 0) {
 		validateErrors.password = PASSWORD_EMPTY
 		validateErrors.isError = true
 	}
@@ -50,7 +50,7 @@ export const validateLoginData = (loginData: any) => {
 		validateErrors.isError = true
 	}
 
-	if (!loginData.password || loginData.password.length == 0) {
+	if (!loginData.password || loginData.password.length === 0) {
 		validateErrors.password = PASSWORD_EMPTY
 		validateErrors.isError = true
 	}

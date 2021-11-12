@@ -32,7 +32,7 @@ describe('Test case for testing registration', () => {
 		expect(toJson(wrapper.state('password'))).toEqual('123456');
 	})
 
-	it('login check', () => {
+	it('registration form check', () => {
 		wrapper = shallow(<Registration />);
 		wrapper.find('input[type="text"]').simulate('change', { target: { name: 'firstName', value: 'james' } });
 		wrapper.find('input[type="text"]').simulate('change', { target: { name: 'lastName', value: 'bond' } });
