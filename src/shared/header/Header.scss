@@ -26,7 +26,8 @@
 	padding-top: 3px;
 	padding-right: 0;
 
-	a {
+	a,
+	button {
 		text-decoration: none;
 		color: $white;
 		font-style: normal;
@@ -36,9 +37,16 @@
 	}
 
 	a:hover,
-	a:focus {
+	button:hover,
+	a:focus,
+	button:focus {
 		text-decoration: underline;
 		color: $white;
+	}
+
+	button {
+		background-color: $black;
+		border: none;
 	}
 }
 

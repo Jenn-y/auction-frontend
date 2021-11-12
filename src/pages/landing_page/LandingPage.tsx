@@ -1,7 +1,7 @@
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Auction } from 'interfaces/Auction'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import AuctionService from 'services/AuctionService'
 import GridLayout from 'shared/grid_layout/GridLayout'
@@ -13,10 +13,11 @@ const LandingPage = () => {
 	const [newArrivalsActive, setNewArrivalsActive] = useState(true)
 	const [lastChanceActive, setLastChanceActive] = useState(false)
 	const [auctions, setAuctions] = useState([])
+	const [highlightedProduct, setHighlightedProduct] = useState<Auction>()
 
 	useEffect(() => {
 		handleNewArrivals()
-		console.log(auctions[0]['uuid'])
+		setHighlightedProduct(auctions[0])
 	}, [])
 
 	const handleNewArrivals = () => {
@@ -68,14 +69,13 @@ const LandingPage = () => {
 							</ul>
 						</div>
 						<div className="col-12 col-sm-4 col-lg product-desc">
-							{auctions[0] ?
+							{highlightedProduct ?
 								<>
-									<h4 className="prod-title">{auctions !== null ? auctions[0]['item']['name'] : ''}</h4>
-									<h4 className="price">Start from ${auctions[0]['item']['startPrice'] != null ? auctions[0]['item']['startPrice'] : ''}</h4>
-									<p>{auctions[0]['item']['description'] != null ? auctions[0]['item']['description'] : ''}</p>
-									<Link to={`/auctions/${auctions[0]['uuid']}`} className="bid-btn">BID NOW <FontAwesomeIcon icon={faAngleRight} /></Link>
-								</> : ''
+									<h4 className="prod-title">{highlightedProduct?.item.name}</h4>
+									<h4 className="price">Start from ${highlightedProduct?.item.startPrice}</h4>
+									<p>{highlightedProduct?.item.description}</p> </> : ''
 							}
+							<button className="bid-btn">BID NOW <FontAwesomeIcon icon={faAngleRight} /></button>
 						</div>
 						<div className="col-12 col-sm-4 col-lg">
 							<img src={images[0]} alt="sneakers" />

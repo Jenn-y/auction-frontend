@@ -1,0 +1,16 @@
+@import 'utils/Colors.scss';
+
+.remember-box {
+	display: flex;
+	flex-direction: row;
+
+	label {
+		margin-left: 10px;
+	}
+
+	input[type=checkbox] {
+		border: 1px solid $border-color;
+		outline: none;
+		background-color: $extra-light-gray;
+	}
+}

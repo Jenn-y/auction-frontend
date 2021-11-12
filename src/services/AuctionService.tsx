@@ -23,7 +23,6 @@ class AuctionService {
 	}
 
 	getItem = (uuid: any) => {
-		// console.log(uuid)
 		return axios
 			.get(API_URL + `auctions/${uuid}`)
 			.then((response: any) => {
