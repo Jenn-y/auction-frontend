@@ -1,0 +1,70 @@
+@import 'utils/Colors.scss';
+
+.form {
+	width: 500px;
+	height: auto;
+	background: $white;
+	border-radius: 2px;
+	border: 1px solid $border-color;
+	margin: 50px auto;
+
+	.title {
+		text-align: center;
+		margin-bottom: 20px;
+		font-size: 20px;
+		line-height: 29px;
+		font-weight: bold;
+		text-align: center;
+		background-color: $extra-light-gray;
+		padding: 10px;
+	}
+
+	.input_wrap {
+		position: relative;
+		padding: 10px 50px;
+
+		.input_wrap:last-child {
+			margin-bottom: 0;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+			font-size: 18px;
+			line-height: 27px;
+			color: $black;
+		}
+
+		.input {
+			padding: 12px;
+			width: 100%;
+			font-size: 16px;
+			border: 1px solid $border-color;
+			outline: none;
+			background-color: $extra-light-gray;
+		}
+
+		.btn {
+			text-transform: uppercase;
+			font-weight: bold;
+			font-size: 17px;
+			line-height: 30px;
+			background-color: $purple;
+			color: $white;
+			width: 100%;
+			border-radius: 0;
+		}
+
+		.btn:hover {
+			background-color: $white;
+			border: 1px solid $purple;
+			color: $purple;
+			transition: all 0.5s;
+		}
+
+		span {
+			color: $error-red;
+			font-weight: 500;
+		}
+	}
+}
