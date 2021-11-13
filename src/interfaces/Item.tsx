@@ -1,5 +1,5 @@
 export interface Item {
-	uuid: string;
+	id: string;
 	color: string;
 	description: string;
 	itemNumber: string;

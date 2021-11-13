@@ -22,7 +22,7 @@ const Routes = () => {
 				<Route exact path="/terms_conditions" component={Terms_Conditions} />
 				<Route exact path="/about" component={About} />
 				<Route exact path="/privacy_policy" component={Privacy_Policy} />
-				<Route exact path="/auctions/:uuid" component={SingleProduct} />
+				<Route exact path="/auctions/:id" component={SingleProduct} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Registration} />
 			</Switch>

@@ -3,7 +3,7 @@ import { Item } from "./Item";
 import { User } from "./User";
 
 export interface Auction {
-	uuid: string;
+	id: string;
 	startDate: Date;
 	endDate: Date;
 	highestBid: number;

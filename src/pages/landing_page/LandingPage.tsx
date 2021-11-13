@@ -2,6 +2,7 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Auction } from 'interfaces/Auction'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import AuctionService from 'services/AuctionService'
 import GridLayout from 'shared/grid_layout/GridLayout'
@@ -17,7 +18,6 @@ const LandingPage = () => {
 
 	useEffect(() => {
 		handleNewArrivals()
-		setHighlightedProduct(auctions[0])
 	}, [])
 
 	const handleNewArrivals = () => {
@@ -28,6 +28,7 @@ const LandingPage = () => {
 			.then(response => {
 				if (response) {
 					setAuctions(response)
+					setHighlightedProduct(response[0])
 				}
 			})
 	}
@@ -73,9 +74,10 @@ const LandingPage = () => {
 								<>
 									<h4 className="prod-title">{highlightedProduct?.item.name}</h4>
 									<h4 className="price">Start from ${highlightedProduct?.item.startPrice}</h4>
-									<p>{highlightedProduct?.item.description}</p> </> : ''
+									<p>{highlightedProduct?.item.description}</p>
+									<Link to={`/auctions/${highlightedProduct.id}`} className="bid-btn">BID NOW <FontAwesomeIcon icon={faAngleRight} /></Link>
+								</> : ''
 							}
-							<button className="bid-btn">BID NOW <FontAwesomeIcon icon={faAngleRight} /></button>
 						</div>
 						<div className="col-12 col-sm-4 col-lg">
 							<img src={images[0]} alt="sneakers" />
