@@ -62,3 +62,7 @@ export const validateLoginData = (loginData: any) => {
 
 	return validateErrors
 }
+
+export const validateBidAmount = (bidAmount: number, highestBid: any) => {
+	return bidAmount > highestBid;
+}

@@ -1,14 +1,19 @@
 import { faAngleRight, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
+import moment from 'moment'
+import { toast } from 'react-toastify';
 
 import { Auction } from 'interfaces/Auction'
 import AuctionService from 'services/AuctionService'
 import AuthService from 'services/AuthService'
 
 import './SingleProduct.scss'
-import { Bid } from 'interfaces/Bid'
 import BiddersTable from 'components/Bidders/BiddersTable'
+import { Bid } from 'interfaces/Bid'
+import { User } from 'interfaces/User'
+import { validateBidAmount } from 'utils/Validations';
+import { HIGHER_BID_EXIST } from 'constants/ErrorMessages';
 
 const SingleProduct = (props: any) => {
 
@@ -16,8 +21,10 @@ const SingleProduct = (props: any) => {
 	const [sellerInfoActive, setSellerInfo] = useState(false)
 	const [customerRevActive, setCustomerRev] = useState(false)
 	const [loggedUser, setIsLogged] = useState(false)
+	const [user, setUser] = useState<User>()
 	const [item, setItem] = useState<Auction>()
-	const [bids, setBids] = useState<Bid>()
+	const [bids, setBids] = useState([])
+	const [bid, setBid] = useState({bidAmount: '', bidDate: new Date(), buyer: user, auction: item})
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
@@ -38,7 +45,46 @@ const SingleProduct = (props: any) => {
 					}
 				})
 		}
+		getUser()
 	}, [])
+
+	const getUser = () => {
+		const currentUser = AuthService.getCurrentUser()
+		
+		AuthService.getUser(currentUser.email, currentUser.authenticationToken)
+			.then(response => {
+				if (response) {
+					setUser(response)
+				}
+			})
+	}
+
+	const handleChange = (e: any) => {
+		setBid(Object.assign({}, bid, { [e.target.name]: e.target.value }))
+	}
+
+	const handleSubmit = (e: any) => {
+		e.preventDefault();
+
+		if (validateBidAmount(Number(bid.bidAmount), item?.highestBid)){
+			const currentUser = AuthService.getCurrentUser()
+			
+			if (user){
+				bid!.buyer = user
+				bid!.auction = item
+			}
+
+			AuctionService.addBid(bid, currentUser.authenticationToken)
+				.then(
+					() => {
+						toast.success("Congrats! You are the highest bidder!", { hideProgressBar: true });
+						window.location.reload();
+					}
+				)
+		} else {
+			toast.warning(HIGHER_BID_EXIST, { hideProgressBar: true });
+		}
+	}
 
 	const handleDetails = () => {
 		setDetails(true)
@@ -91,17 +137,19 @@ const SingleProduct = (props: any) => {
 							</div>
 							<div className="col-12 col-sm-8 col-lg">
 								<h1 className="prod-title">{item?.item.name}</h1>
-								<h4 className="prod-price">Start from <span>${item.item.startPrice}</span></h4>
+								<h4 className="prod-price">Start from <span>${item.highestBid}+</span></h4>
 								{loggedUser ?
-									<div className="bid-section">
-										<input type="text" required name="price" placeholder="Enter your bid" />
-										<button className="bid-btn">PLACE BID <FontAwesomeIcon icon={faAngleRight} /></button>
-									</div> : ''
+									<form onSubmit={handleSubmit}>
+										<div className="bid-section">
+											<input type="text" onChange={handleChange} value={bid?.bidAmount} name="bidAmount" placeholder="Enter your bid" required />
+											<button className="bid-btn" type="submit">PLACE BID <FontAwesomeIcon icon={faAngleRight} /></button>
+										</div>
+									</form> : ''
 								}
 								<div className="bid-stats">
 									<p>Highest bid: <span>${item.highestBid}</span></p>
-									<p>No of bids: <span>2</span></p>
-									<p>Time left: <span>10 days</span></p>
+									<p>No of bids: <span>{bids.length}</span></p>
+									<p>Time left: <span>{moment(item.endDate).fromNow()}</span></p>
 								</div>
 								<div className="watchlist">
 									<button>Watchlist <FontAwesomeIcon icon={faHeart} className="heart" /></button>
