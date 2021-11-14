@@ -7,6 +7,8 @@ import AuctionService from 'services/AuctionService'
 import AuthService from 'services/AuthService'
 
 import './SingleProduct.scss'
+import { Bid } from 'interfaces/Bid'
+import BiddersTable from 'components/Bidders/BiddersTable'
 
 const SingleProduct = (props: any) => {
 
@@ -15,6 +17,7 @@ const SingleProduct = (props: any) => {
 	const [customerRevActive, setCustomerRev] = useState(false)
 	const [loggedUser, setIsLogged] = useState(false)
 	const [item, setItem] = useState<Auction>()
+	const [bids, setBids] = useState<Bid>()
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
@@ -26,6 +29,15 @@ const SingleProduct = (props: any) => {
 					setItem(response)
 				}
 			})
+		
+		if (user) {
+			AuctionService.getBids(props.match.params.id, user.authenticationToken)
+				.then(response => {
+					if (response) {
+						setBids(response)
+					}
+				})
+		}
 	}, [])
 
 	const handleDetails = () => {
@@ -116,114 +128,10 @@ const SingleProduct = (props: any) => {
 						</> : ''
 					}
 				</div>
-				{loggedUser ?
-					<div className="row bidders">
-						<div className="col-md-12">
-							<div className="table-section">
-								<table className="table">
-									<thead>
-										<tr>
-											<th>BIDDER</th>
-											<th>DATE</th>
-											<th>BID</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr className="bidders-list">
-											<td colSpan={2} className="title">
-												<div className="thumb">
-													<img className="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-												</div>
-												<div className="bidder-details">
-													<div className="bidder-list-title">
-														<h5>Brooke Kelly</h5>
-													</div>
-												</div>
-											</td>
-											<td colSpan={1} className="bid-date">
-												<p className="date">4 March 2021</p>
-											</td>
-											<td colSpan={1} className="bid-amount">
-												<p>$ 120.00</p>
-											</td>
-										</tr>
-										<tr className="bidders-list">
-											<td colSpan={2} className="title">
-												<div className="thumb">
-													<img className="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-												</div>
-												<div className="bidder-details">
-													<div className="bidder-list-title">
-														<h5>Brooke Kelly</h5>
-													</div>
-												</div>
-											</td>
-											<td colSpan={1} className="bid-date">
-												<p className="date">4 March 2021</p>
-											</td>
-											<td colSpan={1} className="bid-amount">
-												<p>$ 120.00</p>
-											</td>
-										</tr>
-										<tr className="bidders-list">
-											<td colSpan={2} className="title">
-												<div className="thumb">
-													<img className="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-												</div>
-												<div className="bidder-details">
-													<div className="bidder-list-title">
-														<h5>Brooke Kelly</h5>
-													</div>
-												</div>
-											</td>
-											<td colSpan={1} className="bid-date">
-												<p className="date">4 March 2021</p>
-											</td>
-											<td colSpan={1} className="bid-amount">
-												<p>$ 120.00</p>
-											</td>
-										</tr>
-										<tr className="bidders-list">
-											<td colSpan={2} className="title">
-												<div className="thumb">
-													<img className="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-												</div>
-												<div className="bidder-details">
-													<div className="bidder-list-title">
-														<h5>Brooke Kelly</h5>
-													</div>
-												</div>
-											</td>
-											<td colSpan={1} className="bid-date">
-												<p className="date">4 March 2021</p>
-											</td>
-											<td colSpan={1} className="bid-amount">
-												<p>$ 120.00</p>
-											</td>
-										</tr>
-										<tr className="bidders-list">
-											<td colSpan={2} className="title">
-												<div className="thumb">
-													<img className="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-												</div>
-												<div className="bidder-details">
-													<div className="bidder-list-title">
-														<h5>Brooke Kelly</h5>
-													</div>
-												</div>
-											</td>
-											<td colSpan={1} className="bid-date">
-												<p className="date">4 March 2021</p>
-											</td>
-											<td colSpan={1} className="bid-amount">
-												<p>$ 120.00</p>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div> : ''
+				{loggedUser && bids ?
+					<BiddersTable
+						bids={bids}
+					/> : ''
 				}
 			</div>
 		</>
