@@ -32,7 +32,6 @@ const SingleProduct = (props: any) => {
 		setDetails(true)
 		setSellerInfo(false)
 		setCustomerRev(false)
-		console.log(item)
 	}
 
 	const handleSellerInfo = () => {
