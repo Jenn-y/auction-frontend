@@ -7,13 +7,12 @@ import { toast } from 'react-toastify';
 import { Auction } from 'interfaces/Auction'
 import AuctionService from 'services/AuctionService'
 import AuthService from 'services/AuthService'
-
-import './SingleProduct.scss'
 import BiddersTable from 'components/Bidders/BiddersTable'
-import { Bid } from 'interfaces/Bid'
 import { User } from 'interfaces/User'
 import { validateBidAmount } from 'utils/Validations';
 import { HIGHER_BID_EXIST } from 'constants/ErrorMessages';
+
+import './SingleProduct.scss'
 
 const SingleProduct = (props: any) => {
 
