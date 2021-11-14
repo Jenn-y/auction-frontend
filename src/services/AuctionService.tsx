@@ -1,4 +1,5 @@
 import axios from "axios";
+import HeaderConfig from "utils/HeaderConfig";
 
 const API_URL = "http://localhost:8080/api/";
 
@@ -29,6 +30,15 @@ class AuctionService {
 				return response.data;
 			})
 			.catch(() => console.log("An error occured while fetching the item."));
+	}
+
+	getBids = (auctionId: any, token: string) => {
+		return axios
+			.get(API_URL + `bids/${auctionId}`, HeaderConfig(token))
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the bidders."));
 	}
 }
 
