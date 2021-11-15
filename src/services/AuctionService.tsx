@@ -1,8 +1,9 @@
 import axios from "axios";
 import { Bid } from "interfaces/Bid";
 import HeaderConfig from "utils/HeaderConfig";
+import { DEV_API, PROD_API } from "./ApiConstants";
 
-const API_URL = "http://localhost:8080/api/";
+const API_URL = process.env.NODE_ENV === "development" ? DEV_API : PROD_API
 
 class AuctionService {
 
