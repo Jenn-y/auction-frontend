@@ -44,7 +44,7 @@ const SingleProduct = (props: any) => {
 					}
 				})
 		}
-		getUser()
+		if (user) getUser()
 	}, [])
 
 	const getUser = () => {
