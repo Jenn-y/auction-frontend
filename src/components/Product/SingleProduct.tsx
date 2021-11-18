@@ -27,7 +27,9 @@ const SingleProduct = (props: any) => {
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
-		if (user != null) setIsLogged(true)
+		if (user != null) {
+			setIsLogged(true)
+		}
 		
 		AuctionService.getItem(props.match.params.id)
 			.then(response => {
@@ -97,91 +99,81 @@ const SingleProduct = (props: any) => {
 		setCustomerRev(false)
 	}
 
-	const handleCustomerRev = () => {
-		setDetails(false)
-		setSellerInfo(false)
-		setCustomerRev(true)
-	}
-
 	let images = [
 		'https://media1.popsugar-assets.com/files/thumbor/CHzF5iQ31LcGCjSPu1xF0wjTypg/0x0:1500x2024/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2021/04/20/773/n/1922564/c9ce4a74607f107ac3b225.06048116_/i/Best-Women-Sneakers.jpg'
 	]
 
 	return (
-		<>
-			<div className="container">
-				<div className="row product">
-					{item ?
-						<>
-							<div className="col-12 col-sm-4 col-lg">
+		<div className="container">
+			<div className="row product">
+				{item ?
+					<>
+						<div className="col-12 col-sm-4 col-lg">
+							<div className="row">
+								<div className="col-12 col-sm-12 col-lg">
+									<img src={images[0]} alt="person 1" className="main-img" />
+								</div>
 								<div className="row">
-									<div className="col-12 col-sm-12 col-lg">
-										<img src={images[0]} alt="person 1" className="main-img" />
+									<div className="col-12 col-sm-3 col-lg">
+										<img src={images[0]} alt="person 1" className="secondary-img" />
 									</div>
-									<div className="row">
-										<div className="col-12 col-sm-3 col-lg">
-											<img src={images[0]} alt="person 1" className="secondary-img" />
-										</div>
-										<div className="col-12 col-sm-3 col-lg">
-											<img src={images[0]} alt="person 1" className="secondary-img" />
-										</div>
-										<div className="col-12 col-sm-3 col-lg">
-											<img src={images[0]} alt="person 1" className="secondary-img" />
-										</div>
-										<div className="col-12 col-sm-3 col-lg">
-											<img src={images[0]} alt="person 1" className="secondary-img" />
-										</div>
+									<div className="col-12 col-sm-3 col-lg">
+										<img src={images[0]} alt="person 1" className="secondary-img" />
+									</div>
+									<div className="col-12 col-sm-3 col-lg">
+										<img src={images[0]} alt="person 1" className="secondary-img" />
+									</div>
+									<div className="col-12 col-sm-3 col-lg">
+										<img src={images[0]} alt="person 1" className="secondary-img" />
 									</div>
 								</div>
 							</div>
-							<div className="col-12 col-sm-8 col-lg">
-								<h1 className="prod-title">{item?.item.name}</h1>
-								<h4 className="prod-price">Start from <span>${item.highestBid}+</span></h4>
-								{loggedUser ?
-									<form onSubmit={handleSubmit}>
-										<div className="bid-section">
-											<input type="text" onChange={handleChange} value={bid?.bidAmount} name="bidAmount" placeholder="Enter your bid" required />
-											<button className="bid-btn" type="submit">PLACE BID <FontAwesomeIcon icon={faAngleRight} /></button>
-										</div>
-									</form> : ''
-								}
-								<div className="bid-stats">
-									<p>Highest bid: <span>${item.highestBid}</span></p>
-									<p>No of bids: <span>{bids.length}</span></p>
-									<p>Time left: <span>{moment(item.endDate).fromNow()}</span></p>
-								</div>
-								<div className="watchlist">
-									<button>Watchlist <FontAwesomeIcon icon={faHeart} className="heart" /></button>
-								</div>
-								<div className="details-section">
-									<button className={detailsActive ? 'active' : ''}
-										onClick={handleDetails} >Details</button>
-									<button className={sellerInfoActive ? 'active' : ''}
-										onClick={handleSellerInfo}>Seller Information</button>
-									<button className={customerRevActive ? 'active' : ''}
-										onClick={handleCustomerRev}>Customer Reviews</button>
-								</div>
-								{detailsActive ?
-									<div className="item-details">
-										<p>{item.item.description}</p>
-									</div> : ''
-								}
-								{sellerInfoActive ?
-									<div className="item-details">
-										<p>{item.seller.firstName} {item.seller.lastName}</p>
-									</div> : ''
-								}
+						</div>
+						<div className="col-12 col-sm-8 col-lg">
+							<h1 className="prod-title">{item?.item.name}</h1>
+							<h4 className="prod-price">Start from <span>${item.highestBid}+</span></h4>
+							{loggedUser ?
+								<form onSubmit={handleSubmit}>
+									<div className="bid-section">
+										<input type="text" onChange={handleChange} value={bid?.bidAmount} name="bidAmount" placeholder="Enter your bid" required />
+										<button className="bid-btn" type="submit">PLACE BID <FontAwesomeIcon icon={faAngleRight} /></button>
+									</div>
+								</form> : ''
+							}
+							<div className="bid-stats">
+								<p>Highest bid: <span>${item.highestBid}</span></p>
+								<p>No of bids: <span>{bids.length}</span></p>
+								<p>Time left: <span>{moment(item.endDate).fromNow()}</span></p>
 							</div>
-						</> : ''
-					}
-				</div>
-				{loggedUser && bids ?
-					<BiddersTable
-						bids={bids}
-					/> : ''
+							<div className="watchlist">
+								<button>Watchlist <FontAwesomeIcon icon={faHeart} className="heart" /></button>
+							</div>
+							<div className="details-section">
+								<button className={detailsActive ? 'active' : ''}
+									onClick={handleDetails} >Details</button>
+								<button className={sellerInfoActive ? 'active' : ''}
+									onClick={handleSellerInfo}>Seller Information</button>
+							</div>
+							{detailsActive ?
+								<div className="item-details">
+									<p>{item.item.description}</p>
+								</div> : ''
+							}
+							{sellerInfoActive ?
+								<div className="item-details">
+									<p>{item.seller.firstName} {item.seller.lastName}</p>
+								</div> : ''
+							}
+						</div>
+					</> : ''
 				}
 			</div>
-		</>
+			{loggedUser && bids ?
+				<BiddersTable
+					bids={bids}
+				/> : ''
+			}
+		</div>
 	)
 }
 
