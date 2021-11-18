@@ -73,7 +73,7 @@ const LandingPage = () => {
 							{highlightedProduct ?
 								<>
 									<h4 className="prod-title">{highlightedProduct?.item.name}</h4>
-									<h4 className="price">Start from ${highlightedProduct?.item.startPrice}</h4>
+									<h4 className="price">Start from ${highlightedProduct?.startPrice}</h4>
 									<p>{highlightedProduct?.item.description}</p>
 									<Link to={`/auctions/${highlightedProduct.id}`} className="bid-btn">BID NOW <FontAwesomeIcon icon={faAngleRight} /></Link>
 								</> : ''

@@ -6,6 +6,7 @@ export interface Auction {
 	id: string;
 	startDate: Date;
 	endDate: Date;
+	startPrice: number;
 	highestBid: number;
 	adress: string;
 	phone: string;

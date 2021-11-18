@@ -19,7 +19,7 @@ const GridLayout = (models: any) => {
 								<img src={images[0]} alt="sneakers" />
 							</Link>
 							<h4>{model.item.name}</h4>
-							<p>Start From <span>${model.item.startPrice}</span></p>
+							<p>Start From <span>${model.startPrice}</span></p>
 						</Col>
 					)
 				})}
