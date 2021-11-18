@@ -18,7 +18,6 @@ const SingleProduct = (props: any) => {
 
 	const [detailsActive, setDetails] = useState(true)
 	const [sellerInfoActive, setSellerInfo] = useState(false)
-	const [customerRevActive, setCustomerRev] = useState(false)
 	const [loggedUser, setIsLogged] = useState(false)
 	const [user, setUser] = useState<User>()
 	const [item, setItem] = useState<Auction>()
@@ -90,13 +89,11 @@ const SingleProduct = (props: any) => {
 	const handleDetails = () => {
 		setDetails(true)
 		setSellerInfo(false)
-		setCustomerRev(false)
 	}
 
 	const handleSellerInfo = () => {
 		setDetails(false)
 		setSellerInfo(true)
-		setCustomerRev(false)
 	}
 
 	let images = [
@@ -168,7 +165,7 @@ const SingleProduct = (props: any) => {
 					</> : ''
 				}
 			</div>
-			{loggedUser && bids ?
+			{loggedUser && bids && user?.email === item?.seller.email ?
 				<BiddersTable
 					bids={bids}
 				/> : ''
