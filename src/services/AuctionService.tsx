@@ -43,6 +43,15 @@ class AuctionService {
 			.catch(() => console.log("An error occured while fetching the bidders."));
 	}
 
+	getHighestBid = (auctionId: any) => {
+		return axios
+			.get(API_URL + `bids/highestBid/${auctionId}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the highest bid."));
+	}
+
 	addBid = (bid: any, token: string) => {
 		return axios
 			.post(API_URL + "bids/newBid", bid, HeaderConfig(token))

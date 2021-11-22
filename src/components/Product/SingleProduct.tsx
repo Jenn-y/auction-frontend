@@ -21,6 +21,7 @@ const SingleProduct = (props: any) => {
 	const [loggedUser, setIsLogged] = useState(false)
 	const [user, setUser] = useState<User>()
 	const [item, setItem] = useState<Auction>()
+	const [highestBid, setHighestBid] = useState<Number>()
 	const [bids, setBids] = useState([])
 	const [bid, setBid] = useState({bidAmount: '', bidDate: new Date(), buyer: user, auction: item})
 
@@ -34,6 +35,13 @@ const SingleProduct = (props: any) => {
 			.then(response => {
 				if (response) {
 					setItem(response)
+				}
+			})
+
+		AuctionService.getHighestBid(props.match.params.id)
+			.then(response => {
+				if (response) {
+					setHighestBid(response)
 				}
 			})
 		
@@ -66,7 +74,7 @@ const SingleProduct = (props: any) => {
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
 
-		if (validateBidAmount(Number(bid.bidAmount), item?.highestBid)){
+		if (validateBidAmount(Number(bid.bidAmount), highestBid)){
 			const currentUser = AuthService.getCurrentUser()
 			
 			if (user){
@@ -128,7 +136,9 @@ const SingleProduct = (props: any) => {
 						</div>
 						<div className="col-12 col-sm-8 col-lg">
 							<h1 className="prod-title">{item?.item.name}</h1>
-							<h4 className="prod-price">Start from <span>${item.highestBid}+</span></h4>
+							{highestBid ?
+								<h4 className="prod-price">Start from <span>${highestBid}+</span></h4> : ''
+							}
 							{loggedUser ?
 								<form onSubmit={handleSubmit}>
 									<div className="bid-section">
@@ -138,7 +148,9 @@ const SingleProduct = (props: any) => {
 								</form> : ''
 							}
 							<div className="bid-stats">
-								<p>Highest bid: <span>${item.highestBid}</span></p>
+								{highestBid ?
+									<p>Highest bid: <span>${highestBid}</span></p> : ''
+								}
 								<p>No of bids: <span>{bids.length}</span></p>
 								<p>Time left: <span>{moment(item.endDate).fromNow()}</span></p>
 							</div>
