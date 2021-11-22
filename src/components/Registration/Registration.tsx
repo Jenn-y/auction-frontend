@@ -21,7 +21,8 @@ const Registration = () => {
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
 
-		if (validate()) {
+		validate()
+		if (!validateRegisterData(user).isError) {
 			AuthService.register(
 				user.firstName,
 				user.lastName,

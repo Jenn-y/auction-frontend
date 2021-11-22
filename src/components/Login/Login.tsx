@@ -18,7 +18,8 @@ const Login = () => {
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
 		
-		if (validate()) {
+		validate()
+		if (!validateLoginData(user).isError) {
 			AuthService.login(
 				user.email,
 				user.password
@@ -41,7 +42,6 @@ const Login = () => {
 			password: validateLoginData(user).password,
 			isError: validateLoginData(user).isError
 		})
-		return !errors.isError
 	}
 
 	return (
