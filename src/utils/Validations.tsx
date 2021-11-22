@@ -23,7 +23,7 @@ export const validateRegisterData = (registerData: any) => {
 		validateErrors.isError = true
 	}
 
-	if (!validateEmail(registerData.email)) {
+	else if (!validateEmail(registerData.email)) {
 		validateErrors.email = EMAIL_INVALID
 		validateErrors.isError = true
 	}
@@ -33,7 +33,7 @@ export const validateRegisterData = (registerData: any) => {
 		validateErrors.isError = true
 	}
 
-	if (registerData.password && registerData.password.length < 6) {
+	else if (registerData.password && registerData.password.length < 6) {
 		validateErrors.password = PASSWORD_LENGTH
 		validateErrors.isError = true
 	}
@@ -45,7 +45,12 @@ export const validateLoginData = (loginData: any) => {
 
 	const validateErrors = { email: '', password: '', isError: false }
 
-	if (!validateEmail(loginData.email)) {
+	if (!loginData.email || loginData.email.length === 0) {
+		validateErrors.email = EMAIL_EMPTY
+		validateErrors.isError = true
+	}
+
+	else if (!validateEmail(loginData.email)) {
 		validateErrors.email = EMAIL_INVALID
 		validateErrors.isError = true
 	}
@@ -55,7 +60,7 @@ export const validateLoginData = (loginData: any) => {
 		validateErrors.isError = true
 	}
 
-	if (loginData.password && loginData.password.length < 6) {
+	else if (loginData.password && loginData.password.length < 6) {
 		validateErrors.password = PASSWORD_LENGTH
 		validateErrors.isError = true
 	}

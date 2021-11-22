@@ -12,7 +12,7 @@ import './Registration.scss'
 const Registration = () => {
 
 	const [user, setUser] = useState({ firstName: '', lastName: '', email: '', password: '' })
-	const [errors, setErrors] = useState({ firstName: '', lastName: '', email: '', password: '', isError: false })
+	const [errors, setErrors] = useState({ firstName: '', lastName: '', email: '', password: '', isError: true })
 
 	const handleChange = (e: any) => {
 		setUser(Object.assign({}, user, { [e.target.name]: e.target.value }))
@@ -64,28 +64,28 @@ const Registration = () => {
 				<div className="input_wrap">
 					<label>First Name</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.firstName} name="firstName" type="text" className="input" placeholder="Enter your first name" required />
+						<input onChange={handleChange} value={user.firstName} name="firstName" type="text" className="input" placeholder="Enter your first name" />
 						<span>{errors.firstName}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
 					<label>Last Name</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.lastName} name="lastName" type="text" className="input" placeholder="Enter your last name" required />
+						<input onChange={handleChange} value={user.lastName} name="lastName" type="text" className="input" placeholder="Enter your last name" />
 						<span>{errors.lastName}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
 					<label>Email</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" required />
+						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" />
 						<span>{errors.email}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
 					<label>Password</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" required />
+						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" />
 						<span>{errors.password}</span>
 					</div>
 				</div>

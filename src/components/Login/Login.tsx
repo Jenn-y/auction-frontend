@@ -9,7 +9,7 @@ import '../common_style/Form.scss'
 
 const Login = () => {
 	const [user, setUser] = useState({ email: '', password: '' })
-	const [errors, setErrors] = useState({ email: '', password: '', isError: false })
+	const [errors, setErrors] = useState({ email: '', password: '', isError: true })
 
 	const handleChange = (e: any) => {
 		setUser(Object.assign({}, user, { [e.target.name]: e.target.value }))
@@ -51,14 +51,14 @@ const Login = () => {
 				<div className="input_wrap">
 					<label>Email</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" required />
+						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" />
 						<span>{errors.email}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
 					<label>Password</label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" required />
+						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" />
 						<span>{errors.password}</span>
 					</div>
 				</div>
