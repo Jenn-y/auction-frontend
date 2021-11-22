@@ -82,7 +82,7 @@ const SingleProduct = (props: any) => {
 								</div> : ''
 							}
 							<div className="bid-stats">
-								<p>Highest bid: <span>${item.highestBid}</span></p>
+								<p>Highest bid: <span>$20</span></p>
 								<p>No of bids: <span>2</span></p>
 								<p>Time left: <span>10 days</span></p>
 							</div>
