@@ -21,9 +21,7 @@ export const validateRegisterData = (registerData: any) => {
 	if (!registerData.email || registerData.email.length === 0) {
 		validateErrors.email = EMAIL_EMPTY
 		validateErrors.isError = true
-	}
-
-	else if (!validateEmail(registerData.email)) {
+	} else if (!validateEmail(registerData.email)) {
 		validateErrors.email = EMAIL_INVALID
 		validateErrors.isError = true
 	}
@@ -31,9 +29,7 @@ export const validateRegisterData = (registerData: any) => {
 	if (!registerData.password || registerData.password.length === 0) {
 		validateErrors.password = PASSWORD_EMPTY
 		validateErrors.isError = true
-	}
-
-	else if (registerData.password && registerData.password.length < 6) {
+	} else if (registerData.password && registerData.password.length < 6) {
 		validateErrors.password = PASSWORD_LENGTH
 		validateErrors.isError = true
 	}
@@ -48,9 +44,7 @@ export const validateLoginData = (loginData: any) => {
 	if (!loginData.email || loginData.email.length === 0) {
 		validateErrors.email = EMAIL_EMPTY
 		validateErrors.isError = true
-	}
-
-	else if (!validateEmail(loginData.email)) {
+	} else if (!validateEmail(loginData.email)) {
 		validateErrors.email = EMAIL_INVALID
 		validateErrors.isError = true
 	}
@@ -58,9 +52,7 @@ export const validateLoginData = (loginData: any) => {
 	if (!loginData.password || loginData.password.length === 0) {
 		validateErrors.password = PASSWORD_EMPTY
 		validateErrors.isError = true
-	}
-
-	else if (loginData.password && loginData.password.length < 6) {
+	} else if (loginData.password && loginData.password.length < 6) {
 		validateErrors.password = PASSWORD_LENGTH
 		validateErrors.isError = true
 	}
