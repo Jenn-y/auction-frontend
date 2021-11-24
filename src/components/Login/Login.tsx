@@ -6,10 +6,11 @@ import { validateLoginData } from 'utils/Validations';
 
 import './Login.scss';
 import '../common_style/Form.scss'
+import { LoginError } from 'interfaces/LoginError';
 
 const Login = () => {
 	const [user, setUser] = useState({ email: '', password: '' })
-	const [errors, setErrors] = useState({ email: '', password: '', isError: true })
+	const [errors, setErrors] = useState<LoginError>()
 
 	const handleChange = (e: any) => {
 		setUser(Object.assign({}, user, { [e.target.name]: e.target.value }))
@@ -17,9 +18,16 @@ const Login = () => {
 
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
-		
-		validate()
-		if (!validateLoginData(user).isError) {
+
+		setErrors(validateLoginData(user))
+		setTimeout(
+			() => handleLogin(), 
+			300
+		);
+	}
+
+	const handleLogin = () => {
+		if (errors?.isError) {
 			AuthService.login(
 				user.email,
 				user.password
@@ -36,14 +44,6 @@ const Login = () => {
 
 	};
 
-	const validate = () => {
-		setErrors({
-			email: validateLoginData(user).email,
-			password: validateLoginData(user).password,
-			isError: validateLoginData(user).isError
-		})
-	}
-
 	return (
 		<div className="form">
 			<div className="title">LOGIN</div>
@@ -52,14 +52,14 @@ const Login = () => {
 					<label>Email</label>
 					<div className="input_field">
 						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" />
-						<span>{errors.email}</span>
+						<span>{errors?.email}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
 					<label>Password</label>
 					<div className="input_field">
 						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" />
-						<span>{errors.password}</span>
+						<span>{errors?.password}</span>
 					</div>
 				</div>
 				<div className="input_wrap remember-box">
