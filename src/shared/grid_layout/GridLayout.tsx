@@ -13,7 +13,7 @@ const GridLayout = (models: any) => {
 			<Row className="section">
 				{models.auctions.map((model: any) => {
 					return (
-						<Col xs={3} key={model.item.itemNumber} className="card-h">
+						<Col xs={models.numOfCols} key={model.item.id} className="card-h">
 							<img src={images[0]} alt="sneakers" />
 							<h4>{model.item.name}</h4>
 							<p>Start From <span>${model.item.startPrice}</span></p>

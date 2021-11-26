@@ -4,6 +4,7 @@ import { Auction } from 'interfaces/Auction'
 import { useEffect, useState } from 'react'
 
 import AuctionService from 'services/AuctionService'
+import CategoryService from 'services/CategoryService'
 import GridLayout from 'shared/grid_layout/GridLayout'
 
 import './LandingPage.scss'
@@ -14,11 +15,22 @@ const LandingPage = () => {
 	const [lastChanceActive, setLastChanceActive] = useState(false)
 	const [auctions, setAuctions] = useState([])
 	const [highlightedProduct, setHighlightedProduct] = useState<Auction>()
+	const [categories, setCategories] = useState([])
 
 	useEffect(() => {
+		getCategories()
 		handleNewArrivals()
 		setHighlightedProduct(auctions[0])
 	}, [])
+
+	const getCategories = () => {
+		CategoryService.getCategories()
+			.then(response => {
+				if (response) {
+					setCategories(response)
+				}
+			})
+	}
 
 	const handleNewArrivals = () => {
 		setNewArrivalsActive(true)
@@ -55,18 +67,15 @@ const LandingPage = () => {
 					<div className="row highlight">
 						<div className="col-12 col-sm-4 col-lg">
 							<h6 className="cat-title">CATEGORIES</h6>
+							{categories ? 
 							<ul className="cat-list">
-								<li><div className="category"><a>Fashion</a></div></li>
-								<li><div className="category"><a>Accesories</a></div></li>
-								<li><div className="category"><a>Jewelry</a></div></li>
-								<li><div className="category"><a>Shoes</a></div></li>
-								<li><div className="category"><a>Sportware</a></div></li>
-								<li><div className="category"><a>Home</a></div></li>
-								<li><div className="category"><a>Electronics</a></div></li>
-								<li><div className="category"><a>Mobile</a></div></li>
-								<li><div className="category"><a>Computer</a></div></li>
+								{categories.map((category: any) => {
+									return (
+										<li key={category.id}><div className="category"><a>{category.name}</a></div></li>
+									)
+								})} 
 								<li><div className="category"><a>All Categories</a></div></li>
-							</ul>
+							</ul> : '' }
 						</div>
 						<div className="col-12 col-sm-4 col-lg product-desc">
 							{highlightedProduct ?
@@ -96,7 +105,10 @@ const LandingPage = () => {
 						</div>
 					</div>
 				</div>
-				<GridLayout auctions={auctions} />
+				<GridLayout 
+					auctions={auctions}
+					numOfCols={3}
+				/>
 			</div>
 		</>
 	)
