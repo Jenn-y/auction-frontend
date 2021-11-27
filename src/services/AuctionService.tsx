@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Bid } from "interfaces/Bid";
 import HeaderConfig from "utils/HeaderConfig";
 import { DEV_API, PROD_API } from "./ApiConstants";
 

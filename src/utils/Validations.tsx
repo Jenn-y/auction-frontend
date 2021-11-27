@@ -6,6 +6,20 @@ export const validateEmail = (email: string) => {
 	return RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i).test(email)
 }
 
+export const isValidLoginInput = (loginData: any) => {
+	if (validateLoginData(loginData).isError) {
+		return false
+	}
+	return true
+}
+
+export const isValidRegisterInput = (registerData: any) => {
+	if (validateRegisterData(registerData).isError) {
+		return false
+	}
+	return true
+}
+
 export const validateRegisterData = (registerData: any) => {
 
 	const validateErrors: RegistrationError = { firstName: '', lastName: '', email: '', password: '', isError: false };

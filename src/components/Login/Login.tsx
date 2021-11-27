@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify';
 
 import AuthService from 'services/AuthService';
-import { validateLoginData } from 'utils/Validations';
+import { isValidLoginInput, validateLoginData } from 'utils/Validations';
 
 import './Login.scss';
 import '../common_style/Form.scss'
@@ -10,7 +10,7 @@ import { LoginError } from 'interfaces/LoginError';
 
 const Login = () => {
 	const [user, setUser] = useState({ email: '', password: '' })
-	const [errors, setErrors] = useState<LoginError>()
+	const [errors, setErrors] = useState<LoginError>({ email: '', password: '', isError: true })
 
 	const handleChange = (e: any) => {
 		setUser(Object.assign({}, user, { [e.target.name]: e.target.value }))
@@ -20,14 +20,11 @@ const Login = () => {
 		e.preventDefault();
 
 		setErrors(validateLoginData(user))
-		setTimeout(
-			() => handleLogin(), 
-			300
-		);
+		handleLogin()
 	}
 
 	const handleLogin = () => {
-		if (errors?.isError) {
+		if (isValidLoginInput(user)) {
 			AuthService.login(
 				user.email,
 				user.password
@@ -49,14 +46,14 @@ const Login = () => {
 			<div className="title">LOGIN</div>
 			<form onSubmit={handleSubmit}>
 				<div className="input_wrap">
-					<label>Email</label>
+					<label>Email<span>*</span></label>
 					<div className="input_field">
 						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" />
 						<span>{errors?.email}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
-					<label>Password</label>
+					<label>Password<span>*</span></label>
 					<div className="input_field">
 						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" />
 						<span>{errors?.password}</span>
