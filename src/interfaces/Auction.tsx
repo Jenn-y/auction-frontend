@@ -3,15 +3,11 @@ import { Item } from "./Item";
 import { User } from "./User";
 
 export interface Auction {
-	uuid: string;
+	id: string;
 	startDate: Date;
 	endDate: Date;
-	highestBid: number;
-	adress: string;
-	phone: string;
-	shippingCostIncluded: string;
+	startPrice: number;
 	status: string;
-	zipCode: number;
 	item: Item;
 	seller: User;
 	category: Category;

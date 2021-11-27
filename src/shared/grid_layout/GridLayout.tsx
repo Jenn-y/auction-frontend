@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Col, Container, Row } from 'reactstrap'
 
 import './GridLayout.scss'
@@ -13,10 +14,12 @@ const GridLayout = (models: any) => {
 			<Row className="section">
 				{models.auctions.map((model: any) => {
 					return (
-						<Col xs={3} key={model.item.itemNumber} className="card-h">
-							<img src={images[0]} alt="sneakers" />
+						<Col xs={3} key={model.item.id} className="card-h">
+							<Link to={`/auctions/${model.id}`} className="bid-btn">
+								<img src={images[0]} alt="sneakers" />
+							</Link>
 							<h4>{model.item.name}</h4>
-							<p>Start From <span>${model.item.startPrice}</span></p>
+							<p>Start From <span>${model.startPrice}</span></p>
 						</Col>
 					)
 				})}
