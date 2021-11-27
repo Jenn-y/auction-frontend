@@ -1,10 +1,16 @@
 import { faAngleRight, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
+import moment from 'moment'
+import { toast } from 'react-toastify';
 
 import { Auction } from 'interfaces/Auction'
 import AuctionService from 'services/AuctionService'
 import AuthService from 'services/AuthService'
+import BiddersTable from 'components/Bidders/BiddersTable'
+import { User } from 'interfaces/User'
+import { validateBidAmount } from 'utils/Validations';
+import { HIGHER_BID_EXIST } from 'constants/ErrorMessages';
 
 import './SingleProduct.scss'
 
@@ -12,9 +18,12 @@ const SingleProduct = (props: any) => {
 
 	const [detailsActive, setDetails] = useState(true)
 	const [sellerInfoActive, setSellerInfo] = useState(false)
-	const [customerRevActive, setCustomerRev] = useState(false)
 	const [loggedUser, setIsLogged] = useState(false)
+	const [user, setUser] = useState<User>()
 	const [item, setItem] = useState<Auction>()
+	const [highestBid, setHighestBid] = useState<Number>()
+	const [bids, setBids] = useState([])
+	const [bid, setBid] = useState({bidAmount: '', bidDate: new Date(), buyer: user, auction: item})
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
@@ -28,18 +37,71 @@ const SingleProduct = (props: any) => {
 					setItem(response)
 				}
 			})
+
+		AuctionService.getHighestBid(props.match.params.id)
+			.then(response => {
+				if (response) {
+					setHighestBid(response)
+				}
+			})
+		
+		if (user) {
+			AuctionService.getBids(props.match.params.id, user.authenticationToken)
+				.then(response => {
+					if (response) {
+						setBids(response)
+					}
+				})
+		}
+		if (user) getUser()
 	}, [])
+
+	const getUser = () => {
+		const currentUser = AuthService.getCurrentUser()
+		
+		AuthService.getUser(currentUser.email, currentUser.authenticationToken)
+			.then(response => {
+				if (response) {
+					setUser(response)
+				}
+			})
+	}
+
+	const handleChange = (e: any) => {
+		setBid(Object.assign({}, bid, { [e.target.name]: e.target.value }))
+	}
+
+	const handleSubmit = (e: any) => {
+		e.preventDefault();
+
+		if (validateBidAmount(Number(bid.bidAmount), highestBid)){
+			const currentUser = AuthService.getCurrentUser()
+			
+			if (user){
+				bid!.buyer = user
+				bid!.auction = item
+			}
+
+			AuctionService.addBid(bid, currentUser.authenticationToken)
+				.then(
+					() => {
+						toast.success("Congrats! You are the highest bidder!", { hideProgressBar: true });
+						window.location.reload();
+					}
+				)
+		} else {
+			toast.warning(HIGHER_BID_EXIST, { hideProgressBar: true });
+		}
+	}
 
 	const handleDetails = () => {
 		setDetails(true)
 		setSellerInfo(false)
-		setCustomerRev(false)
 	}
 
 	const handleSellerInfo = () => {
 		setDetails(false)
 		setSellerInfo(true)
-		setCustomerRev(false)
 	}
 
 	let images = [
@@ -74,17 +136,23 @@ const SingleProduct = (props: any) => {
 						</div>
 						<div className="col-12 col-sm-8 col-lg">
 							<h1 className="prod-title">{item?.item.name}</h1>
-							<h4 className="prod-price">Start from <span>${item.item.startPrice}</span></h4>
+							{highestBid ?
+								<h4 className="prod-price">Start from <span>${highestBid}+</span></h4> : ''
+							}
 							{loggedUser ?
-								<div className="bid-section">
-									<input type="text" required name="price" placeholder="Enter your bid" />
-									<button className="bid-btn">PLACE BID <FontAwesomeIcon icon={faAngleRight} /></button>
-								</div> : ''
+								<form onSubmit={handleSubmit}>
+									<div className="bid-section">
+										<input type="text" onChange={handleChange} value={bid?.bidAmount} name="bidAmount" placeholder="Enter your bid" required />
+										<button className="bid-btn" type="submit">PLACE BID <FontAwesomeIcon icon={faAngleRight} /></button>
+									</div>
+								</form> : ''
 							}
 							<div className="bid-stats">
-								<p>Highest bid: <span>$20</span></p>
-								<p>No of bids: <span>2</span></p>
-								<p>Time left: <span>10 days</span></p>
+								{highestBid ?
+									<p>Highest bid: <span>${highestBid}</span></p> : ''
+								}
+								<p>No of bids: <span>{bids.length}</span></p>
+								<p>Time left: <span>{moment(item.endDate).fromNow()}</span></p>
 							</div>
 							<div className="watchlist">
 								<button>Watchlist <FontAwesomeIcon icon={faHeart} className="heart" /></button>
@@ -109,114 +177,10 @@ const SingleProduct = (props: any) => {
 					</> : ''
 				}
 			</div>
-			{loggedUser ?
-				<div className="row bidders">
-					<div className="col-md-12">
-						<div className="table-section">
-							<table className="table">
-								<thead>
-									<tr>
-										<th>BIDDER</th>
-										<th>DATE</th>
-										<th>BID</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr className="bidders-list">
-										<td colSpan={2} className="title">
-											<div className="thumb">
-												<img className="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-											</div>
-											<div className="bidder-details">
-												<div className="bidder-list-title">
-													<h5>Brooke Kelly</h5>
-												</div>
-											</div>
-										</td>
-										<td colSpan={1} className="bid-date">
-											<p className="date">4 March 2021</p>
-										</td>
-										<td colSpan={1} className="bid-amount">
-											<p>$ 120.00</p>
-										</td>
-									</tr>
-									<tr className="bidders-list">
-										<td colSpan={2} className="title">
-											<div className="thumb">
-												<img className="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-											</div>
-											<div className="bidder-details">
-												<div className="bidder-list-title">
-													<h5>Brooke Kelly</h5>
-												</div>
-											</div>
-										</td>
-										<td colSpan={1} className="bid-date">
-											<p className="date">4 March 2021</p>
-										</td>
-										<td colSpan={1} className="bid-amount">
-											<p>$ 120.00</p>
-										</td>
-									</tr>
-									<tr className="bidders-list">
-										<td colSpan={2} className="title">
-											<div className="thumb">
-												<img className="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-											</div>
-											<div className="bidder-details">
-												<div className="bidder-list-title">
-													<h5>Brooke Kelly</h5>
-												</div>
-											</div>
-										</td>
-										<td colSpan={1} className="bid-date">
-											<p className="date">4 March 2021</p>
-										</td>
-										<td colSpan={1} className="bid-amount">
-											<p>$ 120.00</p>
-										</td>
-									</tr>
-									<tr className="bidders-list">
-										<td colSpan={2} className="title">
-											<div className="thumb">
-												<img className="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-											</div>
-											<div className="bidder-details">
-												<div className="bidder-list-title">
-													<h5>Brooke Kelly</h5>
-												</div>
-											</div>
-										</td>
-										<td colSpan={1} className="bid-date">
-											<p className="date">4 March 2021</p>
-										</td>
-										<td colSpan={1} className="bid-amount">
-											<p>$ 120.00</p>
-										</td>
-									</tr>
-									<tr className="bidders-list">
-										<td colSpan={2} className="title">
-											<div className="thumb">
-												<img className="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
-											</div>
-											<div className="bidder-details">
-												<div className="bidder-list-title">
-													<h5>Brooke Kelly</h5>
-												</div>
-											</div>
-										</td>
-										<td colSpan={1} className="bid-date">
-											<p className="date">4 March 2021</p>
-										</td>
-										<td colSpan={1} className="bid-amount">
-											<p>$ 120.00</p>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div> : ''
+			{loggedUser && bids && user?.email === item?.seller.email ?
+				<BiddersTable
+					bids={bids}
+				/> : ''
 			}
 		</div>
 	)

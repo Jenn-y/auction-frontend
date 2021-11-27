@@ -6,6 +6,7 @@ export interface Auction {
 	id: string;
 	startDate: Date;
 	endDate: Date;
+	startPrice: number;
 	status: string;
 	item: Item;
 	seller: User;

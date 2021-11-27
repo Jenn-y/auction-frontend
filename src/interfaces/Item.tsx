@@ -5,5 +5,4 @@ export interface Item {
 	itemNumber: string;
 	name: string;
 	size: number;
-	startPrice: number;
 }
