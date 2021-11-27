@@ -1,6 +1,8 @@
 import axios from "axios";
+import HeaderConfig from "utils/HeaderConfig";
+import { DEV_API, PROD_API } from "./ApiConstants";
 
-const API_URL = "http://localhost:8080/api/";
+const API_URL = process.env.NODE_ENV === "development" ? DEV_API : PROD_API
 
 class AuthService {
 	login = (email: string, password: string) => {
@@ -37,6 +39,15 @@ class AuthService {
 			email,
 			password
 		});
+	}
+
+	getUser = async (email: string, token: string) => {
+		return axios
+			.get(API_URL + `users/${email}`, HeaderConfig(token))
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the bidders."));
 	}
 }
 

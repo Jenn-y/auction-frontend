@@ -1,8 +1,8 @@
 import { Auction } from "./Auction";
 
 export interface Category {
-	uuid: string;
+	id: string;
 	name: string;
-	subcategory: Category;
+	subcategoryOf: Category;
 	itemList: Auction;
 }

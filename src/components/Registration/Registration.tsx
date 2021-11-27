@@ -3,16 +3,17 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 import AuthService from 'services/AuthService';
-import { validateRegisterData } from 'utils/Validations';
+import { isValidRegisterInput, validateRegisterData } from 'utils/Validations';
 import { EMAIL_UNAVAILABLE } from 'constants/ErrorMessages';
 
 import './../common_style/Form.scss'
 import './Registration.scss'
+import { RegistrationError } from 'interfaces/RegistrationError';
 
 const Registration = () => {
 
 	const [user, setUser] = useState({ firstName: '', lastName: '', email: '', password: '' })
-	const [errors, setErrors] = useState({ firstName: '', lastName: '', email: '', password: '', isError: false })
+	const [errors, setErrors] = useState<RegistrationError>({ firstName: '', lastName: '', email: '', password: '', isError: true })
 
 	const handleChange = (e: any) => {
 		setUser(Object.assign({}, user, { [e.target.name]: e.target.value }))
@@ -21,7 +22,12 @@ const Registration = () => {
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
 
-		if (validate()) {
+		setErrors(validateRegisterData(user))
+		handleRegistration() 
+	}
+
+	const handleRegistration = () => {
+		if (isValidRegisterInput(user)) {
 			AuthService.register(
 				user.firstName,
 				user.lastName,
@@ -46,47 +52,36 @@ const Registration = () => {
 		}
 	};
 
-	const validate = () => {
-		setErrors({
-			firstName: validateRegisterData(user).firstName,
-			lastName: validateRegisterData(user).lastName,
-			email: validateRegisterData(user).email,
-			password: validateRegisterData(user).password,
-			isError: validateRegisterData(user).isError
-		})
-		return !errors.isError
-	}
-
 	return (
 		<div className="form">
 			<div className="title">REGISTER</div>
 			<form onSubmit={handleSubmit}>
 				<div className="input_wrap">
-					<label>First Name</label>
+					<label>First Name<span>*</span></label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.firstName} name="firstName" type="text" className="input" placeholder="Enter your first name" required />
-						<span>{errors.firstName}</span>
+						<input onChange={handleChange} value={user.firstName} name="firstName" type="text" className="input" placeholder="Enter your first name" />
+						<span>{errors?.firstName}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
-					<label>Last Name</label>
+					<label>Last Name<span>*</span></label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.lastName} name="lastName" type="text" className="input" placeholder="Enter your last name" required />
-						<span>{errors.lastName}</span>
+						<input onChange={handleChange} value={user.lastName} name="lastName" type="text" className="input" placeholder="Enter your last name" />
+						<span>{errors?.lastName}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
-					<label>Email</label>
+					<label>Email<span>*</span></label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" required />
-						<span>{errors.email}</span>
+						<input onChange={handleChange} value={user.email} name="email" type="text" className="input" placeholder="Enter your email" />
+						<span>{errors?.email}</span>
 					</div>
 				</div>
 				<div className="input_wrap">
-					<label>Password</label>
+					<label>Password<span>*</span></label>
 					<div className="input_field">
-						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" required />
-						<span>{errors.password}</span>
+						<input onChange={handleChange} value={user.password} name="password" type="password" className="input" placeholder="Enter your password" />
+						<span>{errors?.password}</span>
 					</div>
 				</div>
 				<div className="input_wrap">

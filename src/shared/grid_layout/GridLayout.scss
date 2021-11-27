@@ -27,6 +27,11 @@
 		font-weight: bold;
 	}
 
+	img:hover {
+		box-shadow: 0px 4px 9px 0px $light-gray;
+		transition: all 0.5s;
+	}
+
 	img {
 		width: 262px;
 		height: 262px;

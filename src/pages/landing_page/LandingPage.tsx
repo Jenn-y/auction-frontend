@@ -21,7 +21,6 @@ const LandingPage = () => {
 	useEffect(() => {
 		getCategories()
 		handleNewArrivals()
-		setHighlightedProduct(auctions[0])
 	}, [])
 
 	const getCategories = () => {
@@ -41,6 +40,7 @@ const LandingPage = () => {
 			.then(response => {
 				if (response) {
 					setAuctions(response)
+					setHighlightedProduct(response[0])
 				}
 			})
 	}
@@ -83,10 +83,11 @@ const LandingPage = () => {
 							{highlightedProduct ?
 								<>
 									<h4 className="prod-title">{highlightedProduct?.item.name}</h4>
-									<h4 className="price">Start from ${highlightedProduct?.item.startPrice}</h4>
-									<p>{highlightedProduct?.item.description}</p> </> : ''
+									<h4 className="price">Start from ${highlightedProduct?.startPrice}</h4>
+									<p>{highlightedProduct?.item.description}</p>
+									<Link to={`/auctions/${highlightedProduct.id}`} className="bid-btn">BID NOW <FontAwesomeIcon icon={faAngleRight} /></Link>
+								</> : ''
 							}
-							<button className="bid-btn">BID NOW <FontAwesomeIcon icon={faAngleRight} /></button>
 						</div>
 						<div className="col-12 col-sm-4 col-lg">
 							<img src={images[0]} alt="sneakers" />
