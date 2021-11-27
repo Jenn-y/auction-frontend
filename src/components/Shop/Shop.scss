@@ -1,0 +1,106 @@
+@import 'utils/Colors.scss';
+
+.left-side {
+	max-width: 22%;
+
+	.prod-categories {
+		border: 1px solid $border-color;
+		margin-top: 40px;
+		padding: 24px 20px 32px;
+
+		.cat-title {
+			font-weight: bold;
+			font-size: 16px;
+			line-height: 24px;
+			color: $purple;
+			margin-bottom: 20px;
+		}
+	
+		.cat-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+	
+			.parent-category {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 20px;
+
+				p {
+					color: $black;
+					font-weight: 500;
+					font-size: 16px;
+					line-height: 17px;
+					margin: 0;
+				}
+
+				.icon {
+					color: $black;
+					width: 8px;
+					height: 8px;
+					cursor: pointer;
+				}
+			}
+
+			.subcategory {
+				margin-bottom: 20px;
+				margin-left: 5px;
+
+				label {
+					font-weight: normal;
+					font-size: 16px;
+					line-height: 17px;
+					color: $light-gray;
+					cursor: pointer;
+				}
+
+				input[type=checkbox] {
+					background-color: $white;
+					outline: 1px solid $purple;
+					border-radius: 3px;
+					-webkit-appearance: none;
+					width: 17px;
+					height: 17px;
+					cursor: pointer;
+					position: relative;
+					top: 3px;
+					margin-right: 5px;
+				}
+
+				input[type=checkbox]:checked {
+					background: $purple url("data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==") 3px 3px no-repeat;
+				}
+			}
+		}
+	}
+}
+
+.right-side {
+	min-width: 75%;
+
+	.expand {
+		text-align: center;
+		margin-bottom: 80px;
+
+		.explore-btn {
+			padding: 12px 40px;
+			font-weight: 700;
+			font-size: 16px;
+			line-height: 27px;
+			color: $white;
+			letter-spacing: 0.63px;
+			background-color: $purple;
+			border: 3px solid $white;
+		}
+	
+		.explore-btn:hover,
+		.explore-btn:focus {
+			background-color: $white;
+			border: 3px solid $purple;
+			color: $purple;
+			transition: all 0.3s;
+		}
+	}
+}
