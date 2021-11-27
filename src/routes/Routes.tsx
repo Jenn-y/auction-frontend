@@ -10,6 +10,7 @@ import Registration from "components/Registration/Registration";
 import { ToastContainer } from "react-toastify";
 
 import 'react-toastify/dist/ReactToastify.css';
+import Shop from "components/Shop/Shop";
 
 const Routes = () => {
 	return (
@@ -23,6 +24,7 @@ const Routes = () => {
 				<Route exact path="/privacy_policy" component={Privacy_Policy} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Registration} />
+				<Route exact path="/shop" component={Shop} />
 			</Switch>
 		</>
 	);

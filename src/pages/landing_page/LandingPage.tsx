@@ -2,6 +2,7 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Auction } from 'interfaces/Auction'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import AuctionService from 'services/AuctionService'
 import CategoryService from 'services/CategoryService'
@@ -68,14 +69,15 @@ const LandingPage = () => {
 						<div className="col-12 col-sm-4 col-lg">
 							<h6 className="cat-title">CATEGORIES</h6>
 							{categories ? 
-							<ul className="cat-list">
-								{categories.map((category: any) => {
-									return (
-										<li key={category.id}><div className="category"><a>{category.name}</a></div></li>
-									)
-								})} 
-								<li><div className="category"><a>All Categories</a></div></li>
-							</ul> : '' }
+								<ul className="cat-list">
+									{categories.map((category: any) => {
+										return (
+											<li key={category.id}><div className="category"><Link to="/shop">{category.name}</Link></div></li>
+										)
+									})} 
+									<li><div className="category"><Link to="/shop">All Categories</Link></div></li>
+								</ul> : '' 
+							}
 						</div>
 						<div className="col-12 col-sm-4 col-lg product-desc">
 							{highlightedProduct ?
