@@ -1,0 +1,146 @@
+@import 'utils/Colors.scss';
+
+.product {
+	margin: 100px 0;
+
+	.main-img {
+		width: 521px;
+		height: 600px;
+		margin: 0px 0 30px;
+	}
+
+	.secondary-img {
+		height: 140px;
+		width: 120px;
+	}
+
+	.col-sm-3 {
+		margin: 0;
+		box-sizing: border-box;
+		padding-right: 0;
+	}
+
+	.prod-title {
+		font-weight: 500;
+		font-size: 40px;
+		line-height: 51px;
+		letter-spacing: 0.84px;
+		color: $black;
+	}
+
+	.prod-price {
+		font-weight: 300;
+		font-size: 22px;
+		line-height: 19px;
+		color: $purple;
+		margin: 25px 0;
+	}
+
+	.bid-section {
+		margin: 64px 0px;
+
+		input {
+			width: 220px;
+			height: 54px;
+			border: 1px solid $dirty-white;
+			font-weight: 300;
+			font-size: 16px;
+			line-height: 19px;
+			color: $light-gray;
+			outline-color: none;
+			padding-left: 15px;
+		}
+
+		input:focus {
+			outline-color: $purple;
+		}
+
+		.bid-btn {
+			padding: 11px 32px;
+			width: 192px;
+			border: 3px solid $purple;
+			background-color: $white;
+			box-sizing: border-box;
+			color: $black;
+			margin-left: 50px;
+			font-weight: bold;
+			font-size: 18px;
+			line-height: 27px;
+			letter-spacing: 0.63px;
+		}
+
+		.bid-btn:hover,
+		.bid-btn:focus {
+			background-color: $purple;
+			color: $white;
+			transition: all 0.3s;
+		}
+	}
+
+	.bid-stats {
+		margin-bottom: 50px;
+
+		p {
+			font-weight: 300;
+			font-size: 16px;
+			line-height: 19px;
+			color: $light-gray;
+			margin-bottom: 0.3rem;
+		}
+
+		span {
+			color: $purple;
+			font-weight: bold;
+		}
+	}
+
+	.watchlist {
+		margin-bottom: 60px;
+
+		button {
+			width: 140px;
+			height: 34px;
+			border: 1px solid $dirty-white;
+			font-weight: 500;
+			font-size: 16px;
+			line-height: 19px;
+			color: $black;
+			background-color: $white;
+			cursor: not-allowed;
+		}
+
+		.heart {
+			color: $dirty-white;
+			margin-left: 5px;
+		}
+	}
+
+	.details-section {
+		border-bottom: 1px solid $border-color;
+		margin-bottom: 40px;
+
+		button {
+			border: none;
+			background-color: $white;
+			font-weight: normal;
+			font-size: 16px;
+			line-height: 24px;
+			color: $black;
+			padding: 10px 32px;
+			letter-spacing: 0.84px;
+		}
+
+		button.active {
+			border-bottom: 3px solid $purple;
+			font-weight: 700;
+		}
+
+		button:hover {
+			color: $purple;
+		}
+	}
+
+	.item-details {
+		color: $black;
+	}
+}

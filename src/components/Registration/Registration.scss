@@ -1,0 +1,15 @@
+@import 'utils/Colors.scss';
+
+.input_wrap p {
+	color: $light-gray;
+	font-weight: 510;
+	font-size: 16px;
+	line-height: 19px;
+	text-align: center;
+
+	.login-link {
+		margin-left: 10px;
+		text-decoration: none;
+		color: $purple;
+	}
+}

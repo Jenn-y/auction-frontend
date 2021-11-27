@@ -1,0 +1,76 @@
+@import 'utils/Colors.scss';
+
+.footer_area {
+    overflow: hidden;
+    padding: 20px 0 80px;
+    background: $black;
+    color: $light-gray;
+}
+
+.general-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+
+    .footer_menu li a:hover,
+    .footer_menu li a:focus {
+        text-decoration: underline;
+    }
+
+    .title {
+        margin-bottom: 1.5rem;
+        color: $white;
+        opacity: 0.5;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .footer_menu li a {
+        color: $white;
+        display: block;
+        font-style: normal;
+        font-size: 16px;
+        line-height: 24px;
+        text-decoration: none;
+    }
+}
+
+.footer_social_area {
+
+    a {
+        margin-top: 3px;
+        border-radius: 50%;
+        height: 30px;
+        text-align: center;
+        width: 30px;
+        display: inline-block;
+        background-color: $light-gray;
+        line-height: 30px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        margin-right: 10px;
+        color: $black;
+    }
+
+    a:hover,
+    a:focus {
+        color: $white;
+    }
+}
+
+.footer_area {
+
+    ul li {
+        list-style: none;
+        margin-bottom: 1rem;
+        color: $white;
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+}

@@ -1,0 +1,25 @@
+@import 'utils/Colors.scss';
+
+.text-container {
+	width: 50%;
+	margin: auto;
+	padding: 60px 0 120px;
+	min-height: 70vh;
+
+	h2 {
+		margin-bottom: 60px;
+	}
+
+	h4 {
+		margin: 30px 0;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	p,
+	li {
+		color: $light-gray;
+	}
+}
