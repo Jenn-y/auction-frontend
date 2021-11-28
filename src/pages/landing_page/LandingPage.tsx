@@ -24,7 +24,7 @@ const LandingPage = () => {
 	}, [])
 
 	const getCategories = () => {
-		CategoryService.getCategories()
+		CategoryService.getLandingPageCategories()
 			.then(response => {
 				if (response) {
 					setCategories(response)
@@ -72,10 +72,10 @@ const LandingPage = () => {
 								<ul className="cat-list">
 									{categories.map((category: any) => {
 										return (
-											<li key={category.id}><div className="category"><Link to="/shop">{category.name}</Link></div></li>
+											<li key={category.id}><div className="category"><Link to={`/shop/${category.id}`}>{category.name}</Link></div></li>
 										)
 									})} 
-									<li><div className="category"><Link to="/shop">All Categories</Link></div></li>
+									<li><div className="category"><Link to={`/shop/all`}>All Categories</Link></div></li>
 								</ul> : '' 
 							}
 						</div>

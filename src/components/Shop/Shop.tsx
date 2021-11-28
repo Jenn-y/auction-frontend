@@ -1,36 +1,55 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
+
 import AuctionService from 'services/AuctionService';
+import CategoryService from 'services/CategoryService';
 import GridLayout from 'shared/grid_layout/GridLayout';
+
 import './Shop.scss';
 
-const Shop = () => {
+const Shop = (props: any) => {
 
 	const [auctions, setAuctions] = useState([])
-	const [showSubcategories, setShowSubcategories] = useState(false)
-	const [icon, setIcon] = useState<IconProp>(faPlus)
+	const [categories, setCategories] = useState([])
+	const [activeCategory, setActiveCategory] = useState<string>()
 
 	useEffect(() => {
+		const categoryId = props.match.params.categoryId
+		if (categoryId !== undefined && categoryId !== "all") {
+			getAuctionsByCategoryId(categoryId)
+		} else {
+			getAllAuctions()
+		}
+		
+		CategoryService.getAllCategories()
+			.then(response => {
+				if (response) {
+					setCategories(response)
+				}
+			})
+	}, [])
+
+	const getAllAuctions = () => {
 		AuctionService.getNewArrivals()
 			.then(response => {
 				if (response) {
 					setAuctions(response)
 				}
 			})
-	}, [])
-
-	const handleOnClick = () => {
-		if (showSubcategories) {
-			setShowSubcategories(false)
-			setIcon(faPlus)
-		}
-		else {
-			setShowSubcategories(true)
-			setIcon(faMinus)
-		}
 	}
+
+	const getAuctionsByCategoryId = (categoryId: string) => {
+		AuctionService.getAuctionsByCategoryId(categoryId)
+			.then(response => {
+				if (response) {
+					setAuctions(response)
+				}
+			})
+		setActiveCategory(categoryId)
+	}
+	
+	const getIcon = (activeCategory: any, category: any) => activeCategory === category ? faMinus : faPlus;
 	
     return (
         <div className="container">
@@ -39,76 +58,18 @@ const Shop = () => {
 					<div className="prod-categories">
 						<h6 className="cat-title">PRODUCT CATEGORIES</h6>
 						<ul className="cat-list">
-							<li>
-								<div className="parent-category">
-									<p className="category">Women</p>
-									<div><FontAwesomeIcon icon={icon} size="xs" className="icon" onClick={handleOnClick} /></div>
-								</div>
-								{showSubcategories ? 
-									<div>
-										<div className="subcategory">
-											<input type="checkbox" name="subcategory" />
-											<label htmlFor="subcategory">Acessorise (120)</label>
-										</div>
-										<div className="subcategory">
-											<input type="checkbox" name="subcategory" />
-											<label htmlFor="subcategory">Bag (40)</label>
-										</div>
-										<div className="subcategory">
-											<input type="checkbox" name="subcategory" />
-											<label htmlFor="subcategory">Clothes (40)</label>
-										</div>
-										<div className="subcategory">
-											<input type="checkbox" name="subcategory" />
-											<label htmlFor="subcategory">Bad & Bath (40)</label>
-										</div>
-										<div className="subcategory">
-											<input type="checkbox" name="subcategory" />
-											<label htmlFor="subcategory">Swimming Tops (40)</label>
-										</div>
-										<div className="subcategory">
-											<input type="checkbox" name="subcategory" />
-											<label htmlFor="subcategory">Spot Tops & Shoes (40)</label>
-										</div>
-									</div> : ''
-								}
-							</li>
-							<li>
-								<div className="parent-category">
-									<p className="category">Men</p>
-									<div><FontAwesomeIcon icon={faPlus} size="xs" className="icon" /></div>
-								</div>
-							</li>
-							<li>
-								<div className="parent-category">
-									<p className="category">Kids</p>
-									<div><FontAwesomeIcon icon={faPlus} size="xs" className="icon" /></div>
-								</div>
-							</li>
-							<li>
-								<div className="parent-category">
-									<p className="category">Accesorise</p>
-									<div><FontAwesomeIcon icon={faPlus} size="xs" className="icon" /></div>
-								</div>
-							</li>
-							<li>
-								<div className="parent-category">
-									<p className="category">Home</p>
-									<div><FontAwesomeIcon icon={faPlus} size="xs" className="icon" /></div>
-								</div>
-							</li>
-							<li>
-								<div className="parent-category">
-									<p className="category">Art</p>
-									<div><FontAwesomeIcon icon={faPlus} size="xs" className="icon" /></div>
-								</div>
-							</li>
-							<li>
-								<div className="parent-category">
-									<p className="category">Computers</p>
-									<div><FontAwesomeIcon icon={faPlus} size="xs" className="icon" /></div>
-								</div>
-							</li>
+							{categories ? 
+								categories.map((category: any) => {
+									return (
+										<li key={category.id}>
+											<div id="parent-category" className={activeCategory === category.id ? 'active' : 'inactive'}>
+												<p className="category" onClick={() => getAuctionsByCategoryId(category.id)}>{category.name}</p>
+												<div><FontAwesomeIcon icon={getIcon(activeCategory, category.id)} size="xs" id="icon"/></div>
+											</div>
+										</li>
+									)
+								}) : '' 
+							}
 						</ul>
 					</div>
 				</div>
@@ -119,9 +80,9 @@ const Shop = () => {
 							numOfCols={4}
 						/>
 					</div>
-					<div className="expand">
+					{/* <div className="expand">
 						<button className="explore-btn">EXPLORE MORE</button>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div>

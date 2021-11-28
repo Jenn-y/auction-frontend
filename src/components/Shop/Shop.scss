@@ -21,7 +21,7 @@
 			padding: 0;
 			margin: 0;
 	
-			.parent-category {
+			#parent-category {
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
@@ -29,49 +29,26 @@
 				margin-bottom: 20px;
 
 				p {
-					color: $black;
-					font-weight: 500;
 					font-size: 16px;
 					line-height: 17px;
 					margin: 0;
+					cursor: pointer;
 				}
 
-				.icon {
-					color: $black;
+				#icon {
 					width: 8px;
 					height: 8px;
 					cursor: pointer;
 				}
 			}
 
-			.subcategory {
-				margin-bottom: 20px;
-				margin-left: 5px;
+			.active {
+				color: $purple;
+				font-weight: bold;
+			}
 
-				label {
-					font-weight: normal;
-					font-size: 16px;
-					line-height: 17px;
-					color: $light-gray;
-					cursor: pointer;
-				}
-
-				input[type=checkbox] {
-					background-color: $white;
-					outline: 1px solid $purple;
-					border-radius: 3px;
-					-webkit-appearance: none;
-					width: 17px;
-					height: 17px;
-					cursor: pointer;
-					position: relative;
-					top: 3px;
-					margin-right: 5px;
-				}
-
-				input[type=checkbox]:checked {
-					background: $purple url("data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==") 3px 3px no-repeat;
-				}
+			.inactive {
+				color: $black;
 			}
 		}
 	}
