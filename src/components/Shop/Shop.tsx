@@ -49,12 +49,14 @@ const Shop = (props: any) => {
 		setActiveCategory(categoryId)
 	}
 	
-	const getIcon = (activeCategory: any, category: any) => activeCategory === category ? faMinus : faPlus;
+	const getIcon = (activeCategory: any, category: any) => {
+		return activeCategory === category ? faMinus : faPlus
+	}
 	
     return (
         <div className="container">
 			<div className="row">
-				<div className="col-12 col-sm-3 col-lg left-side">
+				<div className="col-12 col-sm-3 col-lg filters">
 					<div className="prod-categories">
 						<h6 className="cat-title">PRODUCT CATEGORIES</h6>
 						<ul className="cat-list">
@@ -73,7 +75,7 @@ const Shop = (props: any) => {
 						</ul>
 					</div>
 				</div>
-				<div className="col-12 col-sm-9 col-lg right-side">
+				<div className="col-12 col-sm-9 col-lg product-view">
 					<div>
 						<GridLayout 
 							auctions={auctions}

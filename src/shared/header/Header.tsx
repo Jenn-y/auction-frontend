@@ -58,7 +58,7 @@ const Header = () => {
 						</div>
 						<div className="col-5 wr-header">
 							<span><NavLink to="/" exact activeClassName="active">HOME</NavLink></span>
-							<span><NavLink to="/shop" activeClassName="active">SHOP</NavLink></span>
+							<span><NavLink to={`/shop/all`} activeClassName="active">SHOP</NavLink></span>
 						</div>
 					</div>
 				</div>
