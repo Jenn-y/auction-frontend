@@ -12,7 +12,9 @@ const Shop = (props: any) => {
 
 	const [auctions, setAuctions] = useState([])
 	const [categories, setCategories] = useState([])
+	const [subcategories, setSubcategories] = useState([])
 	const [activeCategory, setActiveCategory] = useState<string>()
+	const [showSubcategories, setShowSubcategories] = useState(false)
 
 	useEffect(() => {
 		const categoryId = props.match.params.categoryId
@@ -48,9 +50,23 @@ const Shop = (props: any) => {
 			})
 		setActiveCategory(categoryId)
 	}
+
+	const getSubcategoriesByCategoryId = (categoryId: string) => {
+		CategoryService.getSubcategoriesByCategoryId(categoryId)
+			.then(response => {
+				if (response) {
+					setSubcategories(response)
+				}
+			})
+	}
 	
 	const getIcon = (activeCategory: any, category: any) => {
 		return activeCategory === category ? faMinus : faPlus
+	}
+
+	const handleCategoryClick = (categoryId: string) => {
+		getAuctionsByCategoryId(categoryId)
+		getSubcategoriesByCategoryId(categoryId)
 	}
 	
     return (
@@ -60,17 +76,25 @@ const Shop = (props: any) => {
 					<div className="prod-categories">
 						<h6 className="cat-title">PRODUCT CATEGORIES</h6>
 						<ul className="cat-list">
-							{categories ? 
-								categories.map((category: any) => {
-									return (
-										<li key={category.id}>
-											<div id="parent-category" className={activeCategory === category.id ? 'active' : 'inactive'}>
-												<p className="category" onClick={() => getAuctionsByCategoryId(category.id)}>{category.name}</p>
-												<div><FontAwesomeIcon icon={getIcon(activeCategory, category.id)} size="xs" id="icon"/></div>
-											</div>
-										</li>
-									)
-								}) : '' 
+							{categories.map((category: any) => {
+								return (
+									<li key={category.id}>
+										<div id="parent-category" className={activeCategory === category.id ? 'active' : 'inactive'}>
+											<p className="category" onClick={() => handleCategoryClick(category.id)}>{category.name}</p>
+											<div><FontAwesomeIcon icon={getIcon(activeCategory, category.id)} onClick={() => handleCategoryClick(category.id)} size="xs" id="icon"/></div>
+										</div>
+										{activeCategory === category.id ?
+											subcategories.map((subcategory: any) => {
+												return (
+													<div className="subcategory">
+														<input type="checkbox" name="subcategory" />
+														<label htmlFor="subcategory">{subcategory.name} (120)</label>
+													</div>
+												)
+											}) : ''
+										}
+									</li>
+								)})
 							}
 						</ul>
 					</div>

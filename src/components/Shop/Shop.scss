@@ -50,6 +50,36 @@
 			.inactive {
 				color: $black;
 			}
+
+			.subcategory {
+				margin-bottom: 20px;
+				margin-left: 5px;
+  
+				label {
+					font-weight: normal;
+					font-size: 16px;
+					line-height: 17px;
+					color: $light-gray;
+					cursor: pointer;
+				}
+  
+				input[type=checkbox] {
+					background-color: $white;
+					outline: 1px solid $purple;
+					border-radius: 3px;
+					-webkit-appearance: none;
+					width: 17px;
+					height: 17px;
+					cursor: pointer;
+					position: relative;
+					top: 3px;
+					margin-right: 5px;
+				}
+  
+				input[type=checkbox]:checked {
+					background: $purple url("data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==") 3px 3px no-repeat;
+				}
+			}
 		}
 	}
 }
