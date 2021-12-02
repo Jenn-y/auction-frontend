@@ -33,6 +33,15 @@ class AuctionService {
 			.catch(() => console.log("An error occured while fetching the auctions"));
 	}
 
+	getFilteredAuctions = (category: any, subcategories: any) => {
+		return axios 
+			.get(API_URL + `auctions/categories/filter?category=${category}&subcategories=${subcategories}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching filtered auctions"))
+	}
+
 	getItem = (id: any) => {
 		return axios
 			.get(API_URL + `auctions/${id}`)

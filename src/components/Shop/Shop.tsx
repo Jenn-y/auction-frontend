@@ -8,15 +8,15 @@ import CategoryService from 'services/CategoryService';
 import GridLayout from 'shared/grid_layout/GridLayout';
 
 import './Shop.scss';
+import SubcategoriesList from './SubcategoriesList';
 
 const Shop = (props: any) => {
 
 	const [auctions, setAuctions] = useState([])
 	const [categories, setCategories] = useState([])
-	const [subcategories, setSubcategories] = useState<Category[]>([])
-	const [activeCategory, setActiveCategory] = useState<string>()
+	const [activeCategories, setActiveCategories] = useState<string[]>([])
 	const [activeSubcategories, setActiveSubcategories] = useState<Category[]>([])
-	const [checked, setChecked] = useState(false)
+	const [selectedCategories, setSelectedCategories] = useState<Category[]>([])
 
 	useEffect(() => {
 		const categoryId = props.match.params.categoryId
@@ -50,52 +50,45 @@ const Shop = (props: any) => {
 					setAuctions(response)
 				}
 			})
-		setActiveCategory(categoryId)
+		setActiveCategories([...activeCategories, categoryId])
 	}
 
-	const getSubcategoriesByCategoryId = (categoryId: string) => {
-		CategoryService.getSubcategoriesByCategoryId(categoryId)
-			.then(response => {
-				if (response) {
-					setSubcategories(response)
-				}
-			})
-	}
-	
-	const getIcon = (activeCategory: any, category: any) => {
-		return activeCategory === category ? faMinus : faPlus
-	}
+	// const getFilteredAuctions = () => {
+	// 	AuctionService.getFilteredAuctions(activeCategory, activeSubcategories.map(c => c.id))
+	// 		.then(response => {
+	// 			if (response) {
+	// 				setAuctions(response)
+	// 			}
+	// 		})
+	// }
 
-	const isChecked = (subcategory: any) => {
-		return activeSubcategories.some((category: any) => category.id === subcategory) ? true : false
+	const handleCategoryClick = (category: any) => {
+		getAuctionsByCategoryId(category.id)
+		setSelectedCategories([...activeCategories, category])
 	}
 
-	const handleCategoryClick = (categoryId: string) => {
-		getAuctionsByCategoryId(categoryId)
-		getSubcategoriesByCategoryId(categoryId)
+	const handleIconClick = (categoryId: string) => {
+		// getSubcategoriesByCategoryId(categoryId)
 	}
 
-	const handleSubcategoryClick = (id: string, name: string, subcategoryOf: Category) => {
-		const subcategory = {
-            id: id,
-            name: name,
-			subcategoryOf: subcategoryOf,
-        }
+	const getIcon = (category: any) => {
+		return isSelectedCategory(category.id) ? faMinus : faPlus
+	}
 
-		if (!activeSubcategories.some((category: any) => category.id === subcategory.id)) {
-            setActiveSubcategories([...activeSubcategories, subcategory])
-        } else {
-			setActiveSubcategories(activeSubcategories.filter(category => category.id !== subcategory.id))
-		}
+	const isSelectedCategory = (categoryId: any) => {
+		return selectedCategories.some((category: any) => category === categoryId) ? true : false
 	}
 
 	const onClearAllClick = () => {
         setActiveSubcategories([]);
-		setChecked(false)
+        setActiveCategories([]);
+        setSelectedCategories([]);
     }
 
 	const onRemoveTagClick = (subcategoryId: string) => {
         setActiveSubcategories(activeSubcategories.filter(category => category.id !== subcategoryId))
+        setActiveCategories(activeCategories.filter(category => category !== subcategoryId))
+        setSelectedCategories(selectedCategories.filter(category => category.id !== subcategoryId))
     }
 	
     return (
@@ -108,19 +101,12 @@ const Shop = (props: any) => {
 							{categories.map((category: any) => {
 								return (
 									<li key={category.id}>
-										<div id="parent-category" className={activeCategory === category.id ? 'active' : 'inactive'}>
-											<p className="category" onClick={() => handleCategoryClick(category.id)}>{category.name}</p>
-											<div><FontAwesomeIcon icon={getIcon(activeCategory, category.id)} onClick={() => handleCategoryClick(category.id)} size="xs" id="icon"/></div>
+										<div id="parent-category" className={isSelectedCategory(category.id) ? 'active' : 'inactive'}>
+											<p className="category" onClick={() => handleCategoryClick(category)}>{category.name}</p>
+											<div><FontAwesomeIcon icon={getIcon(category.id)} onClick={() => handleIconClick(category.id)} size="xs" id="icon"/></div>
 										</div>
-										{activeCategory === category.id ?
-											subcategories.map((subcategory: any) => {
-												return (
-													<div className="subcategory" key={subcategory.id}>
-														<input type="checkbox" name="subcategory" checked={isChecked(subcategory.id)} onClick={() => handleSubcategoryClick(subcategory.id, subcategory.name, category)}/>
-														<label htmlFor="subcategory">{subcategory.name} (120)</label>
-													</div>
-												)
-											}) : ''
+										{isSelectedCategory(category.id) ? 
+											<SubcategoriesList category={category} selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} /> : ''
 										}
 									</li>
 								)})
@@ -130,12 +116,12 @@ const Shop = (props: any) => {
 				</div>
 				<div className="col-12 col-sm-9 col-lg product-view">
 					<div className="tag-area">
-						{activeSubcategories.map((subcategory: any) => {
+						{selectedCategories.map((category: any) => {
 							return (
-								<div key={subcategory.id} className="subcategory-tag">{subcategory.name} <span><FontAwesomeIcon icon={faTimesCircle} color="white" onClick={() => onRemoveTagClick(subcategory.id)} /></span></div>
+								<div key={category.id} className="subcategory-tag">{category.name} <span><FontAwesomeIcon icon={faTimesCircle} color="white" onClick={() => onRemoveTagClick(category.id)} /></span></div>
 							)
 						})}
-						{activeSubcategories.length > 0 ? 
+						{selectedCategories.length > 0 ? 
 							<div className="clear-tags" onClick={onClearAllClick}>Clear all</div> : ''
 						}
                     </div>
