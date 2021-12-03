@@ -21,7 +21,13 @@ const Shop = (props: any) => {
 	useEffect(() => {
 		const categoryId = props.match.params.categoryId
 		if (categoryId !== undefined && categoryId !== "all") {
-			getAuctionsByCategoryId(categoryId)
+			CategoryService.getCategory(categoryId)
+			.then(response => {
+				if (response) {
+					setActiveCategories([...activeCategories, response])
+					setOpenedCategories([...openedCategories, response])
+				}
+			})
 		} else {
 			getAllAuctions()
 		}
@@ -32,7 +38,6 @@ const Shop = (props: any) => {
 					setCategories(response)
 				}
 			})
-			console.log(activeCategories)
 	}, [])
 
 	useEffect(() => {
@@ -41,15 +46,6 @@ const Shop = (props: any) => {
 
 	const getAllAuctions = () => {
 		AuctionService.getNewArrivals()
-			.then(response => {
-				if (response) {
-					setAuctions(response)
-				}
-			})
-	}
-
-	const getAuctionsByCategoryId = (categoryId: string) => {
-		AuctionService.getAuctionsByCategoryId(categoryId)
 			.then(response => {
 				if (response) {
 					setAuctions(response)
@@ -73,7 +69,6 @@ const Shop = (props: any) => {
         } else {
 			onRemoveTagClick(clickedCategory)
 		}
-		getFilteredAuctions()
 	}
 
 	const handleIconClick = (clickedCategory: any) => {
@@ -129,7 +124,11 @@ const Shop = (props: any) => {
 											<div><FontAwesomeIcon icon={getIcon(category)} onClick={() => handleIconClick(category)} size="xs" id="icon"/></div>
 										</div>
 										{isOpenedCategory(category) || isActiveCategory(category) ? 
-											<SubcategoriesList category={category} activeSubcategories={activeSubcategories} setActiveSubcategories={setActiveSubcategories} /> : ''
+											<SubcategoriesList category={category} 
+															   activeSubcategories={activeSubcategories} 
+															   setActiveSubcategories={setActiveSubcategories}
+															   onRemoveTagClick={onRemoveTagClick}
+											/> : ''
 										}
 									</li>
 								)})

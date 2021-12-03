@@ -2,7 +2,7 @@ import { Category } from "interfaces/Category"
 import { useEffect, useState } from "react"
 import CategoryService from "services/CategoryService"
 
-const SubcategoriesList = (parentCategory: any, activeSubcategories: Category[], setActiveSubcategories: any) => {
+const SubcategoriesList = (parentCategory: any) => {
 
 	const [subcategories, setSubcategories] = useState([])
 
@@ -25,7 +25,7 @@ const SubcategoriesList = (parentCategory: any, activeSubcategories: Category[],
 		if (!parentCategory.activeSubcategories.some((category: any) => category.id === subcategory.id)) {
             parentCategory.setActiveSubcategories([...parentCategory.activeSubcategories, subcategory])
         } else {
-			parentCategory.setActiveSubcategories(parentCategory.activeSubcategories.filter((category: any) => category.id !== subcategory.id))
+			parentCategory.onRemoveTagClick(subcategory)
 		}
 	}
 

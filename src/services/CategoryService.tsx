@@ -30,6 +30,15 @@ class CategoryService {
 			})
 			.catch(() => console.log("An error occured while fetching the subcategories"));
 	}
+
+	getCategory = (id: any) => {
+		return axios
+			.get(API_URL + `categories/${id}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the category."));
+	}
 }
 
 export default new CategoryService();
