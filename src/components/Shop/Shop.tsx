@@ -7,12 +7,14 @@ import CategoryService from 'services/CategoryService';
 import GridLayout from 'shared/grid_layout/GridLayout';
 
 import './Shop.scss';
+import SortingMenu from './SortingMenu';
 
 const Shop = (props: any) => {
 
 	const [auctions, setAuctions] = useState([])
 	const [categories, setCategories] = useState([])
 	const [activeCategory, setActiveCategory] = useState<string>()
+	const [selectedSort, setSelectedSort] = useState<string>("Default Sorting")
 
 	useEffect(() => {
 		const categoryId = props.match.params.categoryId
@@ -76,6 +78,10 @@ const Shop = (props: any) => {
 					</div>
 				</div>
 				<div className="col-12 col-sm-9 col-lg product-view">
+					<SortingMenu auctions={auctions} 
+								 setAuctions={setAuctions} 
+								 activeCategory={activeCategory}
+					/>
 					<div>
 						<GridLayout 
 							auctions={auctions}
