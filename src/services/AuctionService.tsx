@@ -42,6 +42,15 @@ class AuctionService {
 			.catch(() => console.log("An error occured while fetching the item."));
 	}
 
+	getCountBySubcategory = (subcategoryId: string) => {
+		return axios
+			.get(API_URL + `auctions/countBySubcategory/${subcategoryId}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the number of auctions for the subcategory."));
+	}
+
 	getBids = (auctionId: any, token: string) => {
 		return axios
 			.get(API_URL + `bids/${auctionId}`, HeaderConfig(token))

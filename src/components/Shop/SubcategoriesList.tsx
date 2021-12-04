@@ -1,10 +1,12 @@
 import { Category } from "interfaces/Category"
 import { useEffect, useState } from "react"
+import AuctionService from "services/AuctionService"
 import CategoryService from "services/CategoryService"
 
 const SubcategoriesList = (parentCategory: any) => {
 
 	const [subcategories, setSubcategories] = useState([])
+	const [numOfAuctions, setNumOfAuctions] = useState(0)
 
 	useEffect(() => {
 		CategoryService.getSubcategoriesByCategoryId(parentCategory.category.id)
@@ -14,6 +16,16 @@ const SubcategoriesList = (parentCategory: any) => {
 				}
 			})
 	}, [])
+
+	const getCountBySubcategory = (subcategoryId: string) => {
+		AuctionService.getCountBySubcategory(subcategoryId)
+			.then(response => {
+				if (response) {
+					setNumOfAuctions(response)
+				}
+			})
+		return numOfAuctions
+	}
 
 	const handleSubcategoryClick = (id: string, name: string, subcategoryOf: Category) => {
 		const subcategory = {
@@ -39,7 +51,7 @@ const SubcategoriesList = (parentCategory: any) => {
 				return (
 					<div className="subcategory" key={subcategory.id}>
 						<input type="checkbox" name="subcategory" checked={isChecked(subcategory.id)} onChange={() => handleSubcategoryClick(subcategory.id, subcategory.name, parentCategory)}/>
-						<label htmlFor="subcategory">{subcategory.name} (120)</label>
+						<label htmlFor="subcategory">{subcategory.name} <span>({getCountBySubcategory(subcategory.id)})</span></label>
 					</div>
 				)
 			})}
