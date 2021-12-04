@@ -42,6 +42,51 @@ class AuctionService {
 			.catch(() => console.log("An error occured while fetching the item."));
 	}
 
+	getAuctionsByDefaultSort = (selectedAuctions: any) => {
+		return axios 
+			.get(API_URL + `auctions/default?selectedAuctions=${selectedAuctions}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the auctions sorted by default."))
+	}
+
+	getAuctionsByOldToNew = (selectedAuctions: any) => {
+		return axios 
+			.get(API_URL + `auctions/oldToNew?selectedAuctions=${selectedAuctions}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the auctions sorted by end date."))
+	}
+
+	getAuctionsByNewToOld = (selectedAuctions: any) => {
+		return axios 
+			.get(API_URL + `auctions/newToOld?selectedAuctions=${selectedAuctions}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the auctions sorted by start date."))
+	}
+
+	getAuctionsByPriceDesc = (selectedAuctions: any) => {
+		return axios 
+			.get(API_URL + `auctions/byPriceSortDesc?selectedAuctions=${selectedAuctions}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the auctions sorted by highest price."))
+	}
+
+	getAuctionsByPriceAsc = (selectedAuctions: any) => {
+		return axios 
+			.get(API_URL + `auctions/byPriceSortAsc?selectedAuctions=${selectedAuctions}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the auctions sorted by lowest price."))
+	}
+
 	getBids = (auctionId: any, token: string) => {
 		return axios
 			.get(API_URL + `bids/${auctionId}`, HeaderConfig(token))
