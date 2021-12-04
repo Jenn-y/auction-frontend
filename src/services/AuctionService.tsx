@@ -51,6 +51,33 @@ class AuctionService {
 			.catch(() => console.log("An error occured while fetching the number of auctions for the subcategory."));
 	}
 
+	getMinPrice = (auctions: any) => {
+		return axios 
+			.get(API_URL + `auctions/minPrice?auctions=${auctions}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the minimum price"))
+	}
+
+	getMaxPrice = (auctions: any) => {
+		return axios 
+			.get(API_URL + `auctions/maxPrice?auctions=${auctions}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the maximum price"))
+	}
+
+	getAveragePrice = (auctions: any) => {
+		return axios 
+			.get(API_URL + `auctions/averagePrice?auctions=${auctions}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the average price"))
+	}
+
 	getBids = (auctionId: any, token: string) => {
 		return axios
 			.get(API_URL + `bids/${auctionId}`, HeaderConfig(token))
