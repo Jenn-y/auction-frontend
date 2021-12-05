@@ -82,9 +82,6 @@ const Shop = (props: any) => {
 							numOfCols={4}
 						/>
 					</div>
-					{/* <div className="expand">
-						<button className="explore-btn">EXPLORE MORE</button>
-					</div> */}
 				</div>
 			</div>
 		</div>
