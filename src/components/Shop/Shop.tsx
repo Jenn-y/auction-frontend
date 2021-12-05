@@ -6,9 +6,9 @@ import AuctionService from 'services/AuctionService';
 import CategoryService from 'services/CategoryService';
 import GridView from 'shared/product_layout/GridView';
 import ListView from 'shared/product_layout/ListView';
+import SortingMenu from './SortingMenu';
 
 import './Shop.scss';
-import SortingMenu from './SortingMenu';
 
 const Shop = (props: any) => {
 
