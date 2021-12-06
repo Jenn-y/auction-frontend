@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import AuctionService from 'services/AuctionService';
 import CategoryService from 'services/CategoryService';
 import GridLayout from 'shared/grid_layout/GridLayout';
+import PriceFilter from './PriceFilter';
 
 import './Shop.scss';
 import SubcategoriesList from './SubcategoriesList';
@@ -17,6 +18,7 @@ const Shop = (props: any) => {
 	const [activeCategories, setActiveCategories] = useState<Category[]>([])
 	const [activeSubcategories, setActiveSubcategories] = useState<Category[]>([])
 	const [openedCategories, setOpenedCategories] = useState<Category[]>([])
+	const [priceRange, setPriceRange] = useState([]);
 
 	useEffect(() => {
 		const categoryId = props.match.params.categoryId
@@ -114,7 +116,7 @@ const Shop = (props: any) => {
 			<div className="row">
 				<div className="col-12 col-sm-3 col-lg filters">
 					<div className="prod-categories">
-						<h6 className="cat-title">PRODUCT CATEGORIES</h6>
+						<h6 className="filter-title">PRODUCT CATEGORIES</h6>
 						<ul className="cat-list">
 							{categories.map((category: any) => {
 								return (
@@ -135,6 +137,10 @@ const Shop = (props: any) => {
 							}
 						</ul>
 					</div>
+					<PriceFilter auctions={auctions} 
+								 setAuctions={setAuctions} 
+								 priceRange={priceRange}
+								 setPriceRange={setPriceRange} />
 				</div>
 				<div className="col-12 col-sm-9 col-lg product-view">
 					<div className="tag-area">
@@ -158,9 +164,6 @@ const Shop = (props: any) => {
 							numOfCols={4}
 						/>
 					</div>
-					{/* <div className="expand">
-						<button className="explore-btn">EXPLORE MORE</button>
-					</div> */}
 				</div>
 			</div>
 		</div>
