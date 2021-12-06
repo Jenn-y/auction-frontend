@@ -78,6 +78,15 @@ class AuctionService {
 			.catch(() => console.log("An error occured while fetching the average price"))
 	}
 
+	getPriceCount = (auctions: any) => {
+		return axios 
+			.get(API_URL + `auctions/priceCount?auctions=${auctions}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the count per price."))
+	}
+
 	getBids = (auctionId: any, token: string) => {
 		return axios
 			.get(API_URL + `bids/${auctionId}`, HeaderConfig(token))
