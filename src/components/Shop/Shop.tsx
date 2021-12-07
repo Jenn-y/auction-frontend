@@ -18,7 +18,7 @@ const Shop = (props: any) => {
 	const [activeCategories, setActiveCategories] = useState<Category[]>([])
 	const [activeSubcategories, setActiveSubcategories] = useState<Category[]>([])
 	const [openedCategories, setOpenedCategories] = useState<Category[]>([])
-	const [priceRange, setPriceRange] = useState([]);
+	const [priceRange, setPriceRange] = useState([0, 1000]);
 
 	useEffect(() => {
 		const categoryId = props.match.params.categoryId
@@ -44,7 +44,7 @@ const Shop = (props: any) => {
 
 	useEffect(() => {
 		getFilteredAuctions()
-	}, [activeCategories, activeSubcategories])
+	}, [activeCategories, activeSubcategories, priceRange])
 
 	const getAllAuctions = () => {
 		AuctionService.getNewArrivals()
@@ -56,7 +56,7 @@ const Shop = (props: any) => {
 	}
 
 	const getFilteredAuctions = () => {
-		AuctionService.getFilteredAuctions(activeCategories.map(c => c.id), activeSubcategories.map(c => c.id))
+		AuctionService.getFilteredAuctions(priceRange[0], priceRange[1], activeCategories.map(c => c.id), activeSubcategories.map(c => c.id))
 			.then(response => {
 				if (response) {
 					setAuctions(response)

@@ -8,7 +8,7 @@ const PriceGraph = (props: any) => {
     const width = 200;
     const height = 50;
 
-    const drawGraph = (data: any) => {
+    const drawGraph = (data: number[]) => {
         const svg = d3.select(ref.current!)
             .attr("width", width)
             .attr("height", height);
@@ -35,7 +35,7 @@ const PriceGraph = (props: any) => {
         getPriceCount()
         console.log(countData)
         drawGraph(countData.map((i: any) => i.count))
-    }, [props.auctions]);
+    }, []);
 
     const getPriceCount = () => {
         AuctionService.getPriceCount(props.auctions.map((a: any) => a.id)).then((response) => setCountData(response));
