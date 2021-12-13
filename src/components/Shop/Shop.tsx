@@ -18,11 +18,11 @@ const Shop = (props: any) => {
 	const [activeCategories, setActiveCategories] = useState<Category[]>([])
 	const [activeSubcategories, setActiveSubcategories] = useState<Category[]>([])
 	const [openedCategories, setOpenedCategories] = useState<Category[]>([])
-	const [priceRange, setPriceRange] = useState([0, 1000]);
+	const [priceRange, setPriceRange] = useState([]);
 
 	useEffect(() => {
 		const categoryId = props.match.params.categoryId
-		if (categoryId !== undefined && categoryId !== "all") {
+		if (categoryId !== "all") {
 			CategoryService.getCategory(categoryId)
 			.then(response => {
 				if (response) {
@@ -96,14 +96,13 @@ const Shop = (props: any) => {
 	const onClearAllClick = () => {
         setActiveSubcategories([]);
         setActiveCategories([]);
-        setOpenedCategories([]);
-		getAllAuctions()
     }
 
 	const onRemoveTagClick = (clickedCategory: any) => {
 		if ((activeCategories.length < 1 && activeSubcategories.length <= 1) ||
 			(activeCategories.length <= 1 && activeSubcategories.length < 1)) {
 			onClearAllClick()
+			getAllAuctions()
 		} else {
 			setActiveCategories(activeCategories.filter(category => category.id !== clickedCategory.id))
 			setActiveSubcategories(activeSubcategories.filter(subcategory => subcategory.id !== clickedCategory.id))
@@ -139,6 +138,8 @@ const Shop = (props: any) => {
 					</div>
 					<PriceFilter auctions={auctions} 
 								 setAuctions={setAuctions} 
+								 activeSubcategories={activeSubcategories} 
+								 activeCategories={activeCategories} 
 								 priceRange={priceRange}
 								 setPriceRange={setPriceRange} />
 				</div>

@@ -11,7 +11,7 @@ const PriceFilter = (props: any) => {
 
 	useEffect(() => {
 		setPriceFilter()
-	}, [props.auctions])
+	}, [props.activeCategories, props.activeSubcategories])
 
 	const setPriceFilter = () => {
         getMinPrice()
@@ -54,7 +54,8 @@ const PriceFilter = (props: any) => {
 	return (
 		<div className="price-filter">
 			<h6 className="filter-title">FILTER BY PRICE</h6>
-            <PriceGraph auctions={props.auctions} />
+            <PriceGraph auctions={props.auctions} activeSubcategories={props.activeSubcategories} 
+								 activeCategories={props.activeCategories}  />
             <div className="slider">
                 <Slider value={props.priceRange}
                         valueLabelDisplay="auto"

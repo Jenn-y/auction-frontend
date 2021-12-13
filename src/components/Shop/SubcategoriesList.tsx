@@ -49,7 +49,7 @@ const SubcategoriesList = (parentCategory: any) => {
 		<div>
 			{subcategories.map((subcategory: any) => {
 				return (
-					<div className="subcategory" key={subcategory.id}>
+					<div className="subcategory" key={subcategory}>
 						<input type="checkbox" name="subcategory" checked={isChecked(subcategory.id)} onChange={() => handleSubcategoryClick(subcategory.id, subcategory.name, parentCategory)}/>
 						<label htmlFor="subcategory">{subcategory.name} <span>({getCountBySubcategory(subcategory.id)})</span></label>
 					</div>

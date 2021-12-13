@@ -3,7 +3,6 @@ import * as d3 from 'd3';
 import AuctionService from "services/AuctionService";
 
 const PriceGraph = (props: any) => {
-    const [countData, setCountData] = useState([])
     const ref = useRef<SVGSVGElement>(null)
     const width = 200;
     const height = 50;
@@ -32,14 +31,8 @@ const PriceGraph = (props: any) => {
     }
 
     useEffect(() => {
-        getPriceCount()
-        console.log(countData)
-        drawGraph(countData.map((i: any) => i.count))
-    }, []);
-
-    const getPriceCount = () => {
-        AuctionService.getPriceCount(props.auctions.map((a: any) => a.id)).then((response) => setCountData(response));
-    }
+        AuctionService.getPriceCount(props.auctions.map((a: any) => a.id)).then((response) => drawGraph(response.map((i: any) => i.count)))
+    }, [props.auctions]);
 
     return (
         <svg ref={ref}></svg>

@@ -25,9 +25,6 @@ class AuctionService {
 	}
 
 	getFilteredAuctions = (minPrice: number, maxPrice: number, categories: any, subcategories: any) => {
-		console.log("min price: " + minPrice)
-		console.log("max price: " + maxPrice)
-		console.log(`auctions/categories/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&categories=${categories}&subcategories=${subcategories}`)
 		return axios 
 			.get(API_URL + `auctions/categories/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&categories=${categories}&subcategories=${subcategories}`)
 			.then((response: any) => {
@@ -82,9 +79,11 @@ class AuctionService {
 	}
 
 	getPriceCount = (auctions: any) => {
+		console.log(`auctions/priceCount?auctions=${auctions}`)
 		return axios 
 			.get(API_URL + `auctions/priceCount?auctions=${auctions}`)
 			.then((response: any) => {
+				console.log(response.data)
 				return response.data;
 			})
 			.catch(() => console.log("An error occured while fetching the count per price."))
