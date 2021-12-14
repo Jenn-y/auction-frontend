@@ -1,13 +1,14 @@
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faTh, faThList } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 
 import AuctionService from 'services/AuctionService';
 import CategoryService from 'services/CategoryService';
-import GridLayout from 'shared/grid_layout/GridLayout';
+import GridView from 'shared/product_layout/GridView';
+import ListView from 'shared/product_layout/ListView';
+import SortingMenu from './SortingMenu';
 
 import './Shop.scss';
-import SortingMenu from './SortingMenu';
 
 const Shop = (props: any) => {
 
@@ -15,6 +16,7 @@ const Shop = (props: any) => {
 	const [categories, setCategories] = useState([])
 	const [activeCategory, setActiveCategory] = useState<string>()
 	const [selectedSort, setSelectedSort] = useState<string>("Default Sorting")
+	const [gridView, setGridView] = useState(true)
 
 	useEffect(() => {
 		const categoryId = props.match.params.categoryId
@@ -54,6 +56,10 @@ const Shop = (props: any) => {
 	const getIcon = (activeCategory: any, category: any) => {
 		return activeCategory === category ? faMinus : faPlus
 	}
+
+	const handleViewClick = () => {
+		setGridView(!gridView)
+	}
 	
     return (
         <div className="container">
@@ -78,15 +84,28 @@ const Shop = (props: any) => {
 					</div>
 				</div>
 				<div className="col-12 col-sm-9 col-lg product-view">
-					<SortingMenu auctions={auctions} 
-								 setAuctions={setAuctions} 
-								 activeCategory={activeCategory}
-					/>
-					<div>
-						<GridLayout 
-							auctions={auctions}
-							numOfCols={4}
-						/>
+					<div className="sorting-view">
+						<div>
+							<SortingMenu auctions={auctions} 
+									setAuctions={setAuctions} 
+									activeCategory={activeCategory}
+							/>
+						</div>
+						<div>
+							<button className={gridView ? 'view-button active' : 'view-button'} onClick={handleViewClick}><FontAwesomeIcon icon={faTh} className="view-icon" />Grid</button>
+							<button className={!gridView ? 'view-button active' : 'view-button'} onClick={handleViewClick}><FontAwesomeIcon icon={faThList} className="view-icon" />List</button>
+						</div>
+					</div>
+					<div> 
+						{gridView ? 
+							<GridView 
+								auctions={auctions}
+								numOfCols={4}
+							/> :
+							<ListView 
+								auctions={auctions}
+							/>
+						}
 					</div>
 					{/* <div className="expand">
 						<button className="explore-btn">EXPLORE MORE</button>

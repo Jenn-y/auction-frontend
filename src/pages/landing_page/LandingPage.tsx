@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 import AuctionService from 'services/AuctionService'
 import CategoryService from 'services/CategoryService'
-import GridLayout from 'shared/grid_layout/GridLayout'
+import GridLayout from 'shared/product_layout/GridView'
 
 import './LandingPage.scss'
 
