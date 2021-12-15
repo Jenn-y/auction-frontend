@@ -1,4 +1,5 @@
 import axios from "axios";
+import { User } from "interfaces/User";
 import HeaderConfig from "utils/HeaderConfig";
 import { DEV_API, PROD_API } from "./ApiConstants";
 
@@ -47,7 +48,16 @@ class AuthService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the bidders."));
+			.catch(() => console.log("An error occured while fetching the user."));
+	}
+
+	deactivate = (id: string, user: any, token: string) => {
+		return axios
+			.put(API_URL + `users/deactivate/${id}`, user, HeaderConfig(token))
+			.then(() => {
+				return
+			})
+			.catch(() => console.log("An error occured while deactivating the account."));
 	}
 }
 
