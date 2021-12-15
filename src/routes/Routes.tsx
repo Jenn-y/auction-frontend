@@ -12,6 +12,11 @@ import { ToastContainer } from "react-toastify";
 
 import 'react-toastify/dist/ReactToastify.css';
 import Shop from "components/Shop/Shop";
+import MyAccount from "components/MyAccount/MyAccount";
+import ProfileSection from "components/MyAccount/ProfileSection";
+import SellerSection from "components/MyAccount/SellerSection";
+import BidsSection from "components/MyAccount/BidsSection";
+import SettingsSection from "components/MyAccount/SettingsSection";
 
 const Routes = () => {
 	return (
@@ -27,6 +32,7 @@ const Routes = () => {
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Registration} />
 				<Route exact path="/shop/:categoryId" component={Shop} />
+				<Route exact path="/my_account/:section" component={MyAccount} />
 			</Switch>
 		</>
 	);

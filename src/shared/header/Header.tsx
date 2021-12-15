@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faInstagram, faSkype, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react'
+import { Dropdown } from 'react-bootstrap';
 
 import AuthService from 'services/AuthService'
 import logo from 'assets/logo.png'
@@ -21,6 +22,10 @@ const Header = () => {
 		AuthService.logout()
 		toast.success("Logout sucessful!", { hideProgressBar: true });
 		window.location.replace("/")
+	}
+
+	const onDropdownMenuClick = (section: any) => {
+		window.location.replace(`/my_account/${section}`)
 	}
 
 	return (
@@ -58,7 +63,21 @@ const Header = () => {
 						</div>
 						<div className="col-5 wr-header">
 							<span><NavLink to="/" exact activeClassName="active">HOME</NavLink></span>
-							<span><NavLink to={`/shop/all`} activeClassName="active">SHOP</NavLink></span>
+							<span><NavLink to="/shop/all" activeClassName="active">SHOP</NavLink></span>
+							{loggedUser ? 
+								<Dropdown className="account-dropdown">
+									<Dropdown.Toggle id="dropdown-basic">
+										<NavLink to="/my_account/profile" activeClassName="active">MY ACCOUNT</NavLink>
+									</Dropdown.Toggle>
+
+									<Dropdown.Menu>
+										<Dropdown.Item as="button" onClick={() => onDropdownMenuClick("profile")}>Profile</Dropdown.Item>
+										<Dropdown.Item as="button" onClick={() => onDropdownMenuClick("seller")}>Seller</Dropdown.Item>
+										<Dropdown.Item as="button" onClick={() => onDropdownMenuClick("bids")}>Bids</Dropdown.Item>
+										<Dropdown.Item as="button" onClick={() => onDropdownMenuClick("settings")}>Settings</Dropdown.Item>
+									</Dropdown.Menu>
+								</Dropdown> : ''
+							}
 						</div>
 					</div>
 				</div>
