@@ -78,7 +78,7 @@ const SettingsSection = (props: any) => {
 						</thead>
 						<tbody>
 							<td>
-								<p>Doy you want to deativate account?</p>
+								<p>Do you want to deativate account?</p>
 								<button className="deactivate-btn" onClick={onDeactivateButtonClick}>DEACTIVATE</button>
 								<Dialog
 									open={openDialog}

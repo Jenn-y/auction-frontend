@@ -24,6 +24,15 @@ class AuctionService {
 			.catch(() => console.log("An error occured while fetching the auctions"));
 	}
 
+	getActiveAuctionsBySeller = (status: any, sellerId: string, token: string) => {
+		return axios
+			.get(API_URL + `auctions/${status}/${sellerId}`, HeaderConfig(token))
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the active auctions"));
+	}
+
 	getFilteredAuctions = (minPrice: number, maxPrice: number, categories: any, subcategories: any) => {
 		return axios 
 			.get(API_URL + `auctions/categories/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&categories=${categories}&subcategories=${subcategories}`)
@@ -98,6 +107,15 @@ class AuctionService {
 			.catch(() => console.log("An error occured while fetching the bidders."));
 	}
 
+	getBidsByBidderId = (bidderId: any, token: string) => {
+		return axios
+			.get(API_URL + `bids/bidder/${bidderId}`, HeaderConfig(token))
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the bids."));
+	}
+
 	getHighestBid = (auctionId: any) => {
 		return axios
 			.get(API_URL + `bids/highestBid/${auctionId}`)
@@ -105,6 +123,16 @@ class AuctionService {
 				return response.data;
 			})
 			.catch(() => console.log("An error occured while fetching the highest bid."));
+	}
+
+	getNoOfBids = (auctionId: any, token: string) => {
+		return axios
+			.get(API_URL + `bids/noOfBids/${auctionId}`, HeaderConfig(token))
+			.then((response: any) => {
+				console.log(response.data)
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the number of bids."));
 	}
 
 	addBid = (bid: any, token: string) => {

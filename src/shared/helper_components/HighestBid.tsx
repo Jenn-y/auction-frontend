@@ -12,7 +12,7 @@ const HighestBid = (props: any) => {
 	}, [])
 
 	return (
-		<p className={props.bidAmount >= highestBid ? 'green' : 'blue'}>$ {highestBid}</p>
+		<p className={props.bidAmount === highestBid ? 'green' : 'blue'}>$ {highestBid}</p>
 	)
 }
 

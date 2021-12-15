@@ -11,14 +11,12 @@ const BidsSection = (props: any) => {
 	const [bids, setBids] = useState([])
 
 	useEffect(() => {
-		if (props.user) {
-			AuctionService.getBidsByBidderId(props.user.id, props.user.authenticationToken)
-				.then(response => {
-					if (response) {
-						setBids(response)
-					}
-				})
-		}
+		AuctionService.getBidsByBidderId(props.user.id, props.user.authenticationToken)
+			.then(response => {
+				if (response) {
+					setBids(response)
+				}
+			})
 	}, [])
 
     return (
@@ -30,7 +28,7 @@ const BidsSection = (props: any) => {
 							<th>Item</th>
 							<th>Name</th>
 							<th>Time left</th>
-							<th>Your price</th>
+							<th>Your bid</th>
 							<th>No. bids</th>
 							<th>Highest bid</th>
 							<th>Auction</th>
