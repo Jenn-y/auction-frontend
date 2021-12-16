@@ -12,6 +12,7 @@ import './Header.scss'
 
 const Header = () => {
 	const [loggedUser, setIsLogged] = useState(false)
+	const [showDropdown, setShowDropdown] = useState(false)
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
@@ -65,12 +66,15 @@ const Header = () => {
 							<span><NavLink to="/" exact activeClassName="active">HOME</NavLink></span>
 							<span><NavLink to="/shop/all" activeClassName="active">SHOP</NavLink></span>
 							{loggedUser ? 
-								<Dropdown className="account-dropdown">
+								<Dropdown className="account-dropdown"
+										  onMouseLeave={() => setShowDropdown(false)}
+										  onMouseOver={() => setShowDropdown(true)}
+								>
 									<Dropdown.Toggle id="dropdown-basic">
 										<NavLink to="/my_account/profile" activeClassName="active">MY ACCOUNT</NavLink>
 									</Dropdown.Toggle>
 
-									<Dropdown.Menu>
+									<Dropdown.Menu show={showDropdown}>
 										<Dropdown.Item as="button" onClick={() => onDropdownMenuClick("profile")}>Profile</Dropdown.Item>
 										<Dropdown.Item as="button" onClick={() => onDropdownMenuClick("seller")}>Seller</Dropdown.Item>
 										<Dropdown.Item as="button" onClick={() => onDropdownMenuClick("bids")}>Bids</Dropdown.Item>

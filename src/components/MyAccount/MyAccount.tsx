@@ -70,8 +70,8 @@ const MyAccount = (props: any) => {
 			<div className="row">
 				<div className="col-12 col-sm-12 col-lg section">
 					{ showProfile ? <ProfileSection /> : ''}
-					{ showSeller ? <SellerSection /> : ''}
-					{ showBids ? <BidsSection /> : ''}
+					{ showSeller ? <SellerSection user={user} /> : ''}
+					{ showBids ? <BidsSection user={user} /> : ''}
 					{ showSettings ? <SettingsSection user={user} /> : ''}
 				</div>
 			</div>

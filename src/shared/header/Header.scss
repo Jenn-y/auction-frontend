@@ -66,10 +66,6 @@
 	align-items: center;
 	justify-content: flex-end;
 
-	.account-dropdown:hover .dropdown-menu {
-		display: block;
-	}
-
 	.btn-check:active+.btn-primary:focus, 
 	.btn-check:checked+.btn-primary:focus, 
 	.btn-primary.active:focus, 
