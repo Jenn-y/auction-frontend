@@ -94,13 +94,13 @@ const ProfileSection = () => {
 										<div className="col-12 col-sm-8 col-lg">
 											<div className="input_wrap">
 												<div className="radio-input">
-													<input type="radio"></input>
-													<label>Pay Pal</label>
+													<input type="radio" id="paypal" name="radio"></input>
+													<label htmlFor="paypal">Pay Pal</label>
 												</div>
 												<div className="credit-input">
 													<div className="radio-input">
-														<input type="radio"></input>
-														<label>Credit Card</label>
+														<input type="radio" id="credit" name="radio"></input>
+														<label htmlFor="credit">Credit Card</label>
 													</div>
 													<p>We accept the following credit cards:</p>
 													<div className="credit-cards">
@@ -202,6 +202,9 @@ const ProfileSection = () => {
 								</td>
 							</tbody>
 						</table>
+						<div className="input_wrap submit">
+							<input type="submit" id="update_btn" className="btn btn-lg submit-btn" value="Save Info" />
+						</div>
 					</form>
 				</div>
 			</div>
