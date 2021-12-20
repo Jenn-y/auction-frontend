@@ -1,11 +1,103 @@
-import { DropdownDate, DropdownComponent } from 'react-dropdown-date'
+import { User } from 'interfaces/User';
+import { toast } from 'react-toastify';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { DropdownDate, DropdownComponent, YearPicker, MonthPicker } from 'react-dropdown-date'
+import AuthService from 'services/AuthService';
+import { PaymentDetails } from 'interfaces/PaymentDetails';
+import { ShippingDetails } from 'interfaces/ShippingDetails';
 
-const ProfileSection = () => {
+const ProfileSection = (props: any) => {
+	const [user, setUser] = useState<User>()
+	const [paymentInfo, setPaymentInfo] = useState<PaymentDetails>()
+	const [shippingInfo, setShippingInfo] = useState<ShippingDetails>()
+
+	useEffect(() => {
+		AuthService.getUser(props.user.email, props.user.authenticationToken)
+			.then(response => {
+				if (response) {
+					console.log(response)
+					setUser(response)
+					setShippingInfo(response.shippingDetails)
+					setPaymentInfo(response.paymentDetails)
+				}
+			})
+	}, [])
+
+	const handleSubmit = (e: any) => {
+		e.preventDefault();
+		const finalUserData = {
+            ...user,
+            paymentDetails: paymentInfo,
+            shippingDetails: shippingInfo
+        };
+
+		AuthService.update(
+			props.user.id,
+			finalUserData,
+			props.user.authenticationToken
+		).then(
+			() => {
+				toast.success("Edit sucessful!", { hideProgressBar: true });
+				window.location.replace("/my_account/profile")
+			}
+		)
+			.catch(() => {
+				toast.error("Edit was not saved!", { hideProgressBar: true });
+			});
+	}
+
+	const handleBasicInfoChange = (e: any) => {
+		setUser(Object.assign({}, user, { [e.target.name]: e.target.value }))
+	}
+
+	const onBirthDateChange = (date: any) => {
+		setUser(Object.assign({}, user, { dateOfBirth: date }))
+    }
+
+	const handleShippingInfoChange = (e: any) => {
+		setShippingInfo(Object.assign({}, shippingInfo, { [e.target.name]: e.target.value }))
+	}
+
+	const handlePaymentInfoChange = (e: any) => {
+		setPaymentInfo(Object.assign({}, paymentInfo, { [e.target.name]: e.target.value }))
+	}
+
+	const handlePaypalChange = (e: any) => {
+		setPaymentInfo(Object.assign({}, paymentInfo, { paypal: true }))
+	}
+
+	const handleExpirationYearChange = (e: any) => {
+		let newDate = new Date()
+		newDate.setMonth(getMonth())
+		newDate.setFullYear(e)
+		setPaymentInfo(Object.assign({}, paymentInfo, { expirationDate: newDate }))
+	}
+
+	const handleExpirationMonthChange = (e: any) => {
+		let newDate = new Date();
+		newDate.setMonth(e)
+		newDate.setFullYear(getYear())
+		setPaymentInfo(Object.assign({}, paymentInfo, { expirationDate: newDate }))
+	}
+
+	const getDate = () => {
+		return moment(user?.dateOfBirth).format("MM DD YYYY")
+	}
+
+	const getMonth = () => {
+		return Number(moment(paymentInfo?.expirationDate).format("MM")) - 1
+	}
+
+	const getYear = () => {
+		return Number(moment(paymentInfo?.expirationDate).format("YYYY"))
+	}
+
     return (
         <div className="profile">
 			<div className="row">
 				<div className="col-12 col-sm-12 col-lg tabs">
-					<form>
+					<form onSubmit={handleSubmit}>
 						<table className="table">
 							<thead>
 								<tr>
@@ -24,22 +116,22 @@ const ProfileSection = () => {
 											<div className="input_wrap">
 												<label>First Name</label>
 												<div className="input_field">
-													<input name="firstName" type="text" className="input" placeholder="Enter your first name" />
+													<input onChange={handleBasicInfoChange} value={user?.firstName} name="firstName" type="text" className="input" placeholder="Enter your first name" />
 												</div>
 											</div>
 											<div className="input_wrap">
 												<label>Last Name</label>
 												<div className="input_field">
-													<input name="lastName" type="text" className="input" placeholder="Enter your last name" />
+													<input onChange={handleBasicInfoChange} value={user?.lastName} name="lastName" type="text" className="input" placeholder="Enter your last name" />
 												</div>
 											</div>
 											<div className="input_wrap">
 												<label>I am</label>
 												<div className="input_field">
-													<select className="input">
-														<option disabled>Gender</option>
-														<option>Male</option>
-														<option>Female</option>
+													<select className="input" onChange={handleBasicInfoChange} name="gender">
+														<option disabled selected>Gender</option>
+														<option selected={user?.gender === 'MALE'}>MALE</option>
+														<option selected={user?.gender === 'FEMALE'}>FEMALE</option>
 													</select>
 												</div>
 											</div>
@@ -61,19 +153,21 @@ const ProfileSection = () => {
 															}
 														}
 														order={[DropdownComponent.day, DropdownComponent.month, DropdownComponent.year]} 
+														selectedDate={getDate()}
+														onDateChange={onBirthDateChange}
 													/>
 												</div>
 											</div>
 											<div className="input_wrap">
 												<label>Phone number</label>
 												<div className="input_field">
-													<input name="phone" type="text" className="input" placeholder="Enter your phone" />
+													<input onChange={handleBasicInfoChange} value={user?.phoneNum} name="phoneNum" type="text" className="input" placeholder="Enter your phone" />
 												</div>
 											</div>
 											<div className="input_wrap">
 												<label>Email address</label>
 												<div className="input_field">
-													<input name="email" type="text" className="input" placeholder="Enter your email" />
+													<input onChange={handleBasicInfoChange} value={user?.email} name="email" type="text" className="input" placeholder="Enter your email" />
 												</div>
 											</div>
 										</div>
@@ -94,12 +188,12 @@ const ProfileSection = () => {
 										<div className="col-12 col-sm-8 col-lg">
 											<div className="input_wrap">
 												<div className="radio-input">
-													<input type="radio" id="paypal" name="radio"></input>
+													<input checked={paymentInfo?.paypal} onChange={() => handlePaypalChange(true)} type="radio" id="paypal" name="radio"></input>
 													<label htmlFor="paypal">Pay Pal</label>
 												</div>
 												<div className="credit-input">
 													<div className="radio-input">
-														<input type="radio" id="credit" name="radio"></input>
+														<input checked={!paymentInfo?.paypal} onChange={() => handlePaypalChange(false)} type="radio" id="credit" name="radio"></input>
 														<label htmlFor="credit">Credit Card</label>
 													</div>
 													<p>We accept the following credit cards:</p>
@@ -114,13 +208,13 @@ const ProfileSection = () => {
 											<div className="input_wrap">
 												<label>Name on the card</label>
 												<div className="input_field">
-													<input name="cardName" type="text" className="input" placeholder="Enter card name" />
+													<input onChange={handlePaymentInfoChange} value={paymentInfo?.cardName} name="cardName" type="text" className="input" placeholder="Enter card name" />
 												</div>
 											</div>
 											<div className="input_wrap">
 												<label>Card number</label>
 												<div className="input_field">
-													<input name="cardNumber" type="text" className="input" placeholder="Enter card number" />
+													<input onChange={handlePaymentInfoChange} value={paymentInfo?.cardNumber} name="cardNumber" type="text" className="input" placeholder="Enter card number" />
 												</div>
 											</div>
 											<div className="expiration-date">
@@ -130,22 +224,25 @@ const ProfileSection = () => {
 														<label className='cvv-label'>CVC/CVV</label>
 													</div>
 													<div className="input_field flex-date">
-														<DropdownDate 
-															startDate={'2018-01-01'}
-															defaultValues={                   
-																{
-																	year: 'YYYY',
-																	month: 'MM',
-																}
-															}
-															classes={
-																{
-																  dateContainer: 'flex-date'
-																}
-															}
-															order={[DropdownComponent.month, DropdownComponent.year]} 
-														/>
-														<input name="cvv" type="text" className="input cvv" placeholder="Enter CVC/CVV" />
+														<div>
+															<MonthPicker value={getMonth()}
+																		defaultValue={'MM'} 
+																		onChange={handleExpirationMonthChange}
+																		endYearGiven
+																		year={getYear()}
+																		classes={'input cvv'}/>
+														</div>
+														<div>
+															<YearPicker start={new Date().getFullYear()} 
+																		end={new Date().getFullYear() + 10} 
+																		value={getYear()} 
+																		defaultValue={'YYYY'} 
+																		onChange={handleExpirationYearChange} 
+																		classes={'input cvv'}/>
+														</div>
+														<div>
+															<input onChange={handlePaymentInfoChange} value={paymentInfo?.verificationCode} name="verificationCode" type="text" className="input cvv" placeholder="Enter CVC/CVV" />
+														</div>
 													</div>
 												</div>
 											</div>
@@ -168,33 +265,33 @@ const ProfileSection = () => {
 											<div className="input_wrap">
 												<label>Street</label>
 												<div className="input_field">
-													<input name="street" type="text" className="input" placeholder="Enter street name" />
+													<input onChange={handleShippingInfoChange} value={shippingInfo?.streetName} name="streetName" type="text" className="input" placeholder="Enter street name" />
 												</div>
 											</div>
 											<div className="address-box">
 												<div className="input_wrap address">
 													<label>City</label>
 													<div className="input_field">
-														<input name="city" type="text" className="input" placeholder="Enter city" />
+														<input onChange={handleShippingInfoChange} value={shippingInfo?.city} name="city" type="text" className="input" placeholder="Enter city" />
 													</div>
 												</div>
 												<div className="input_wrap address">
 													<label>Zip code</label>
 													<div className="input_field">
-														<input name="zipCode" type="text" className="input" placeholder="Enter zip code" />
+														<input onChange={handleShippingInfoChange} value={shippingInfo?.zipCode} name="zipCode" type="text" className="input" placeholder="Enter zip code" />
 													</div>
 												</div>
 											</div>
 											<div className="input_wrap">
 												<label>State</label>
 												<div className="input_field">
-													<input name="state" type="text" className="input" placeholder="Enter state name" />
+													<input onChange={handleShippingInfoChange} value={shippingInfo?.state} name="state" type="text" className="input" placeholder="Enter state name" />
 												</div>
 											</div>
 											<div className="input_wrap">
 												<label>Country</label>
 												<div className="input_field">
-													<input name="country" type="text" className="input" placeholder="Enter country name" />
+													<input onChange={handleShippingInfoChange} value={shippingInfo?.country} name="country" type="text" className="input" placeholder="Enter country name" />
 												</div>
 											</div>
 										</div>
