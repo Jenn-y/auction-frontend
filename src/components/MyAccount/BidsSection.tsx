@@ -1,8 +1,9 @@
-import shoppingCart from 'assets/shoppingCart.png';
-import { Bid } from 'interfaces/Bid';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import shoppingCart from 'assets/shoppingCart.png';
+import { Bid } from 'interfaces/Bid';
 import AuctionService from 'services/AuctionService';
 import HighestBid from 'shared/helper_components/HighestBid';
 import NoOfBids from 'shared/helper_components/NoOfBids';

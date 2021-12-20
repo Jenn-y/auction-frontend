@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import moment from "moment";
+import { Link } from "react-router-dom";
+
 import shoppingCart from 'assets/shoppingCart.png';
 import AuctionService from "services/AuctionService";
 import { Auction } from "interfaces/Auction";
-import moment from "moment";
 import NoOfBids from "shared/helper_components/NoOfBids";
 import HighestBid from "shared/helper_components/HighestBid";
-import { Link } from "react-router-dom";
+
 
 const SellerSection = (props: any) => {
 	const [active, setActive] = useState(true)

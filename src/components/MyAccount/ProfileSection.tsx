@@ -1,8 +1,9 @@
-import { User } from 'interfaces/User';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { DropdownDate, DropdownComponent, YearPicker, MonthPicker } from 'react-dropdown-date'
+
+import { User } from 'interfaces/User';
 import AuthService from 'services/AuthService';
 import { PaymentDetails } from 'interfaces/PaymentDetails';
 import { ShippingDetails } from 'interfaces/ShippingDetails';

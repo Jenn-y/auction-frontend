@@ -1,12 +1,14 @@
 import { faCog, faGavel, faThList, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
+
 import AuthService from 'services/AuthService';
 import BidsSection from './BidsSection';
-import './MyAccount.scss';
 import ProfileSection from './ProfileSection';
 import SellerSection from './SellerSection';
 import SettingsSection from './SettingsSection';
+
+import './MyAccount.scss';
 
 const MyAccount = (props: any) => {
 	const [user, setUser] = useState()
