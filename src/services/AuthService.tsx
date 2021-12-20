@@ -34,12 +34,17 @@ class AuthService {
 	}
 
 	register = async (firstName: string, lastName: string, email: string, password: string) => {
-		return axios.post(API_URL + "auth/register", {
-			firstName,
-			lastName,
-			email,
-			password
-		});
+		return axios
+			.post(API_URL + "auth/register", {
+				firstName,
+				lastName,
+				email,
+				password
+			})
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while registering the user."));
 	}
 
 	getUser = async (email: string, token: string) => {
