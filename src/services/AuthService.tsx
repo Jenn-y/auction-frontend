@@ -59,6 +59,15 @@ class AuthService {
 			})
 			.catch(() => console.log("An error occured while deactivating the account."));
 	}
+
+	update = (id: string, user: any, token: string) => {
+		return axios
+			.put(API_URL + `users/update/${id}`, user, HeaderConfig(token))
+			.then(() => {
+				return
+			})
+			.catch(() => console.log("An error occured while updating the account."));
+	}
 }
 
 export default new AuthService();
