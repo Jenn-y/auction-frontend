@@ -56,6 +56,24 @@ class AuthService {
 			.catch(() => console.log("An error occured while fetching the user."));
 	}
 
+	getUserById = async (id: string, token: string) => {
+		return axios
+			.get(API_URL + `users/id/${id}`, HeaderConfig(token))
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the user."));
+	}
+
+	isEmailAvailable = async (email: string, token: string) => {
+		return axios
+			.get(API_URL + `users/available/${email}`, HeaderConfig(token))
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.log("An error occured while fetching the user."));
+	}
+
 	deactivate = (id: string, user: any, token: string) => {
 		return axios
 			.put(API_URL + `users/deactivate/${id}`, user, HeaderConfig(token))

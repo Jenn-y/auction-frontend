@@ -7,18 +7,48 @@ import { User } from 'interfaces/User';
 import AuthService from 'services/AuthService';
 import { PaymentDetails } from 'interfaces/PaymentDetails';
 import { ShippingDetails } from 'interfaces/ShippingDetails';
+import { validateUserUpdateInfo } from 'utils/Validations';
+import { EMAIL_UNAVAILABLE } from 'constants/ErrorMessages';
 
 const ProfileSection = (props: any) => {
 	const [user, setUser] = useState<User>()
+	const [oldEmail, setOldEmail] = useState()
 	const [paymentInfo, setPaymentInfo] = useState<PaymentDetails>()
 	const [shippingInfo, setShippingInfo] = useState<ShippingDetails>()
+	const [errors, setErrors] = useState({
+		firstName: {
+			message: '',
+			hasError: false
+		},
+		lastName: {
+			message: '',
+			hasError: false
+		},
+		gender: {
+			message: '',
+			hasError: false
+		},
+		dateOfBirth: {
+			message: '',
+			hasError: false
+		},
+		phoneNumber: {
+			message: '',
+			hasError: false
+		},
+		email: {
+			message: '',
+			hasError: false
+		},
+		canUpdate: false
+	})
 
 	useEffect(() => {
-		AuthService.getUser(props.user.email, props.user.authenticationToken)
+		AuthService.getUserById(props.user.id, props.user.authenticationToken)
 			.then(response => {
 				if (response) {
-					console.log(response)
 					setUser(response)
+					setOldEmail(response.email)
 					setShippingInfo(response.shippingDetails)
 					setPaymentInfo(response.paymentDetails)
 				}
@@ -33,39 +63,59 @@ const ProfileSection = (props: any) => {
             shippingDetails: shippingInfo
         };
 
-		AuthService.update(
-			props.user.id,
-			finalUserData,
-			props.user.authenticationToken
-		).then(
-			() => {
-				toast.success("Edit sucessful!", { hideProgressBar: true });
-				window.location.replace("/my_account/profile")
+		if (errors.canUpdate) {
+			if (validateEmail()) {
+				AuthService.update(
+					props.user.id,
+					finalUserData,
+					props.user.authenticationToken
+				).then(
+					() => {
+						toast.success("Edit sucessful!", { hideProgressBar: true });
+						window.location.replace("/my_account/profile")
+					}
+				)
+			} else {
+				toast.error(EMAIL_UNAVAILABLE, { hideProgressBar: true });
 			}
-		)
-			.catch(() => {
-				toast.error("Edit was not saved!", { hideProgressBar: true });
-			});
+		}
+	}
+
+	const validateEmail = () => {
+		if (oldEmail !== user?.email) {
+			AuthService.isEmailAvailable(user.email, props.user.authenticationToken)
+			.then(
+				(response) => {
+					return response
+				}
+			)
+		}
+		return true
 	}
 
 	const handleBasicInfoChange = (e: any) => {
 		setUser(Object.assign({}, user, { [e.target.name]: e.target.value }))
+		setErrors(validateUserUpdateInfo(user))
 	}
 
 	const onBirthDateChange = (date: any) => {
 		setUser(Object.assign({}, user, { dateOfBirth: date }))
+		setErrors(validateUserUpdateInfo(user))
     }
 
 	const handleShippingInfoChange = (e: any) => {
 		setShippingInfo(Object.assign({}, shippingInfo, { [e.target.name]: e.target.value }))
+		setErrors(validateUserUpdateInfo(user))
 	}
 
 	const handlePaymentInfoChange = (e: any) => {
 		setPaymentInfo(Object.assign({}, paymentInfo, { [e.target.name]: e.target.value }))
+		setErrors(validateUserUpdateInfo(user))
 	}
 
-	const handlePaypalChange = (e: any) => {
-		setPaymentInfo(Object.assign({}, paymentInfo, { paypal: true }))
+	const handlePaypalChange = (paypal: any) => {
+		setPaymentInfo(Object.assign({}, paymentInfo, { paypal: paypal }))
+		setErrors(validateUserUpdateInfo(user))
 	}
 
 	const handleExpirationYearChange = (e: any) => {
@@ -73,6 +123,7 @@ const ProfileSection = (props: any) => {
 		newDate.setMonth(getMonth())
 		newDate.setFullYear(e)
 		setPaymentInfo(Object.assign({}, paymentInfo, { expirationDate: newDate }))
+		setErrors(validateUserUpdateInfo(user))
 	}
 
 	const handleExpirationMonthChange = (e: any) => {
@@ -80,6 +131,7 @@ const ProfileSection = (props: any) => {
 		newDate.setMonth(e)
 		newDate.setFullYear(getYear())
 		setPaymentInfo(Object.assign({}, paymentInfo, { expirationDate: newDate }))
+		setErrors(validateUserUpdateInfo(user))
 	}
 
 	const getDate = () => {
@@ -115,29 +167,32 @@ const ProfileSection = (props: any) => {
 										</div>
 										<div className="col-12 col-sm-8 col-lg">
 											<div className="input_wrap">
-												<label>First Name</label>
+												<label>First Name<span>*</span></label>
 												<div className="input_field">
 													<input onChange={handleBasicInfoChange} value={user?.firstName} name="firstName" type="text" className="input" placeholder="Enter your first name" />
+													<span>{errors?.firstName.message}</span>
 												</div>
 											</div>
 											<div className="input_wrap">
-												<label>Last Name</label>
+												<label>Last Name<span>*</span></label>
 												<div className="input_field">
 													<input onChange={handleBasicInfoChange} value={user?.lastName} name="lastName" type="text" className="input" placeholder="Enter your last name" />
+													<span>{errors?.lastName.message}</span>
 												</div>
 											</div>
 											<div className="input_wrap">
-												<label>I am</label>
+												<label>I am<span>*</span></label>
 												<div className="input_field">
 													<select className="input" onChange={handleBasicInfoChange} name="gender">
 														<option disabled selected>Gender</option>
 														<option selected={user?.gender === 'MALE'}>MALE</option>
 														<option selected={user?.gender === 'FEMALE'}>FEMALE</option>
 													</select>
+													<span>{errors?.gender.message}</span>
 												</div>
 											</div>
 											<div className="input_wrap">
-												<label>Date of birth</label>
+												<label>Date of birth<span>*</span></label>
 												<div className="input_field">
 													<DropdownDate 
 														startDate={'1940-01-01'}
@@ -157,18 +212,21 @@ const ProfileSection = (props: any) => {
 														selectedDate={getDate()}
 														onDateChange={onBirthDateChange}
 													/>
+													<span>{errors?.dateOfBirth.message}</span>
 												</div>
 											</div>
 											<div className="input_wrap">
-												<label>Phone number</label>
+												<label>Phone number<span>*</span></label>
 												<div className="input_field">
 													<input onChange={handleBasicInfoChange} value={user?.phoneNum} name="phoneNum" type="text" className="input" placeholder="Enter your phone" />
+													<span>{errors?.phoneNumber.message}</span>
 												</div>
 											</div>
 											<div className="input_wrap">
-												<label>Email address</label>
+												<label>Email address<span>*</span></label>
 												<div className="input_field">
 													<input onChange={handleBasicInfoChange} value={user?.email} name="email" type="text" className="input" placeholder="Enter your email" />
+													<span>{errors?.email.message}</span>
 												</div>
 											</div>
 										</div>
@@ -189,13 +247,17 @@ const ProfileSection = (props: any) => {
 										<div className="col-12 col-sm-8 col-lg">
 											<div className="input_wrap">
 												<div className="radio-input">
-													<input checked={paymentInfo?.paypal} onChange={() => handlePaypalChange(true)} type="radio" id="paypal" name="radio"></input>
-													<label htmlFor="paypal">Pay Pal</label>
+													<label onClick={() => handlePaypalChange(true)}>
+														<input type="radio" checked={paymentInfo?.paypal}></input>
+														PayPal
+													</label>
 												</div>
 												<div className="credit-input">
 													<div className="radio-input">
-														<input checked={!paymentInfo?.paypal} onChange={() => handlePaypalChange(false)} type="radio" id="credit" name="radio"></input>
-														<label htmlFor="credit">Credit Card</label>
+														<label onClick={() => handlePaypalChange(false)}>
+															<input type="radio" checked={!paymentInfo?.paypal}></input>
+															Credit Card
+														</label>
 													</div>
 													<p>We accept the following credit cards:</p>
 													<div className="credit-cards">
@@ -301,7 +363,7 @@ const ProfileSection = (props: any) => {
 							</tbody>
 						</table>
 						<div className="input_wrap submit">
-							<input type="submit" id="update_btn" className="btn btn-lg submit-btn" value="Save Info" />
+							<input type="submit" id="update_btn" className="btn btn-lg submit-btn" value="Save Info" disabled={!errors.canUpdate} />
 						</div>
 					</form>
 				</div>

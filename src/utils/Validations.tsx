@@ -1,4 +1,4 @@
-import { EMAIL_EMPTY, EMAIL_INVALID, FIRST_NAME_EMPTY, LAST_NAME_EMPTY, PASSWORD_EMPTY, PASSWORD_LENGTH } from "constants/ErrorMessages";
+import { DATE_OF_BIRTH_EMPTY, EMAIL_EMPTY, EMAIL_INVALID, FIRST_NAME_EMPTY, GENDER_EMPTY, LAST_NAME_EMPTY, PASSWORD_EMPTY, PASSWORD_LENGTH, PHONE_NUMBER_EMPTY } from "constants/ErrorMessages";
 import { LoginError } from "interfaces/LoginError";
 import { RegistrationError } from "interfaces/RegistrationError";
 
@@ -74,6 +74,79 @@ export const validateLoginData = (loginData: any) => {
 	}
 
 	return validateErrors
+}
+
+export const validateUserUpdateInfo = (userData: any) => {
+
+	const errors = {
+		firstName: {
+			message: '',
+			hasError: false
+		},
+		lastName: {
+			message: '',
+			hasError: false
+		},
+		gender: {
+			message: '',
+			hasError: false
+		},
+		dateOfBirth: {
+			message: '',
+			hasError: false
+		},
+		phoneNumber: {
+			message: '',
+			hasError: false
+		},
+		email: {
+			message: '',
+			hasError: false
+		},
+		canUpdate: true
+	}
+
+	if (!userData.firstName || userData.firstName.length === 0) {
+		errors.firstName.message = FIRST_NAME_EMPTY
+		errors.firstName.hasError = true
+		errors.canUpdate = false
+	}
+
+	if (!userData.lastName || userData.lastName.length === 0) {
+		errors.lastName.message = LAST_NAME_EMPTY
+		errors.lastName.hasError = true
+		errors.canUpdate = false
+	}
+
+	if (!userData.gender || userData.gender.length === 0) {
+		errors.gender.message = GENDER_EMPTY
+		errors.gender.hasError = true
+		errors.canUpdate = false
+	}
+
+	if (!userData.dateOfBirth || userData.dateOfBirth === null) {
+		errors.dateOfBirth.message = DATE_OF_BIRTH_EMPTY
+		errors.dateOfBirth.hasError = true
+		errors.canUpdate = false
+	}
+
+	if (!userData.phoneNum || userData.phoneNum.length === 0) {
+		errors.phoneNumber.message = PHONE_NUMBER_EMPTY
+		errors.phoneNumber.hasError = true
+		errors.canUpdate = false
+	}
+
+	if (!userData.email || userData.email.length === 0) {
+		errors.email.message = LAST_NAME_EMPTY
+		errors.email.hasError = true
+		errors.canUpdate = false
+	} else if (!validateEmail(userData.email)) {
+		errors.email.message = EMAIL_INVALID
+		errors.email.hasError = true
+		errors.canUpdate = false
+	}
+
+	return errors;
 }
 
 export const validateBidAmount = (bidAmount: number, highestBid: any) => {

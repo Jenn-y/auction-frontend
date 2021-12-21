@@ -144,17 +144,11 @@
 			}
 
 			.radio-input {
-				display: flex;
-				align-items: baseline;
-
-				label {
-					margin-left: 20px;
-				}
 
 				input[type=radio] {
+					margin-right: 20px;
 					appearance: none;
 					background-color: $white;
-					margin: 0;
 					font: inherit;
 					color: currentColor;
 					width: 1.15em;
@@ -162,7 +156,7 @@
 					border: 0.15em solid $purple;
 					border-radius: 50%;
 					transform: translateY(-0.075em);
-					display: grid;
+					display: inline-grid;
   					place-content: center;
 				}
 
@@ -206,6 +200,11 @@
 				color: $white;
 				transition: all 0.5s;
 			}
+		}
+
+		span {
+			color: $error-red;
+			font-weight: 500;
 		}
 	}
 
