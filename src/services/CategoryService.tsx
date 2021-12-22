@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/";
+import { DEV_API, PROD_API } from "./ApiConstants";
+
+const API_URL = process.env.NODE_ENV === "development" ? DEV_API : PROD_API
 
 class CategoryService {
 
