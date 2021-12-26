@@ -33,7 +33,7 @@ const PriceGraph = (props: any) => {
 
     useEffect(() => {
         AuctionService.getPriceCount(props.auctions.map((a: any) => a.id)).then((response) => drawGraph(response.map((i: any) => i.count)))
-    }, []);
+    }, [props.auctions]);
 
     return (
         <svg ref={ref}></svg>
