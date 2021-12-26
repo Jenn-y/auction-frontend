@@ -1,62 +1,51 @@
-import { Category } from "interfaces/Category"
 import { useEffect, useState } from "react"
-import AuctionService from "services/AuctionService"
+
 import CategoryService from "services/CategoryService"
+import NoOfAuctions from "utils/helper_components/NoOfAuctions"
+import { Category } from "interfaces/Category"
 
-const SubcategoriesList = (parentCategory: any) => {
+const SubcategoriesList = (props: any) => {
+    const [subcategories, setSubcategories] = useState([])
 
-	const [subcategories, setSubcategories] = useState([])
-	const [numOfAuctions, setNumOfAuctions] = useState(0)
+    useEffect(() => {
+        CategoryService.getSubcategoriesByCategoryId(props.category.id)
+            .then(response => {
+                if (response) {
+                    setSubcategories(response)
+                }
+            })
+    }, [])
 
-	useEffect(() => {
-		CategoryService.getSubcategoriesByCategoryId(parentCategory.category.id)
-			.then(response => {
-				if (response) {
-					setSubcategories(response)
-				}
-			})
-	}, [])
-
-	const getCountBySubcategory = (subcategoryId: string) => {
-		AuctionService.getCountBySubcategory(subcategoryId)
-			.then(response => {
-				if (response) {
-					setNumOfAuctions(response)
-				}
-			})
-		return numOfAuctions
-	}
-
-	const handleSubcategoryClick = (id: string, name: string, subcategoryOf: Category) => {
-		const subcategory = {
+    const handleSubcategoryClick = (id: string, name: string, subcategoryOf: Category) => {
+        const subcategory = {
             id: id,
             name: name,
-			subcategoryOf: subcategoryOf,
+            subcategoryOf: subcategoryOf,
         }
 
-		if (!parentCategory.activeSubcategories.some((category: any) => category.id === subcategory.id)) {
-            parentCategory.setActiveSubcategories([...parentCategory.activeSubcategories, subcategory])
+        if (!props.activeCategories.some((category: any) => category.id === subcategory.id)) {
+            props.setActiveCategories([...props.activeCategories, subcategory])
         } else {
-			parentCategory.onRemoveTagClick(subcategory)
-		}
-	}
+            props.onRemoveTagClick(subcategory)
+        }
+    }
 
-	const isChecked = (subcategory: any) => {
-		return parentCategory.activeSubcategories.some((category: any) => category.id === subcategory) ? true : false
-	}
+    const isChecked = (subcategory: any) => {
+        return props.activeCategories.some((category: any) => category.id === subcategory) ? true : false
+    }
 
-	return (
-		<div>
-			{subcategories.map((subcategory: any) => {
-				return (
-					<div className="subcategory" key={subcategory}>
-						<input type="checkbox" name="subcategory" checked={isChecked(subcategory.id)} onChange={() => handleSubcategoryClick(subcategory.id, subcategory.name, parentCategory)}/>
-						<label htmlFor="subcategory">{subcategory.name} <span>({getCountBySubcategory(subcategory.id)})</span></label>
-					</div>
-				)
-			})}
-		</div>
-	)
+    return (
+        <div>
+            {subcategories.map((subcategory: any) => {
+                return (
+                    <div className="subcategory" key={subcategory}>
+                        <input type="checkbox" name="subcategory" checked={isChecked(subcategory.id)} onChange={() => handleSubcategoryClick(subcategory.id, subcategory.name, props.category)}/>
+                        <label htmlFor="subcategory">{subcategory.name} <span>(<NoOfAuctions subcategoryId={subcategory.id} />)</span></label>
+                    </div>
+                )
+            })}
+        </div>
+    )
 }
 
 export default SubcategoriesList
