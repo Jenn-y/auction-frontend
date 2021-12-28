@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from "react-router-dom";
 
 import shoppingCart from 'assets/shoppingCart.png';
@@ -7,6 +8,7 @@ import AuctionService from "services/AuctionService";
 import { Auction } from "interfaces/Auction";
 import NoOfBids from "shared/helper_components/NoOfBids";
 import HighestBid from "shared/helper_components/HighestBid";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 
 const SellerSection = (props: any) => {
@@ -56,6 +58,9 @@ const SellerSection = (props: any) => {
 			<div>
 				<button className={active ? 'seller-button active' : 'seller-button'} onClick={() => onButtonClick("active")}>Active</button>
 				<button className={sold ? 'seller-button active' : 'seller-button'} onClick={() => onButtonClick("sold")}>Sold</button>
+				{auctions.length !== 0 ? 
+					<Link to="/auctions/add/new"><button className="add-button"><FontAwesomeIcon icon={faPlus} />ADD ITEM</button></Link> : ''
+				}
 			</div>
 			<div className="table-section">
 				<table className="table">
@@ -106,7 +111,7 @@ const SellerSection = (props: any) => {
 								<p>You do not have any 
 									{active ? ' scheduled items for sale.' : ' sold items.'}
 								</p>
-								<button>START SELLING</button>
+								<Link to="/auctions/add/new"><button>START SELLING</button></Link>
 							</td> : ''
 					}
 					</tbody>
