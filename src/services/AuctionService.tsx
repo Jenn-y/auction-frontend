@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import HeaderConfig from "utils/HeaderConfig";
 import { DEV_API, PROD_API } from "./ApiConstants";
 
@@ -6,59 +7,122 @@ const API_URL = process.env.NODE_ENV === "development" ? DEV_API : PROD_API
 
 class AuctionService {
 
-	getNewArrivals = () => {
-		return axios
-			.get(API_URL + "auctions/new_arrivals")
-			.then((response: any) => {
-				return response.data;
-			})
-			.catch(() => console.log("An error occured while fetching the auctions"));
-	}
+    getNewArrivals = () => {
+        return axios
+            .get(API_URL + "auctions/new_arrivals")
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the auctions"));
+    }
 
-	getLastChance = () => {
-		return axios
-			.get(API_URL + "auctions/last_chance")
-			.then((response: any) => {
-				return response.data;
-			})
-			.catch(() => console.log("An error occured while fetching the auctions"));
-	}
+    getLastChance = () => {
+        return axios
+            .get(API_URL + "auctions/last_chance")
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the auctions"));
+    }
 
-	getItem = (id: any) => {
-		return axios
-			.get(API_URL + `auctions/${id}`)
-			.then((response: any) => {
-				return response.data;
-			})
-			.catch(() => console.log("An error occured while fetching the item."));
-	}
+    getActiveAuctionsBySeller = (status: any, sellerId: string, token: string) => {
+        return axios
+            .get(API_URL + `auctions/${status}/${sellerId}`, HeaderConfig(token))
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the active auctions"));
+    }
 
-	getBids = (auctionId: any, token: string) => {
-		return axios
-			.get(API_URL + `bids/${auctionId}`, HeaderConfig(token))
-			.then((response: any) => {
-				return response.data;
-			})
-			.catch(() => console.log("An error occured while fetching the bidders."));
-	}
+    getFilteredAuctions = (minPrice: number, maxPrice: number, categories: any) => {
+        return axios 
+            .get(API_URL + `auctions/categories/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&categories=${categories}`)
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching filtered auctions"))
+    }
 
-	getHighestBid = (auctionId: any) => {
-		return axios
-			.get(API_URL + `bids/highestBid/${auctionId}`)
-			.then((response: any) => {
-				return response.data;
-			})
-			.catch(() => console.log("An error occured while fetching the highest bid."));
-	}
+    getItem = (id: any) => {
+        return axios
+            .get(API_URL + `auctions/${id}`)
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the item."));
+    }
 
-	addBid = (bid: any, token: string) => {
-		return axios
-			.post(API_URL + "bids/newBid", bid, HeaderConfig(token))
-			.then((response: any) => {
-				return response.data;
-			})
-			.catch(() => console.log("An error occured while saving the bid."));
-	}
+    getCountBySubcategory = (subcategoryId: string) => {
+        return axios
+            .get(API_URL + `auctions/countBySubcategory/${subcategoryId}`)
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the number of auctions for the subcategory."));
+    }
+
+    getPriceInfo = () => {
+        return axios 
+            .get(API_URL + "auctions/priceInfo")
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the price information."))
+    }
+
+    getPriceCount = (auctions: any) => {
+        return axios 
+            .get(API_URL + `auctions/priceCount?auctions=${auctions}`)
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the count per price."))
+    }
+
+    getBids = (auctionId: any, token: string) => {
+        return axios
+            .get(API_URL + `bids/${auctionId}`, HeaderConfig(token))
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the bidders."));
+    }
+
+    getBidsByBidderId = (bidderId: any, token: string) => {
+        return axios
+            .get(API_URL + `bids/bidder/${bidderId}`, HeaderConfig(token))
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the bids."));
+    }
+
+    getHighestBid = (auctionId: any) => {
+        return axios
+            .get(API_URL + `bids/highestBid/${auctionId}`)
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the highest bid."));
+    }
+
+    getNoOfBids = (auctionId: any, token: string) => {
+        return axios
+            .get(API_URL + `bids/noOfBids/${auctionId}`, HeaderConfig(token))
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the number of bids."));
+    }
+
+    addBid = (bid: any, token: string) => {
+        return axios
+            .post(API_URL + "bids/newBid", bid, HeaderConfig(token))
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while saving the bid."));
+    }
 }
 
 export default new AuctionService();

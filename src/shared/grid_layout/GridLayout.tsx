@@ -14,7 +14,7 @@ const GridLayout = (models: any) => {
 			<Row className="section">
 				{models.auctions.map((model: any) => {
 					return (
-						<Col xs={3} key={model.item.id} className="card-h">
+						<Col xs={models.numOfCols} key={model} className="card-h">
 							<Link to={`/auctions/${model.id}`} className="bid-btn">
 								<img src={images[0]} alt="sneakers" />
 							</Link>

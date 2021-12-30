@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import AuctionService from 'services/AuctionService'
+import CategoryService from 'services/CategoryService'
 import GridLayout from 'shared/grid_layout/GridLayout'
 
 import './LandingPage.scss'
@@ -15,10 +16,21 @@ const LandingPage = () => {
 	const [lastChanceActive, setLastChanceActive] = useState(false)
 	const [auctions, setAuctions] = useState([])
 	const [highlightedProduct, setHighlightedProduct] = useState<Auction>()
+	const [categories, setCategories] = useState([])
 
 	useEffect(() => {
+		getCategories()
 		handleNewArrivals()
 	}, [])
+
+	const getCategories = () => {
+		CategoryService.getLandingPageCategories()
+			.then(response => {
+				if (response) {
+					setCategories(response)
+				}
+			})
+	}
 
 	const handleNewArrivals = () => {
 		setNewArrivalsActive(true)
@@ -56,18 +68,16 @@ const LandingPage = () => {
 					<div className="row highlight">
 						<div className="col-12 col-sm-4 col-lg">
 							<h6 className="cat-title">CATEGORIES</h6>
-							<ul className="cat-list">
-								<li><div className="category"><a>Fashion</a></div></li>
-								<li><div className="category"><a>Accesories</a></div></li>
-								<li><div className="category"><a>Jewelry</a></div></li>
-								<li><div className="category"><a>Shoes</a></div></li>
-								<li><div className="category"><a>Sportware</a></div></li>
-								<li><div className="category"><a>Home</a></div></li>
-								<li><div className="category"><a>Electronics</a></div></li>
-								<li><div className="category"><a>Mobile</a></div></li>
-								<li><div className="category"><a>Computer</a></div></li>
-								<li><div className="category"><a>All Categories</a></div></li>
-							</ul>
+							{categories ? 
+								<ul className="cat-list">
+									{categories.map((category: any) => {
+										return (
+											<li key={category.id}><div className="category"><Link to={`/shop/${category.id}`}>{category.name}</Link></div></li>
+										)
+									})} 
+									<li><div className="category"><Link to={`/shop/all`}>All Categories</Link></div></li>
+								</ul> : '' 
+							}
 						</div>
 						<div className="col-12 col-sm-4 col-lg product-desc">
 							{highlightedProduct ?
@@ -98,7 +108,10 @@ const LandingPage = () => {
 						</div>
 					</div>
 				</div>
-				<GridLayout auctions={auctions} />
+				<GridLayout 
+					auctions={auctions}
+					numOfCols={3}
+				/>
 			</div>
 		</>
 	)
