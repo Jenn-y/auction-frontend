@@ -82,6 +82,12 @@
 		font-size: 16px;
 		line-height: 24px;
 	}
+
+	.c-location {
+		width: 210px;
+		padding-right: 10px;
+		padding-left: 10px;
+	}
 }
 
 .description {
@@ -103,6 +109,7 @@
 
 .navigation {
 	text-align: center;
+	margin: 15px 0;
 
 	.back-button, .next-button {
 		width: 194px;
