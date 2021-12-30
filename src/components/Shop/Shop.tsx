@@ -1,14 +1,15 @@
-import { faMinus, faPlus, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faTimesCircle, faTh, faThList } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 
 import AuctionService from 'services/AuctionService';
 import CategoryService from 'services/CategoryService';
-import GridLayout from 'shared/grid_layout/GridLayout';
 import PriceFilter from './PriceFilter';
 import SubcategoriesList from './SubcategoriesList';
 import { Category } from 'interfaces/Category';
 import { PriceInfo } from 'interfaces/PriceInfo';
+import GridView from 'shared/product_layout/GridView';
+import ListView from 'shared/product_layout/ListView';
 import SortingMenu from './SortingMenu';
 
 import './Shop.scss';
@@ -22,6 +23,7 @@ const Shop = (props: any) => {
     const [priceInfo, setPriceInfo] = useState<PriceInfo>()
     const [priceRange, setPriceRange] = useState<number[]>([])
     const [selectedSort, setSelectedSort] = useState<string>("Default Sorting")
+    const [gridView, setGridView] = useState(true)
 
     useEffect(() => {
         const categoryId = props.match.params.categoryId
@@ -84,6 +86,10 @@ const Shop = (props: any) => {
         }
     }
 
+    const handleViewClick = () => {
+		setGridView(!gridView)
+	}
+
     const getIcon = (category: any) => {
         return isOpenedCategory(category) ? faMinus : faPlus
     }
@@ -143,10 +149,18 @@ const Shop = (props: any) => {
                     />
                 </div>
                 <div className="col-12 col-sm-9 col-lg product-view">
-                    <SortingMenu auctions={auctions} 
-								 setAuctions={setAuctions} 
-								 activeCategory={activeCategories}
-					/>
+                    <div className="sorting-view">
+						<div>
+							<SortingMenu auctions={auctions} 
+									setAuctions={setAuctions} 
+									activeCategory={activeCategories}
+							/>
+						</div>
+						<div>
+							<button className={gridView ? 'view-button active' : 'view-button'} onClick={handleViewClick}><FontAwesomeIcon icon={faTh} className="view-icon" />Grid</button>
+							<button className={!gridView ? 'view-button active' : 'view-button'} onClick={handleViewClick}><FontAwesomeIcon icon={faThList} className="view-icon" />List</button>
+						</div>
+					</div>
                     <div className="tag-area">
                         {activeCategories.map((category: any) => {
                             return (
@@ -157,12 +171,17 @@ const Shop = (props: any) => {
                             <div className="clear-tags" onClick={onClearAllClick}>Clear all</div> : ''
                         }
                     </div>
-                    <div>
-                        <GridLayout 
-                            auctions={auctions}
-                            numOfCols={4}
-                        />
-                    </div>
+					<div> 
+						{gridView ? 
+							<GridView 
+								auctions={auctions}
+								numOfCols={4}
+							/> :
+							<ListView 
+								auctions={auctions}
+							/>
+						}
+					</div>
                 </div>
             </div>
         </div>

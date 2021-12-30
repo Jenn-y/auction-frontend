@@ -122,14 +122,19 @@
 			}
 		}
 	}
-	
-	.product-view {
-		min-width: 75%;
-		margin-bottom: 50px;
+}
+
+.product-view {
+	min-width: 75%;
+
+	.sorting-view {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
 
 		.sorting-menu {
 			margin: 40px 35px 0px;
-	
+
 			.btn-check:active+.btn-primary:focus, 
 			.btn-check:checked+.btn-primary:focus, 
 			.btn-primary.active:focus, 
@@ -140,7 +145,7 @@
 				outline: none;
 				box-shadow: none;
 			}
-	
+
 			#dropdown-basic {
 				background-color: $white;
 				color: $black;
@@ -149,23 +154,39 @@
 				border: 2px solid $border-color;
 				border-radius: 0;
 			}
-	
-	
+
+
 			.dropdown-toggle::after {
 				text-align: right;
 				margin-left: 100px;
 			}
-	
+
 			.dropdown-menu {
 				width: 260px;
 				text-align: left;
 				border-radius: 0;
 				margin-top: -3px;
-	
+
 				.dropdown-item:focus, .dropdown-item:hover {
 					background-color: $purple;
 					color: $white;
 				}
+			}
+
+			.view-button {
+				margin-right: 20px;
+				background-color: $white;
+				border: none;
+				color: $light-gray;
+				font-weight: bold;
+	
+				.view-icon {
+					margin-right: 8px;
+				}
+			}
+	
+			.active, .view-button:hover {
+				color: $purple;
 			}
 		}
 	
@@ -197,30 +218,6 @@
 				font-weight: 600;
 				cursor: pointer;
 				margin-top: 40px;
-			}
-		}
-	
-		.expand {
-			text-align: center;
-			margin-bottom: 80px;
-	
-			.explore-btn {
-				padding: 12px 40px;
-				font-weight: 700;
-				font-size: 16px;
-				line-height: 27px;
-				color: $white;
-				letter-spacing: 0.63px;
-				background-color: $purple;
-				border: 3px solid $white;
-			}
-		
-			.explore-btn:hover,
-			.explore-btn:focus {
-				background-color: $white;
-				border: 3px solid $purple;
-				color: $purple;
-				transition: all 0.3s;
 			}
 		}
 	}
