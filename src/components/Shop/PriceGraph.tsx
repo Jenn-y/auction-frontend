@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import {max, scaleLinear, select, } from "d3";
+import {max, scaleLinear, select } from "d3";
 
 import AuctionService from "services/AuctionService";
 
