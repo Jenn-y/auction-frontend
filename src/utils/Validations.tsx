@@ -1,8 +1,6 @@
 import { DATE_OF_BIRTH_EMPTY, EMAIL_EMPTY, EMAIL_INVALID, FIRST_NAME_EMPTY, GENDER_EMPTY, LAST_NAME_EMPTY, PASSWORD_EMPTY, PASSWORD_LENGTH, PHONE_NUMBER_EMPTY } from "constants/ErrorMessages";
-import { Auction } from "interfaces/Auction";
 import { LoginError } from "interfaces/LoginError";
 import { RegistrationError } from "interfaces/RegistrationError";
-import { User } from "interfaces/User";
 import moment from "moment";
 
 export const validateEmail = (email: string) => {
@@ -26,14 +24,18 @@ export const isValidRegisterInput = (registerData: any) => {
 export const isValidAuctionSellingInput = (auction: any, user: any) => {
 	const errors = { message: '', hasError: false }
 
-	if (!auction.item || auction.item.name.length === 0 
-		|| !auction.category || !auction.item.description
-		|| auction.item.description.length === 0 || !auction.startPrice
-		|| !auction.startDate || !auction.endDate || !user.shippingDetails.streetName
-		|| user.shippingDetails.streetName.length === 0 || !user.shippingDetails.city
-		|| user.shippingDetails.city.length === 0 || !user.shippingDetails.country
-		|| user.shippingDetails.country.length === 0 || !user.shippingDetails.zipCode 
-		|| !user.phoneNum) {
+	if (!auction.item || !auction.category || !auction.startPrice || !auction.startDate 
+		|| !auction.endDate || !user.shippingDetails || !user.phoneNum
+		|| !user.shippingDetails.streetName || !user.shippingDetails.city
+		|| !user.shippingDetails.country || !user.shippingDetails.zipCode) {
+
+		errors.message = "You have some empty required fields!"
+		errors.hasError = true
+		return errors
+
+	} else if (auction.item.name.length === 0 || auction.item.description.length === 0
+		|| user.shippingDetails.streetName.length === 0 || user.shippingDetails.city.length === 0 
+		|| user.shippingDetails.country.length === 0 || user.shippingDetails.zipCode.length === 0) {
 
 		errors.message = "You have some empty required fields!"
 		errors.hasError = true
@@ -41,6 +43,11 @@ export const isValidAuctionSellingInput = (auction: any, user: any) => {
 
 	} else if (auction.startDate > auction.endDate) {
 		errors.message = "Start date cannot be set higher than end date!"
+		errors.hasError = true
+		return errors
+
+	} else if (moment(auction.startDate).toISOString().slice(0, 10) < new Date().toISOString().slice(0, 10)) {
+		errors.message = "Start date cannot be set less than today!"
 		errors.hasError = true
 		return errors
 

@@ -45,7 +45,9 @@ const AddAuction = () => {
 			.then(response => {
 				if (response) {
 					setUser(response)
-					setShippingInfo(response.shippingDetails)
+					if (response.shippingDetails) {
+						setShippingInfo(response.shippingDetails)
+					}
 				}
 			})
 	}, [step])
@@ -232,33 +234,33 @@ const AddAuction = () => {
 								<div className="input_wrap">
 									<label>Address</label>
 									<div className="input_field">
-										<input onChange={handleShippingInfoChange} value={shippingInfo?.streetName} name="streetName" type="text" className="input" placeholder="Enter your address" />
+										<input onChange={handleShippingInfoChange} value={shippingInfo ? shippingInfo.streetName : ''} name="streetName" type="text" className="input" placeholder="Enter your address" />
 									</div>
 								</div>
 								<div className="flex-box">
 									<div className="input_wrap c-location">
 										<label>City</label>
 										<div className="input_field">
-											<input onChange={handleShippingInfoChange} value={shippingInfo?.city} name="city" type="text" className="input" placeholder="Enter your city" />
+											<input onChange={handleShippingInfoChange} value={shippingInfo ? shippingInfo.city : ''} name="city" type="text" className="input" placeholder="Enter your city" />
 										</div>
 									</div>
 									<div className="input_wrap c-location">
 										<label>Country</label>
 										<div className="input_field">
-											<input onChange={handleShippingInfoChange} value={shippingInfo?.country} name="country" type="text" className="input" placeholder="Enter your country" />
+											<input onChange={handleShippingInfoChange} value={shippingInfo ? shippingInfo.country: ''} name="country" type="text" className="input" placeholder="Enter your country" />
 										</div>
 									</div>
 								</div>
 								<div className="input_wrap">
 									<label>Zip Code</label>
 									<div className="input_field">
-										<input onChange={handleShippingInfoChange} value={shippingInfo?.zipCode} name="zipCode" type="number" className="input" placeholder="Enter your zip code" />
+										<input onChange={handleShippingInfoChange} value={shippingInfo ? shippingInfo.zipCode : ''} name="zipCode" type="number" className="input" placeholder="Enter your zip code" />
 									</div>
 								</div>
 								<div className="input_wrap">
 									<label>Phone</label>
 									<div className="input_field">
-										<input onChange={handlePhoneChange} value={user?.phoneNum} name="phoneNum" type="text" className="input" placeholder="Enter your phone" />
+										<input onChange={handlePhoneChange} value={user ? user.phoneNum : ''} name="phoneNum" type="text" className="input" placeholder="Enter your phone" />
 									</div>
 								</div>
 							</> : ''
