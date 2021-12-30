@@ -1,99 +1,171 @@
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 
 import AuctionService from 'services/AuctionService';
 import CategoryService from 'services/CategoryService';
 import GridLayout from 'shared/grid_layout/GridLayout';
+import PriceFilter from './PriceFilter';
+import SubcategoriesList from './SubcategoriesList';
+import { Category } from 'interfaces/Category';
+import { PriceInfo } from 'interfaces/PriceInfo';
+import SortingMenu from './SortingMenu';
 
 import './Shop.scss';
-import SortingMenu from './SortingMenu';
 
 const Shop = (props: any) => {
 
-	const [auctions, setAuctions] = useState([])
-	const [categories, setCategories] = useState([])
-	const [activeCategory, setActiveCategory] = useState<string>()
-	const [selectedSort, setSelectedSort] = useState<string>("Default Sorting")
+    const [auctions, setAuctions] = useState([])
+    const [categories, setCategories] = useState([])
+    const [activeCategories, setActiveCategories] = useState<Category[]>([])
+    const [openedCategories, setOpenedCategories] = useState<Category[]>([])
+    const [priceInfo, setPriceInfo] = useState<PriceInfo>()
+    const [priceRange, setPriceRange] = useState<number[]>([])
+    const [selectedSort, setSelectedSort] = useState<string>("Default Sorting")
 
-	useEffect(() => {
-		const categoryId = props.match.params.categoryId
-		if (categoryId !== undefined && categoryId !== "all") {
-			getAuctionsByCategoryId(categoryId)
-		} else {
-			getAllAuctions()
-		}
+    useEffect(() => {
+        const categoryId = props.match.params.categoryId
+
+        AuctionService.getPriceInfo()
+            .then(response => {
+                if (response) {
+                    setPriceInfo(response)
+                    setPriceRange([response.minPrice, response.maxPrice])
+                }
+            })
+        
+        if (categoryId !== "all") {
+            CategoryService.getCategory(categoryId)
+            .then(response => {
+                if (response) {
+                    setActiveCategories([...activeCategories, response])
+                    setOpenedCategories([...openedCategories, response])
+                }
+            })
+        } 
+        
+        CategoryService.getAllCategories()
+            .then(response => {
+                if (response) {
+                    setCategories(response)
+                }
+            })
 		
-		CategoryService.getAllCategories()
-			.then(response => {
-				if (response) {
-					setCategories(response)
-				}
-			})
-	}, [])
+		getFilteredAuctions()
+    }, [])
 
-	const getAllAuctions = () => {
-		AuctionService.getNewArrivals()
-			.then(response => {
-				if (response) {
-					setAuctions(response)
-				}
-			})
-	}
+    useEffect(() => {
+        getFilteredAuctions()
+    }, [activeCategories, priceRange])
 
-	const getAuctionsByCategoryId = (categoryId: string) => {
-		AuctionService.getAuctionsByCategoryId(categoryId)
-			.then(response => {
-				if (response) {
-					setAuctions(response)
-				}
-			})
-		setActiveCategory(categoryId)
-	}
-	
-	const getIcon = (activeCategory: any, category: any) => {
-		return activeCategory === category ? faMinus : faPlus
-	}
-	
+    const getFilteredAuctions = () => {
+        AuctionService.getFilteredAuctions(priceRange[0], priceRange[1], activeCategories.map(c => c.id))
+            .then(response => {
+                if (response) {
+                    setAuctions(response)
+                }
+            })
+    }
+
+    const handleCategoryClick = (clickedCategory: any) => {
+        if (!activeCategories.some((category: any) => category.id === clickedCategory.id)) {
+            setActiveCategories([...activeCategories, clickedCategory])
+            setOpenedCategories([...openedCategories, clickedCategory])
+        } else {
+            onRemoveTagClick(clickedCategory)
+        }
+    }
+
+    const handleIconClick = (clickedCategory: any) => {
+        if (!isOpenedCategory(clickedCategory)) {
+            setOpenedCategories([...openedCategories, clickedCategory])
+        } else {
+            setOpenedCategories(openedCategories.filter((category: any) => category.id !== clickedCategory.id))
+        }
+    }
+
+    const getIcon = (category: any) => {
+        return isOpenedCategory(category) ? faMinus : faPlus
+    }
+
+    const isActiveCategory = (activeCategory: any) => {
+        return activeCategories.some((category: any) => category.id === activeCategory.id) ? true : false
+    }
+
+    const isOpenedCategory = (openedCategory: any) => {
+        return openedCategories.some((category: any) => category.id === openedCategory.id) ? true : false
+    }
+
+    const onClearAllClick = () => {
+        setActiveCategories([]);
+    }
+
+    const onRemoveTagClick = (clickedCategory: any) => {
+        if (activeCategories.length <= 1) {
+            onClearAllClick()
+            getFilteredAuctions()
+        } else {
+            setActiveCategories(activeCategories.filter(category => category.id !== clickedCategory.id))
+            setOpenedCategories(openedCategories.filter(category => category.id !== clickedCategory.id))
+        }
+    }
+    
     return (
-        <div className="container">
-			<div className="row">
-				<div className="col-12 col-sm-3 col-lg filters">
-					<div className="prod-categories">
-						<h6 className="cat-title">PRODUCT CATEGORIES</h6>
-						<ul className="cat-list">
-							{categories ? 
-								categories.map((category: any) => {
-									return (
-										<li key={category.id}>
-											<div id="parent-category" className={activeCategory === category.id ? 'active' : 'inactive'}>
-												<p className="category" onClick={() => getAuctionsByCategoryId(category.id)}>{category.name}</p>
-												<div><FontAwesomeIcon icon={getIcon(activeCategory, category.id)} size="xs" id="icon"/></div>
-											</div>
-										</li>
-									)
-								}) : '' 
-							}
-						</ul>
-					</div>
-				</div>
-				<div className="col-12 col-sm-9 col-lg product-view">
-					<SortingMenu auctions={auctions} 
+        <div className="container shop-page">
+            <div className="row">
+                <div className="col-12 col-sm-3 col-lg filters">
+                    <div className="prod-categories">
+                        <h6 className="filter-title">PRODUCT CATEGORIES</h6>
+                        <ul className="cat-list">
+                            {categories.map((category: any) => {
+                                return (
+                                    <li key={category.id}>
+                                        <div id="parent-category" className={isActiveCategory(category) ? 'active' : 'inactive'}>
+                                            <p className="category" onClick={() => handleCategoryClick(category)}>{category.name}</p>
+                                            <div><FontAwesomeIcon icon={getIcon(category)} onClick={() => handleIconClick(category)} size="xs" id="icon"/></div>
+                                        </div>
+                                        {isOpenedCategory(category) || isActiveCategory(category) ? 
+                                            <SubcategoriesList category={category} 
+                                                               activeCategories={activeCategories} 
+                                                               setActiveCategories={setActiveCategories}
+                                                               onRemoveTagClick={onRemoveTagClick}
+                                            /> : ''
+                                        }
+                                    </li>
+                                )})
+                            }
+                        </ul>
+                    </div>
+                    <PriceFilter auctions={auctions}
+                                 priceInfo={priceInfo}
+                                 priceRange={priceRange}
+                                 setPriceRange={setPriceRange} 
+                    />
+                </div>
+                <div className="col-12 col-sm-9 col-lg product-view">
+                    <SortingMenu auctions={auctions} 
 								 setAuctions={setAuctions} 
-								 activeCategory={activeCategory}
+								 activeCategory={activeCategories}
 					/>
-					<div>
-						<GridLayout 
-							auctions={auctions}
-							numOfCols={4}
-						/>
-					</div>
-					{/* <div className="expand">
-						<button className="explore-btn">EXPLORE MORE</button>
-					</div> */}
-				</div>
-			</div>
-		</div>
+                    <div className="tag-area">
+                        {activeCategories.map((category: any) => {
+                            return (
+                                <div key={category.id} className="category-tag">{category.name} <span><FontAwesomeIcon icon={faTimesCircle} color="white" onClick={() => onRemoveTagClick(category)} /></span></div>
+                            )
+                        })}
+                        {activeCategories.length > 0 ? 
+                            <div className="clear-tags" onClick={onClearAllClick}>Clear all</div> : ''
+                        }
+                    </div>
+                    <div>
+                        <GridLayout 
+                            auctions={auctions}
+                            numOfCols={4}
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 

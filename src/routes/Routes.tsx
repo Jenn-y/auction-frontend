@@ -9,6 +9,7 @@ import Login from "components/Login/Login";
 import Registration from "components/Registration/Registration";
 import LandingPage from "pages/landing_page/LandingPage";
 import { ToastContainer } from "react-toastify";
+import Shop from "components/Shop/Shop";
 
 import 'react-toastify/dist/ReactToastify.css';
 import Shop from "components/Shop/Shop";

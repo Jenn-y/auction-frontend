@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import HeaderConfig from "utils/HeaderConfig";
 import { DEV_API, PROD_API } from "./ApiConstants";
 
@@ -87,7 +88,52 @@ class AuctionService {
 			.catch(() => console.log("An error occured while fetching the auctions sorted by lowest price."))
 	}
 
-	getBids = (auctionId: any, token: string) => {
+    getActiveAuctionsBySeller = (status: any, sellerId: string, token: string) => {
+        return axios
+            .get(API_URL + `auctions/${status}/${sellerId}`, HeaderConfig(token))
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the active auctions"));
+    }
+
+    getFilteredAuctions = (minPrice: number, maxPrice: number, categories: any) => {
+        return axios 
+            .get(API_URL + `auctions/categories/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&categories=${categories}`)
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching filtered auctions"))
+    }
+
+    getCountBySubcategory = (subcategoryId: string) => {
+        return axios
+            .get(API_URL + `auctions/countBySubcategory/${subcategoryId}`)
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the number of auctions for the subcategory."));
+    }
+
+    getPriceInfo = () => {
+        return axios 
+            .get(API_URL + "auctions/priceInfo")
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the price information."))
+    }
+
+    getPriceCount = (auctions: any) => {
+        return axios 
+            .get(API_URL + `auctions/priceCount?auctions=${auctions}`)
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the count per price."))
+    }
+
+    getBids = (auctionId: any, token: string) => {
 		return axios
 			.get(API_URL + `bids/${auctionId}`, HeaderConfig(token))
 			.then((response: any) => {
@@ -105,7 +151,25 @@ class AuctionService {
 			.catch(() => console.log("An error occured while fetching the highest bid."));
 	}
 
-	addBid = (bid: any, token: string) => {
+    getBidsByBidderId = (bidderId: any, token: string) => {
+        return axios
+            .get(API_URL + `bids/bidder/${bidderId}`, HeaderConfig(token))
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the bids."));
+    }
+
+    getNoOfBids = (auctionId: any, token: string) => {
+        return axios
+            .get(API_URL + `bids/noOfBids/${auctionId}`, HeaderConfig(token))
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the number of bids."));
+    }
+
+    addBid = (bid: any, token: string) => {
 		return axios
 			.post(API_URL + "bids/newBid", bid, HeaderConfig(token))
 			.then((response: any) => {

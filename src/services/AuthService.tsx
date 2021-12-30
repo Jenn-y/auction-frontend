@@ -47,7 +47,7 @@ class AuthService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the bidders."));
+			.catch(() => console.error("An error occured while fetching the bidders."));
 	}
 }
 
