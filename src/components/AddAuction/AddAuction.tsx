@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
+import moment from 'moment'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Step, StepIcon, StepLabel, Stepper } from '@material-ui/core'
 
 import { Category } from 'interfaces/Category'
 import CategoryService from 'services/CategoryService'
-
-import './AddAuction.scss'
 import { Auction } from 'interfaces/Auction'
 import { Item } from 'interfaces/Item'
-import moment, { now } from 'moment'
 import { User } from 'interfaces/User'
 import { ShippingDetails } from 'interfaces/ShippingDetails'
 import AuthService from 'services/AuthService'
 import AuctionService from 'services/AuctionService';
 import { isValidAuctionSellingInput } from 'utils/Validations';
+
+import './AddAuction.scss'
 
 const AddAuction = () => {
 	const [categories, setCategories] = useState<Category[]>([])

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 import shoppingCart from 'assets/shoppingCart.png';
@@ -8,7 +9,6 @@ import AuctionService from "services/AuctionService";
 import { Auction } from "interfaces/Auction";
 import NoOfBids from "shared/helper_components/NoOfBids";
 import HighestBid from "shared/helper_components/HighestBid";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 
 const SellerSection = (props: any) => {
