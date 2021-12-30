@@ -13,7 +13,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching the auctions"));
+            .catch(() => console.error("An error occured while fetching the auctions"));
     }
 
     getLastChance = () => {
@@ -22,7 +22,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching the auctions"));
+            .catch(() => console.error("An error occured while fetching the auctions"));
     }
 
     getActiveAuctionsBySeller = (status: any, sellerId: string, token: string) => {
@@ -31,7 +31,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching the active auctions"));
+            .catch(() => console.error("An error occured while fetching the active auctions"));
     }
 
     getFilteredAuctions = (minPrice: number, maxPrice: number, categories: any) => {
@@ -40,7 +40,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching filtered auctions"))
+            .catch(() => console.error("An error occured while fetching filtered auctions"))
     }
 
     getItem = (id: any) => {
@@ -49,7 +49,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching the item."));
+            .catch(() => console.error("An error occured while fetching the item."));
     }
 
     getCountBySubcategory = (subcategoryId: string) => {
@@ -58,7 +58,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching the number of auctions for the subcategory."));
+            .catch(() => console.error("An error occured while fetching the number of auctions for the subcategory."));
     }
 
     getPriceInfo = () => {
@@ -67,7 +67,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching the price information."))
+            .catch(() => console.error("An error occured while fetching the price information."))
     }
 
     getPriceCount = (auctions: any) => {
@@ -76,7 +76,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching the count per price."))
+            .catch(() => console.error("An error occured while fetching the count per price."))
     }
 
     getBids = (auctionId: any, token: string) => {
@@ -85,7 +85,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching the bidders."));
+            .catch(() => console.error("An error occured while fetching the bidders."));
     }
 
     getBidsByBidderId = (bidderId: any, token: string) => {
@@ -94,7 +94,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching the bids."));
+            .catch(() => console.error("An error occured while fetching the bids."));
     }
 
     getHighestBid = (auctionId: any) => {
@@ -103,7 +103,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching the highest bid."));
+            .catch(() => console.error("An error occured while fetching the highest bid."));
     }
 
     getNoOfBids = (auctionId: any, token: string) => {
@@ -112,7 +112,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while fetching the number of bids."));
+            .catch(() => console.error("An error occured while fetching the number of bids."));
     }
 
     addBid = (bid: any, token: string) => {
@@ -121,7 +121,7 @@ class AuctionService {
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.log("An error occured while saving the bid."));
+            .catch(() => console.error("An error occured while saving the bid."));
     }
 }
 

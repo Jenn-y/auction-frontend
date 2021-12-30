@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import * as d3 from 'd3';
+import {max, scaleLinear, select, } from "d3";
 
 import AuctionService from "services/AuctionService";
 
@@ -9,14 +9,14 @@ const PriceGraph = (props: any) => {
     const height = 50;
 
     const drawGraph = (data: number[]) => {
-        const svg = d3.select(ref.current!)
+        const svg = select(ref.current!)
             .attr("width", width)
             .attr("height", height);
 
         let selection = svg.selectAll("rect").data(data);
 
-        let yScale = d3.scaleLinear()
-            .domain([0, d3.max(data) as unknown as number])
+        let yScale = scaleLinear()
+            .domain([0, max(data) as unknown as number])
             .range([0, height]);
 
         selection
