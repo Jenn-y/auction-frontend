@@ -57,13 +57,14 @@
 			line-height: 24px;
 			color: $light-gray;
 			margin-bottom: 10px;
-			max-height: 80px;
+			min-height: 90px;
+			max-height: 90px;
 			overflow: hidden;
 		}
 
 		.price {
 			font-weight: normal;
-			font-size: 32px;
+			font-size: 25px;
 			line-height: 51px;
 			color: $purple;
 			margin-bottom: 20px;
@@ -82,11 +83,32 @@
 			line-height: 22px;
 			padding: 3px 20px;
 			margin-right: 10px;
+			width: 140px;
 		}
 
 		.icon {
 			color: $dirty-white;
 			margin-left: 5px;
+		}
+
+		#bid-button {
+			cursor: pointer;
+			border-color: $purple;
+			color: $purple;
+
+			.icon {
+				color: $purple;
+			}
+		}
+
+		#bid-button:hover {
+			background-color: $purple;
+			color: $white;
+			transition: all 0.3s;
+
+			.icon {
+				color: $white;
+			}
 		}
 	}
 }

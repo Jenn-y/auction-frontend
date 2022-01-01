@@ -28,7 +28,7 @@ const ListView = (models: any) => {
 								<p className="price">Start From ${model.startPrice}</p>
 								<div className="button-box">
 									<button className="button">Watchlist <FontAwesomeIcon icon={faHeart} className="icon" /></button>
-									<button className="button">Bid <FontAwesomeIcon icon={faGavel} className="icon" /></button>
+									<Link to={`/auctions/${model.id}`} ><button className="button" id="bid-button">Bid <FontAwesomeIcon icon={faGavel} className="icon" /></button></Link>
 								</div>
 							</Col>
 						</Row>

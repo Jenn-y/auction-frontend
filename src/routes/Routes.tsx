@@ -12,7 +12,6 @@ import { ToastContainer } from "react-toastify";
 import Shop from "components/Shop/Shop";
 
 import 'react-toastify/dist/ReactToastify.css';
-import Shop from "components/Shop/Shop";
 
 const Routes = () => {
 	return (
