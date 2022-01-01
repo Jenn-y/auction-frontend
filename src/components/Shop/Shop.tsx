@@ -22,7 +22,7 @@ const Shop = (props: any) => {
     const [openedCategories, setOpenedCategories] = useState<Category[]>([])
     const [priceInfo, setPriceInfo] = useState<PriceInfo>()
     const [priceRange, setPriceRange] = useState<number[]>([])
-    const [selectedSort, setSelectedSort] = useState<string>("Default Sorting")
+    const [sortType, setSortType] = useState<string>("default")
     const [gridView, setGridView] = useState(true)
 
     useEffect(() => {
@@ -58,10 +58,10 @@ const Shop = (props: any) => {
 
     useEffect(() => {
         getFilteredAuctions()
-    }, [activeCategories, priceRange])
+    }, [activeCategories, priceRange, sortType])
 
     const getFilteredAuctions = () => {
-        AuctionService.getFilteredAuctions(priceRange[0], priceRange[1], activeCategories.map(c => c.id))
+        AuctionService.getFilteredAuctions(priceRange[0], priceRange[1], activeCategories.map(c => c.id), sortType)
             .then(response => {
                 if (response) {
                     setAuctions(response)
@@ -151,9 +151,8 @@ const Shop = (props: any) => {
                 <div className="col-12 col-sm-9 col-lg product-view">
                     <div className="sorting-view">
 						<div>
-							<SortingMenu auctions={auctions} 
-									setAuctions={setAuctions} 
-									activeCategory={activeCategories}
+							<SortingMenu sortType={sortType}
+                                         setSortType={setSortType}
 							/>
 						</div>
 						<div>

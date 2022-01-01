@@ -14,70 +14,26 @@ const SortingMenu = (props: any) => {
 	const onSortClick = (sortType: any) => {
 		switch (sortType) {
 			case "Last Chance":
-				sortAuctionsByOldToNew()
+				setSelectedSort("Last Chance")
+				props.setSortType("oldToNew")
 				break;
 			case "New Arrivals":
-				sortAuctionsByNewToOld()
+				setSelectedSort("NewArrivals")
+				props.setSortType("newToOld")
 				break;
 			case "Lowest Price":
-				sortAuctionsByLowestPrice()
+				setSelectedSort("Lowest Price")
+				props.setSortType("lowestPrice")
 				break;
 			case "Highest Price":
-				sortAuctionsByHighestPrice()
+				setSelectedSort("Highest Price")
+				props.setSortType("highestPrice")
 				break;
 			default:
-				sortAuctionsByDefault()
+				setSelectedSort("Default Sorting")
+				props.setSortType("default")
 				break;
 		}
-	}
-
-	const sortAuctionsByDefault = () => {
-		AuctionService.getAuctionsByDefaultSort(props.auctions.map((a: any) => a.id))
-			.then(response => {
-				if (response) {
-					props.setAuctions(response)
-					setSelectedSort("Default Sorting")
-				}
-			})
-	}
-
-	const sortAuctionsByOldToNew = () => {
-		AuctionService.getAuctionsByOldToNew(props.auctions.map((a: any) => a.id))
-			.then(response => {
-				if (response) {
-					props.setAuctions(response)
-					setSelectedSort("Last Chance")
-				}
-			})
-	}
-
-	const sortAuctionsByNewToOld = () => {
-		AuctionService.getAuctionsByNewToOld(props.auctions.map((a: any) => a.id))
-			.then(response => {
-				if (response) {
-					props.setAuctions(response)
-					setSelectedSort("New Arrivals")
-				}
-			})
-	}
-	const sortAuctionsByLowestPrice = () => {
-		AuctionService.getAuctionsByPriceAsc(props.auctions.map((a: any) => a.id))
-			.then(response => {
-				if (response) {
-					props.setAuctions(response)
-					setSelectedSort("Lowest Price")
-				}
-			})
-	}
-
-	const sortAuctionsByHighestPrice = () => {
-		AuctionService.getAuctionsByPriceDesc(props.auctions.map((a: any) => a.id))
-			.then((response: any) => {
-				if (response) {
-					props.setAuctions(response)
-					setSelectedSort("Highest Price")
-				}
-			})
 	}
 	
     return (
