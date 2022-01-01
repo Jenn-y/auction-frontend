@@ -13,7 +13,7 @@ class AuctionService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the auctions"));
+			.catch(() => console.error("An error occured while fetching the auctions"));
 	}
 
 	getLastChance = () => {
@@ -22,7 +22,7 @@ class AuctionService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the auctions"));
+			.catch(() => console.error("An error occured while fetching the auctions"));
 	}
 
 	getAuctionsByCategoryId = (categoryId: any) => {
@@ -31,7 +31,7 @@ class AuctionService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the auctions"));
+			.catch(() => console.error("An error occured while fetching the auctions"));
 	}
 
 	getItem = (id: any) => {
@@ -40,7 +40,7 @@ class AuctionService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the item."));
+			.catch(() => console.error("An error occured while fetching the item."));
 	}
 
     getActiveAuctionsBySeller = (status: any, sellerId: string, token: string) => {
@@ -94,7 +94,7 @@ class AuctionService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the bidders."));
+			.catch(() => console.error("An error occured while fetching the bidders."));
 	}
 
 	getHighestBid = (auctionId: any) => {
@@ -103,7 +103,7 @@ class AuctionService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the highest bid."));
+			.catch(() => console.error("An error occured while fetching the highest bid."));
 	}
 
     getBidsByBidderId = (bidderId: any, token: string) => {
@@ -130,7 +130,7 @@ class AuctionService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while saving the bid."));
+			.catch(() => console.error("An error occured while saving the bid."));
 	}
 }
 
