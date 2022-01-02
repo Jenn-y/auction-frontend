@@ -27,7 +27,7 @@ const BiddersTable = (bids: any) => {
 											</div>
 											<div className="bidder-details">
 												<div className="bidder-list-title">
-													<h5>{bid.buyer.firstName} {bid.buyer.lastName}</h5>
+													<h5>{bid.bidder.firstName} {bid.bidder.lastName}</h5>
 												</div>
 											</div>
 										</td>

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import AuctionService from 'services/AuctionService'
 import CategoryService from 'services/CategoryService'
 import GridLayout from 'shared/grid_layout/GridLayout'
+import HighestBid from 'utils/helper_components/HighestBid'
 
 import './LandingPage.scss'
 
@@ -83,7 +84,7 @@ const LandingPage = () => {
 							{highlightedProduct ?
 								<>
 									<h4 className="prod-title">{highlightedProduct?.item.name}</h4>
-									<h4 className="price">Start from ${highlightedProduct?.startPrice}</h4>
+									<h4 className="price">Start from ${<HighestBid id={highlightedProduct.id} />}</h4>
 									<p>{highlightedProduct?.item.description}</p>
 									<Link to={`/auctions/${highlightedProduct.id}`} className="bid-btn">BID NOW <FontAwesomeIcon icon={faAngleRight} /></Link>
 								</> : ''

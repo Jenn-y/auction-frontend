@@ -23,7 +23,7 @@ const SingleProduct = (props: any) => {
 	const [item, setItem] = useState<Auction>()
 	const [highestBid, setHighestBid] = useState<Number>()
 	const [bids, setBids] = useState([])
-	const [bid, setBid] = useState({bidAmount: '', bidDate: new Date(), buyer: user, auction: item})
+	const [bid, setBid] = useState({bidAmount: '', bidDate: new Date(), bidder: user, auction: item})
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
@@ -78,7 +78,7 @@ const SingleProduct = (props: any) => {
 			const currentUser = AuthService.getCurrentUser()
 			
 			if (user){
-				bid!.buyer = user
+				bid!.bidder = user
 				bid!.auction = item
 			}
 
@@ -86,7 +86,7 @@ const SingleProduct = (props: any) => {
 				.then(
 					() => {
 						toast.success("Congrats! You are the highest bidder!", { hideProgressBar: true });
-						window.location.reload();
+						window.location.replace("/my_account/bids");
 					}
 				)
 		} else {
