@@ -11,9 +11,9 @@ import LandingPage from "pages/landing_page/LandingPage";
 import { ToastContainer } from "react-toastify";
 import Shop from "components/Shop/Shop";
 import MyAccount from "components/MyAccount/MyAccount";
+import AddAuction from "components/AddAuction/AddAuction";
 
 import 'react-toastify/dist/ReactToastify.css';
-import AddAuction from "components/AddAuction/AddAuction";
 
 const Routes = () => {
 	return (

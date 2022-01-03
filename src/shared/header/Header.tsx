@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faInstagram, faSkype, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react'
 import { Dropdown } from 'react-bootstrap';
@@ -9,10 +10,12 @@ import AuthService from 'services/AuthService'
 import logo from 'assets/logo.png'
 
 import './Header.scss'
+import { ENTER_KEY } from 'constants/KeyCodes';
 
 const Header = () => {
 	const [loggedUser, setIsLogged] = useState(false)
 	const [showDropdown, setShowDropdown] = useState(false)
+	const [searchText, setSearchText] = useState("")
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
@@ -28,6 +31,20 @@ const Header = () => {
 	const onDropdownMenuClick = (section: any) => {
 		window.location.replace(`/my_account/${section}`)
 	}
+
+	const onSearchChange = (e: any) => {
+        setSearchText(e.target.value)
+    }
+
+    const onEnterPressed = (e: any) => {
+        if (e.keyCode === ENTER_KEY) {
+            onSearch()
+        }
+    }
+
+	const onSearch = () => {
+        window.location.replace(`/shop/all?${searchText}`)
+    }
 
 	return (
 		<>
@@ -60,7 +77,10 @@ const Header = () => {
 							<Link to="/"><img src={logo} alt="" /></Link>
 						</div>
 						<div className="col-4">
-							{/* search bar to be added later here */}
+							<div className="searchbar">
+								<input type="text" placeholder="Search ..." value={searchText} onChange={onSearchChange} onKeyDown={onEnterPressed}></input>
+								<FontAwesomeIcon icon={faSearch} onClick={onSearch} />
+							</div>
 						</div>
 						<div className="col-5 wr-header">
 							<span><NavLink to="/" exact activeClassName="active">HOME</NavLink></span>
@@ -71,7 +91,7 @@ const Header = () => {
 										  onMouseOver={() => setShowDropdown(true)}
 								>
 									<Dropdown.Toggle id="dropdown-basic">
-										<NavLink to="/my_account/profile" activeClassName="active">MY ACCOUNT</NavLink>
+										<NavLink to="/my_account/profile" activeClassName="active" id="my-account-navlink">MY ACCOUNT</NavLink>
 									</Dropdown.Toggle>
 
 									<Dropdown.Menu show={showDropdown}>
