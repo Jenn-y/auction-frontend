@@ -139,7 +139,7 @@ const SingleProduct = (props: any) => {
 							{highestBid ?
 								<h4 className="prod-price">Start from <span>${highestBid}+</span></h4> : ''
 							}
-							{loggedUser && user?.email !== item?.seller.email ?
+							{loggedUser && user?.id !== item?.seller.id ?
 								<form onSubmit={handleSubmit}>
 									<div className="bid-section">
 										<input type="text" onChange={handleChange} value={bid?.bidAmount} name="bidAmount" placeholder="Enter your bid" required />
