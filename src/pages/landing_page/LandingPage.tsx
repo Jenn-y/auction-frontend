@@ -76,7 +76,7 @@ const LandingPage = () => {
 											<li key={category.id}><div className="category"><Link to={`/shop/${category.id}`}>{category.name}</Link></div></li>
 										)
 									})} 
-									<li><div className="category"><Link to={`/shop/all`}>All Categories</Link></div></li>
+									<li><div className="category"><Link to="/shop/all">All Categories</Link></div></li>
 								</ul> : '' 
 							}
 						</div>

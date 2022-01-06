@@ -1,0 +1,144 @@
+@import 'utils/Colors.scss';
+
+.stepper-box {
+	max-width: 40%;
+	margin: auto;
+	
+	.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
+		color: $extra-light-gray;
+		border: 1px solid $purple;
+		border-radius: 50%;
+
+		.css-117w1su-MuiStepIcon-text {
+			fill: $purple;
+		}
+	}
+
+	.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+		color: $purple;
+	}
+
+	.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+		color: $purple;
+		border: 1px solid $purple;
+		border-radius: 50%;
+
+		.css-117w1su-MuiStepIcon-text {
+			fill: $white;
+		}
+	}
+
+	.css-vnkopk-MuiStepLabel-iconContainer {
+		padding-right: 0;
+	}
+}
+
+.price-box {
+	display: flex;
+
+	.price-icon {
+		border: 1px solid $border-color;
+		background-color: $extra-light-gray;
+		text-align: center;
+		width: 55px;
+		padding: 10px;
+		border-right: none;
+	}
+	
+	.start-price {
+		max-width: 86%;
+		border-left: none;
+	}
+}
+
+.flex-box {
+	display: flex;
+	flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+
+	:first-of-type[div] {
+		margin-right: 10px;
+	}
+
+	select, input[type=date] {
+		width: 190px;
+		padding: 10px 5px;
+		border: 1px solid $border-color;
+		background-color: $extra-light-gray;
+		outline: none;
+	}
+
+	.categories-list {
+		margin-right: 19px;
+	}
+
+	p {
+		color: $light-gray;
+		padding: 20px 50px;
+		font-size: 16px;
+		line-height: 24px;
+	}
+
+	.c-location {
+		width: 210px;
+		padding-right: 10px;
+		padding-left: 10px;
+	}
+}
+
+.description {
+	padding: 10px 50px;
+	
+	textarea {
+		width: 400px;
+		height: 369px;
+		border-color: $border-color;
+		outline: none;
+    	background-color: $extra-light-gray;
+	}
+
+	p {
+		text-align: right;
+		color: $light-gray;
+	}
+}
+
+.navigation {
+	text-align: center;
+	margin: 15px 0;
+
+	.back-button, .next-button {
+		width: 194px;
+		background-color: $extra-light-gray;
+		font-weight: bold;
+		padding: 5px;
+		letter-spacing: 0.63px;
+	}
+
+	.back-button:hover, .next-button:hover {
+		background-color: $purple;
+		color: $white;
+		transition: all 0.3s;
+	}
+
+	.back-button {
+		margin-right: 10px;
+		border: 2px solid $border-color;
+
+		svg {
+			margin-right: 10px;
+		}
+	}
+
+	.next-button {
+		border: 2px solid $purple;
+
+		svg {
+			margin-left: 10px;
+		}
+	}
+}

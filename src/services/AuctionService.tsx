@@ -79,6 +79,15 @@ class AuctionService {
             .catch(() => console.error("An error occured while fetching the count per price."))
     }
 
+    addAuction = (auction: any, token: string) => {
+        return axios
+            .post(API_URL + "auctions/new", auction, HeaderConfig(token))
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while saving the auction."));
+    }
+
     getBids = (auctionId: any, token: string) => {
         return axios
             .get(API_URL + `bids/${auctionId}`, HeaderConfig(token))
