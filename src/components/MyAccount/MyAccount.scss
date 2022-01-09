@@ -222,6 +222,25 @@
 		transition: all 0.3s;
 	}
 
+	.add-button {
+		width: 130px;
+		border: 1px solid $border-color;
+		color: $purple;
+		background-color: $extra-light-gray;
+		padding: 5px 10px;
+		font-weight: bold;
+
+		svg {
+			margin-right: 10px;
+		}
+	}
+
+	.add-button:hover {
+		background-color: $purple;
+		color: $white;
+		transition: all 0.3s;
+	}
+
 	.table {
 
 		td,

@@ -13,6 +13,7 @@ import Shop from "components/Shop/Shop";
 import MyAccount from "components/MyAccount/MyAccount";
 
 import 'react-toastify/dist/ReactToastify.css';
+import AddAuction from "components/AddAuction/AddAuction";
 
 const Routes = () => {
 	return (
@@ -25,6 +26,7 @@ const Routes = () => {
 				<Route exact path="/about" component={About} />
 				<Route exact path="/privacy_policy" component={Privacy_Policy} />
 				<Route exact path="/auctions/:id" component={SingleProduct} />
+				<Route exact path="/auctions/add/new" component={AddAuction} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Registration} />
 				<Route exact path="/shop/:categoryId" component={Shop} />
