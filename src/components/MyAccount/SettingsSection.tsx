@@ -16,7 +16,7 @@ const SettingsSection = (props: any) => {
     }
 
 	const onDeactivateAccountClick = () => {
-		AuthService.getUser(props.user.id, props.user.authenticationToken)
+		AuthService.getUserById(props.user.id, props.user.authenticationToken)
 			.then(response => {
 				if (response) {
 					setUser(response)
