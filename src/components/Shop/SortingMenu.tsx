@@ -18,7 +18,7 @@ const SortingMenu = (props: any) => {
 				props.setSortType("oldToNew")
 				break;
 			case "New Arrivals":
-				setSelectedSort("NewArrivals")
+				setSelectedSort("New Arrivals")
 				props.setSortType("newToOld")
 				break;
 			case "Lowest Price":

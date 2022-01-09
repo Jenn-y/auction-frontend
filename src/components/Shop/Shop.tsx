@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 
 import AuctionService from 'services/AuctionService';
 import CategoryService from 'services/CategoryService';
-import PriceFilter from './PriceFilter';
-import SubcategoriesList from './SubcategoriesList';
 import { Category } from 'interfaces/Category';
 import { PriceInfo } from 'interfaces/PriceInfo';
 import GridView from 'shared/product_layout/GridView';
 import ListView from 'shared/product_layout/ListView';
+import PriceFilter from './PriceFilter';
+import SubcategoriesList from './SubcategoriesList';
 import SortingMenu from './SortingMenu';
 
 import './Shop.scss';
