@@ -34,9 +34,10 @@ class AuctionService {
             .catch(() => console.log("An error occured while fetching the active auctions"));
     }
 
-    getFilteredAuctions = (minPrice: number, maxPrice: number, categories: any) => {
+    getFilteredAuctions = (search: string, minPrice: number, maxPrice: number, categories: any) => {
+        console.log(API_URL + `auctions/categories/filter?search=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}&categories=${categories}`)
         return axios 
-            .get(API_URL + `auctions/categories/filter?minPrice=${minPrice}&maxPrice=${maxPrice}&categories=${categories}`)
+            .get(API_URL + `auctions/categories/filter?search=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}&categories=${categories}`)
             .then((response: any) => {
                 return response.data;
             })

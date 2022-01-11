@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faInstagram, faSkype, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +15,8 @@ import { ENTER_KEY } from 'constants/KeyCodes';
 const Header = () => {
 	const [loggedUser, setIsLogged] = useState(false)
 	const [showDropdown, setShowDropdown] = useState(false)
-	const [searchText, setSearchText] = useState("")
+	let search = new URLSearchParams(useLocation().search).get("searchText");
+	const [searchText, setSearchText] = useState(search?.toString())
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
@@ -43,7 +44,7 @@ const Header = () => {
     }
 
 	const onSearch = () => {
-        window.location.replace(`/shop/all?${searchText}`)
+        window.location.replace(`/shop/all?searchText=${searchText}`)
     }
 
 	return (

@@ -11,8 +11,11 @@ import { Category } from 'interfaces/Category';
 import { PriceInfo } from 'interfaces/PriceInfo';
 
 import './Shop.scss';
+import { useLocation } from 'react-router-dom';
 
 const Shop = (props: any) => {
+    let search = new URLSearchParams(useLocation().search).get("searchText")
+    const searchText = search ? search : ""
 
     const [auctions, setAuctions] = useState([])
     const [categories, setCategories] = useState([])
@@ -57,7 +60,7 @@ const Shop = (props: any) => {
     }, [activeCategories, priceRange])
 
     const getFilteredAuctions = () => {
-        AuctionService.getFilteredAuctions(priceRange[0], priceRange[1], activeCategories.map(c => c.id))
+        AuctionService.getFilteredAuctions(searchText, priceRange[0], priceRange[1], activeCategories.map(c => c.id))
             .then(response => {
                 if (response) {
                     setAuctions(response)
