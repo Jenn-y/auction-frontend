@@ -12,7 +12,7 @@ class CategoryService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the categories"));
+			.catch(() => console.error("An error occured while fetching the categories"));
 	}
 
 	getAllCategories = () => {
@@ -21,7 +21,7 @@ class CategoryService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the categories"));
+			.catch(() => console.error("An error occured while fetching the categories"));
 	}
 
 	getSubcategoriesByCategoryId = (categoryId: any) => {
@@ -30,7 +30,7 @@ class CategoryService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the subcategories"));
+			.catch(() => console.error("An error occured while fetching the subcategories"));
 	}
 
 	getCategory = (id: any) => {
@@ -39,7 +39,7 @@ class CategoryService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the category."));
+			.catch(() => console.error("An error occured while fetching the category."));
 	}
 }
 

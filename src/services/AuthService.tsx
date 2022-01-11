@@ -44,7 +44,7 @@ class AuthService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while registering the user."));
+			.catch(() => console.error("An error occured while registering the user."));
 	}
 
 	getUser = async (email: string, token: string) => {
@@ -53,7 +53,7 @@ class AuthService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the user."));
+			.catch(() => console.error("An error occured while fetching the user."));
 	}
 
 	getUserById = async (id: string, token: string) => {
@@ -62,7 +62,7 @@ class AuthService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the user."));
+			.catch(() => console.error("An error occured while fetching the user."));
 	}
 
 	isEmailAvailable = async (email: string, token: string) => {
@@ -71,25 +71,25 @@ class AuthService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the user."));
+			.catch(() => console.error("An error occured while checking if email " + email + " is available."));
 	}
 
 	deactivate = (id: string, user: any, token: string) => {
 		return axios
 			.put(API_URL + `users/deactivate/${id}`, user, HeaderConfig(token))
 			.then(() => {
-				return
+				return;
 			})
-			.catch(() => console.log("An error occured while deactivating the account."));
+			.catch(() => console.error("An error occured while deactivating the account."));
 	}
 
 	update = (id: string, user: any, token: string) => {
 		return axios
 			.put(API_URL + `users/update/${id}`, user, HeaderConfig(token))
 			.then(() => {
-				return
+				return;
 			})
-			.catch(() => console.log("An error occured while updating the account."));
+			.catch(() => console.error("An error occured while updating the account."));
 	}
 }
 

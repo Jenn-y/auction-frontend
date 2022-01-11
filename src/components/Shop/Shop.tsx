@@ -112,7 +112,7 @@ const Shop = (props: any) => {
     }
     
     return (
-        <div className="container">
+        <div className="container shop-page">
             <div className="row">
                 <div className="col-12 col-sm-3 col-lg filters">
                     <div className="prod-categories">

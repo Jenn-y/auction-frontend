@@ -14,6 +14,7 @@ import MyAccount from "components/MyAccount/MyAccount";
 import AddAuction from "components/AddAuction/AddAuction";
 
 import 'react-toastify/dist/ReactToastify.css';
+import AddAuction from "components/AddAuction/AddAuction";
 
 const Routes = () => {
 	return (
