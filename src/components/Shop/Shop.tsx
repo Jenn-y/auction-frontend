@@ -1,6 +1,7 @@
 import { faMinus, faPlus, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import AuctionService from 'services/AuctionService';
 import CategoryService from 'services/CategoryService';
@@ -11,7 +12,6 @@ import { Category } from 'interfaces/Category';
 import { PriceInfo } from 'interfaces/PriceInfo';
 
 import './Shop.scss';
-import { Link, useLocation } from 'react-router-dom';
 
 const Shop = (props: any) => {
     let search = new URLSearchParams(useLocation().search).get("searchText")
