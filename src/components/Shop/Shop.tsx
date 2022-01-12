@@ -12,18 +12,21 @@ import { Category } from 'interfaces/Category';
 import { PriceInfo } from 'interfaces/PriceInfo';
 
 import './Shop.scss';
+import { Auction } from 'interfaces/Auction';
 
 const Shop = (props: any) => {
     let search = new URLSearchParams(useLocation().search).get("searchText")
     const searchText = search ? search : ""
 
-    const [auctions, setAuctions] = useState([])
+    const [auctions, setAuctions] = useState<Auction[]>([])
     const [categories, setCategories] = useState([])
     const [activeCategories, setActiveCategories] = useState<Category[]>([])
     const [openedCategories, setOpenedCategories] = useState<Category[]>([])
     const [priceInfo, setPriceInfo] = useState<PriceInfo>()
     const [priceRange, setPriceRange] = useState<number[]>([])
     const [didYouMeanText, setDidYouMeanText] = useState("")
+    const [page, setPage] = useState(0)
+    const [showExploreMoreButton, setShowExploreMoreButton] = useState(true)
 
     useEffect(() => {
         setDidYouMeanText("some")
@@ -62,10 +65,11 @@ const Shop = (props: any) => {
     }, [activeCategories, priceRange])
 
     const getFilteredAuctions = () => {
-        AuctionService.getFilteredAuctions(searchText, priceRange[0], priceRange[1], activeCategories.map(c => c.id))
+        AuctionService.getFilteredAuctions(searchText, priceRange[0], priceRange[1], activeCategories.map(c => c.id), page)
             .then(response => {
                 if (response) {
-                    setAuctions(response)
+                    setAuctions(response.content)
+                    setShowExploreMoreButton(!response.last);
                 }
             })
     }
@@ -115,6 +119,17 @@ const Shop = (props: any) => {
             setActiveCategories(activeCategories.filter(category => category.id !== clickedCategory.id))
             setOpenedCategories(openedCategories.filter(category => category.id !== clickedCategory.id))
         }
+    }
+
+    const nextPage = () => {
+        setPage(page + 1)
+        AuctionService.getFilteredAuctions(searchText, priceRange[0], priceRange[1], activeCategories.map(c => c.id), page + 1)
+            .then(response => {
+                if (response) {
+                    setAuctions([...auctions, ...response.content])
+                    setShowExploreMoreButton(!response.last);
+                }
+            })
     }
     
     return (
@@ -171,6 +186,11 @@ const Shop = (props: any) => {
                                 numOfCols={4}
                             />
                         </div>
+                        {showExploreMoreButton ? 
+                            <div className="expand">
+                                <button className="explore-btn" onClick={nextPage}>Explore More</button>
+                            </div> : ""
+                        }
                     </div>
                 </div>
             </div>
