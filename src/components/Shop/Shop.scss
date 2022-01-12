@@ -1,6 +1,26 @@
 @import 'utils/Colors.scss';
 
 .shop-page {
+
+	.did-you-mean {
+		background-color: $extra-light-gray;
+		color: $light-gray;
+		padding: 15px;
+
+		p {
+			margin-bottom: 0;
+			margin-left: 365px;
+			letter-spacing: 0.63px;
+
+			span {
+				color: $purple;
+				font-weight: bold;
+				margin-left: 10px;
+				cursor: pointer;
+			}
+		}
+	}
+
 	.filters {
 		max-width: 23%;
 	

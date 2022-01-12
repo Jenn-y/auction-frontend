@@ -11,7 +11,7 @@ import { Category } from 'interfaces/Category';
 import { PriceInfo } from 'interfaces/PriceInfo';
 
 import './Shop.scss';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Shop = (props: any) => {
     let search = new URLSearchParams(useLocation().search).get("searchText")
@@ -22,9 +22,11 @@ const Shop = (props: any) => {
     const [activeCategories, setActiveCategories] = useState<Category[]>([])
     const [openedCategories, setOpenedCategories] = useState<Category[]>([])
     const [priceInfo, setPriceInfo] = useState<PriceInfo>()
-    const [priceRange, setPriceRange] = useState<number[]>([]);
+    const [priceRange, setPriceRange] = useState<number[]>([])
+    const [didYouMeanText, setDidYouMeanText] = useState("")
 
     useEffect(() => {
+        setDidYouMeanText("some")
         const categoryId = props.match.params.categoryId
 
         AuctionService.getPriceInfo()
@@ -85,6 +87,10 @@ const Shop = (props: any) => {
         }
     }
 
+    const onDidYouMeanClick = () => {
+        window.location.replace(`/shop/all?searchText=${didYouMeanText}`)
+    }
+
     const getIcon = (category: any) => {
         return isOpenedCategory(category) ? faMinus : faPlus
     }
@@ -112,53 +118,59 @@ const Shop = (props: any) => {
     }
     
     return (
-        <div className="container shop-page">
-            <div className="row">
-                <div className="col-12 col-sm-3 col-lg filters">
-                    <div className="prod-categories">
-                        <h6 className="filter-title">PRODUCT CATEGORIES</h6>
-                        <ul className="cat-list">
-                            {categories.map((category: any) => {
-                                return (
-                                    <li key={category.id}>
-                                        <div id="parent-category" className={isActiveCategory(category) ? 'active' : 'inactive'}>
-                                            <p className="category" onClick={() => handleCategoryClick(category)}>{category.name}</p>
-                                            <div><FontAwesomeIcon icon={getIcon(category)} onClick={() => handleIconClick(category)} size="xs" id="icon"/></div>
-                                        </div>
-                                        {isOpenedCategory(category) || isActiveCategory(category) ? 
-                                            <SubcategoriesList category={category} 
-                                                               activeCategories={activeCategories} 
-                                                               setActiveCategories={setActiveCategories}
-                                                               onRemoveTagClick={onRemoveTagClick}
-                                            /> : ''
-                                        }
-                                    </li>
-                                )})
-                            }
-                        </ul>
-                    </div>
-                    <PriceFilter auctions={auctions}
-                                 priceInfo={priceInfo}
-                                 priceRange={priceRange}
-                                 setPriceRange={setPriceRange} 
-                    />
-                </div>
-                <div className="col-12 col-sm-9 col-lg product-view">
-                    <div className="tag-area">
-                        {activeCategories.map((category: any) => {
-                            return (
-                                <div key={category.id} className="category-tag">{category.name} <span><FontAwesomeIcon icon={faTimesCircle} color="white" onClick={() => onRemoveTagClick(category)} /></span></div>
-                            )
-                        })}
-                        {activeCategories.length > 0 ? 
-                            <div className="clear-tags" onClick={onClearAllClick}>Clear all</div> : ''
-                        }
-                    </div>
-                    <div>
-                        <GridLayout 
-                            auctions={auctions}
-                            numOfCols={4}
+        <div className="shop-page">
+            <div className="did-you-mean">
+                <p>Did you mean? <span onClick={onDidYouMeanClick}>{didYouMeanText}</span></p>
+            </div>
+        
+            <div className="container">
+                <div className="row">
+                    <div className="col-12 col-sm-3 col-lg filters">
+                        <div className="prod-categories">
+                            <h6 className="filter-title">PRODUCT CATEGORIES</h6>
+                            <ul className="cat-list">
+                                {categories.map((category: any) => {
+                                    return (
+                                        <li key={category.id}>
+                                            <div id="parent-category" className={isActiveCategory(category) ? 'active' : 'inactive'}>
+                                                <p className="category" onClick={() => handleCategoryClick(category)}>{category.name}</p>
+                                                <div><FontAwesomeIcon icon={getIcon(category)} onClick={() => handleIconClick(category)} size="xs" id="icon"/></div>
+                                            </div>
+                                            {isOpenedCategory(category) || isActiveCategory(category) ? 
+                                                <SubcategoriesList category={category} 
+                                                                activeCategories={activeCategories} 
+                                                                setActiveCategories={setActiveCategories}
+                                                                onRemoveTagClick={onRemoveTagClick}
+                                                /> : ''
+                                            }
+                                        </li>
+                                    )})
+                                }
+                            </ul>
+                        </div>
+                        <PriceFilter auctions={auctions}
+                                    priceInfo={priceInfo}
+                                    priceRange={priceRange}
+                                    setPriceRange={setPriceRange} 
                         />
+                    </div>
+                    <div className="col-12 col-sm-9 col-lg product-view">
+                        <div className="tag-area">
+                            {activeCategories.map((category: any) => {
+                                return (
+                                    <div key={category.id} className="category-tag">{category.name} <span><FontAwesomeIcon icon={faTimesCircle} color="white" onClick={() => onRemoveTagClick(category)} /></span></div>
+                                )
+                            })}
+                            {activeCategories.length > 0 ? 
+                                <div className="clear-tags" onClick={onClearAllClick}>Clear all</div> : ''
+                            }
+                        </div>
+                        <div>
+                            <GridLayout 
+                                auctions={auctions}
+                                numOfCols={4}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
