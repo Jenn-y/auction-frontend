@@ -88,9 +88,9 @@ class AuctionService {
             .catch(() => console.error("An error occured while saving the auction."));
     }
 
-    getBids = (auctionId: any, token: string) => {
+    getBids = (auctionId: any, token: string, page: number) => {
         return axios
-            .get(API_URL + `bids/${auctionId}`, HeaderConfig(token))
+            .get(API_URL + `bids/${auctionId}?page=${page}`, HeaderConfig(token))
             .then((response: any) => {
                 return response.data;
             })

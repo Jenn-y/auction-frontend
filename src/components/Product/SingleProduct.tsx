@@ -13,6 +13,7 @@ import { validateBidAmount } from 'utils/Validations';
 import { HIGHER_BID_EXIST } from 'constants/ErrorMessages';
 
 import './SingleProduct.scss'
+import { Bid } from 'interfaces/Bid';
 
 const SingleProduct = (props: any) => {
 
@@ -22,11 +23,16 @@ const SingleProduct = (props: any) => {
 	const [user, setUser] = useState<User>()
 	const [item, setItem] = useState<Auction>()
 	const [highestBid, setHighestBid] = useState<Number>()
-	const [bids, setBids] = useState([])
-	const [bid, setBid] = useState({bidAmount: '', bidDate: new Date(), bidder: user, auction: item})
+	const [bids, setBids] = useState<Bid[]>([])
+	// const [bid, setBid] = useState({bidAmount: '', bidDate: new Date(), bidder: user, auction: item})
+	const [bid, setBid] = useState<Bid>()
+	const [page, setPage] = useState(0)
+    const [showExpandTableButton, setShowExpandTableButton] = useState(true)
+	const [currentUser, setCurrentUser] = useState()
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
+		setCurrentUser(AuthService.getCurrentUser())
 		if (user != null) {
 			setIsLogged(true)
 		}
@@ -34,6 +40,7 @@ const SingleProduct = (props: any) => {
 		AuctionService.getItem(props.match.params.id)
 			.then(response => {
 				if (response) {
+					console.log(response)
 					setItem(response)
 				}
 			})
@@ -46,15 +53,27 @@ const SingleProduct = (props: any) => {
 			})
 		
 		if (user) {
-			AuctionService.getBids(props.match.params.id, user.authenticationToken)
+			AuctionService.getBids(props.match.params.id, user.authenticationToken, page)
 				.then(response => {
 					if (response) {
-						setBids(response)
+						setBids(response.content)
+						setShowExpandTableButton(!response.last);
 					}
 				})
 		}
 		if (user) getUser()
 	}, [])
+
+	useEffect(() => {
+		const user = AuthService.getCurrentUser()
+		AuctionService.getBids(props.match.params.id, user.authenticationToken, page)
+			.then(response => {
+				if (response) {
+					setBids([...bids, ...response.content])
+					setShowExpandTableButton(!response.last);
+				}
+			})
+	}, [page])
 
 	const getUser = () => {
 		const currentUser = AuthService.getCurrentUser()
@@ -74,15 +93,19 @@ const SingleProduct = (props: any) => {
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
 
-		if (validateBidAmount(Number(bid.bidAmount), highestBid)){
+		if (validateBidAmount(Number(bid?.bidAmount), highestBid)){
 			const currentUser = AuthService.getCurrentUser()
-			
-			if (user){
-				bid!.bidder = user
-				bid!.auction = item
-			}
 
-			AuctionService.addBid(bid, currentUser.authenticationToken)
+			const finalBidData = {
+				...bid,
+				bidDate: new Date(),
+				bidder: user,
+				auction: item
+			};
+
+			console.log(finalBidData)
+
+			AuctionService.addBid(finalBidData, currentUser.authenticationToken)
 				.then(
 					() => {
 						toast.success("Congrats! You are the highest bidder!", { hideProgressBar: true });
@@ -180,6 +203,11 @@ const SingleProduct = (props: any) => {
 			{loggedUser && bids && user?.email === item?.seller.email ?
 				<BiddersTable
 					bids={bids}
+					setBids={setBids}
+					page={page}
+					setPage={setPage}
+					showExpandTableButton={showExpandTableButton}
+					setShowExpandTableButton={setShowExpandTableButton}
 				/> : ''
 			}
 		</div>
