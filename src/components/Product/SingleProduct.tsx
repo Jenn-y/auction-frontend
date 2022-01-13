@@ -5,15 +5,16 @@ import moment from 'moment'
 import { toast } from 'react-toastify';
 
 import { Auction } from 'interfaces/Auction'
+import { Bid } from 'interfaces/Bid';
+import { User } from 'interfaces/User'
 import AuctionService from 'services/AuctionService'
 import AuthService from 'services/AuthService'
 import BiddersTable from 'components/Bidders/BiddersTable'
-import { User } from 'interfaces/User'
 import { validateBidAmount } from 'utils/Validations';
 import { HIGHER_BID_EXIST } from 'constants/ErrorMessages';
 
 import './SingleProduct.scss'
-import { Bid } from 'interfaces/Bid';
+import GridLayout from 'shared/grid_layout/GridLayout';
 
 const SingleProduct = (props: any) => {
 
@@ -24,15 +25,13 @@ const SingleProduct = (props: any) => {
 	const [item, setItem] = useState<Auction>()
 	const [highestBid, setHighestBid] = useState<Number>()
 	const [bids, setBids] = useState<Bid[]>([])
-	// const [bid, setBid] = useState({bidAmount: '', bidDate: new Date(), bidder: user, auction: item})
 	const [bid, setBid] = useState<Bid>()
 	const [page, setPage] = useState(0)
     const [showExpandTableButton, setShowExpandTableButton] = useState(true)
-	const [currentUser, setCurrentUser] = useState()
+	const [relatedAuctions, setRelatedAuctions] = useState<Auction[]>([])
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
-		setCurrentUser(AuthService.getCurrentUser())
 		if (user != null) {
 			setIsLogged(true)
 		}
@@ -40,7 +39,6 @@ const SingleProduct = (props: any) => {
 		AuctionService.getItem(props.match.params.id)
 			.then(response => {
 				if (response) {
-					console.log(response)
 					setItem(response)
 				}
 			})
@@ -63,6 +61,15 @@ const SingleProduct = (props: any) => {
 		}
 		if (user) getUser()
 	}, [])
+
+	useEffect(() => {
+		AuctionService.getRelatedAuctions(item?.id, item?.category.id)
+			.then(response => {
+				if (response) {
+					setRelatedAuctions(response)
+				}
+			})
+	}, [item])
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
@@ -203,12 +210,16 @@ const SingleProduct = (props: any) => {
 			{loggedUser && bids && user?.email === item?.seller.email ?
 				<BiddersTable
 					bids={bids}
-					setBids={setBids}
-					page={page}
 					setPage={setPage}
 					showExpandTableButton={showExpandTableButton}
-					setShowExpandTableButton={setShowExpandTableButton}
-				/> : ''
+				/> : 
+				<div className="related-auctions">
+					<div className="title">Related auctions</div>
+					<GridLayout 
+						auctions={relatedAuctions}
+						numOfCols={4} 
+					/>
+				</div>
 			}
 		</div>
 	)

@@ -25,6 +25,15 @@ class AuctionService {
             .catch(() => console.error("An error occured while fetching the auctions"));
     }
 
+    getRelatedAuctions = (auctionId: any, categoryId: any) => {
+        return axios
+            .get(API_URL + `auctions/${auctionId}/category/${categoryId}`)
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the related auctions"));
+    }
+
     getActiveAuctionsBySeller = (status: any, sellerId: string, token: string) => {
         return axios
             .get(API_URL + `auctions/${status}/${sellerId}`, HeaderConfig(token))
