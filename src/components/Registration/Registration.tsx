@@ -35,20 +35,14 @@ const Registration = () => {
 				user.password
 			).then(
 				response => {
-					toast.success(JSON.stringify(response.data), { hideProgressBar: true });
-					window.location.replace("/login")
+					if (response.status) {
+						toast.success(JSON.stringify(response.message), { hideProgressBar: true });
+						window.location.replace("/login")
+					} else {
+						toast.error(JSON.stringify(response.message), { hideProgressBar: true });
+					}
 				}
 			)
-				.catch(() => {
-					toast.error("User registration unsuccessful!", { hideProgressBar: true });
-					setErrors({
-						firstName: '',
-						lastName: '',
-						email: EMAIL_UNAVAILABLE,
-						password: '',
-						isError: true
-					})
-				});
 		}
 	};
 

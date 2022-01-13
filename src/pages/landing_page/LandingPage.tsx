@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom'
 
 import AuctionService from 'services/AuctionService'
 import CategoryService from 'services/CategoryService'
-import GridLayout from 'shared/product_layout/GridView'
+import GridView from 'shared/product_layout/GridView'
+import HighestBid from 'utils/helper_components/HighestBid'
 
 import './LandingPage.scss'
 
@@ -75,7 +76,7 @@ const LandingPage = () => {
 											<li key={category.id}><div className="category"><Link to={`/shop/${category.id}`}>{category.name}</Link></div></li>
 										)
 									})} 
-									<li><div className="category"><Link to={`/shop/all`}>All Categories</Link></div></li>
+									<li><div className="category"><Link to="/shop/all">All Categories</Link></div></li>
 								</ul> : '' 
 							}
 						</div>
@@ -83,7 +84,7 @@ const LandingPage = () => {
 							{highlightedProduct ?
 								<>
 									<h4 className="prod-title">{highlightedProduct?.item.name}</h4>
-									<h4 className="price">Start from ${highlightedProduct?.startPrice}</h4>
+									<h4 className="price">Start from ${<HighestBid id={highlightedProduct.id} />}</h4>
 									<p>{highlightedProduct?.item.description}</p>
 									<Link to={`/auctions/${highlightedProduct.id}`} className="bid-btn">BID NOW <FontAwesomeIcon icon={faAngleRight} /></Link>
 								</> : ''
@@ -108,7 +109,7 @@ const LandingPage = () => {
 						</div>
 					</div>
 				</div>
-				<GridLayout 
+				<GridView
 					auctions={auctions}
 					numOfCols={3}
 				/>

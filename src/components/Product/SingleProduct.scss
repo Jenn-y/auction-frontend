@@ -144,3 +144,15 @@
 		color: $black;
 	}
 }
+
+.related-auctions {
+	font-weight: bold;
+	font-size: 20px;
+	color: $purple;
+	text-align: center;
+
+	.title {
+		padding: 10px;
+		border-bottom: 1px solid $border-color;
+	}
+}

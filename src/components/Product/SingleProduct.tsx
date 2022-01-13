@@ -5,14 +5,16 @@ import moment from 'moment'
 import { toast } from 'react-toastify';
 
 import { Auction } from 'interfaces/Auction'
+import { Bid } from 'interfaces/Bid';
+import { User } from 'interfaces/User'
 import AuctionService from 'services/AuctionService'
 import AuthService from 'services/AuthService'
 import BiddersTable from 'components/Bidders/BiddersTable'
-import { User } from 'interfaces/User'
 import { validateBidAmount } from 'utils/Validations';
 import { HIGHER_BID_EXIST } from 'constants/ErrorMessages';
 
 import './SingleProduct.scss'
+import GridLayout from 'shared/grid_layout/GridLayout';
 
 const SingleProduct = (props: any) => {
 
@@ -22,8 +24,11 @@ const SingleProduct = (props: any) => {
 	const [user, setUser] = useState<User>()
 	const [item, setItem] = useState<Auction>()
 	const [highestBid, setHighestBid] = useState<Number>()
-	const [bids, setBids] = useState([])
-	const [bid, setBid] = useState({bidAmount: '', bidDate: new Date(), buyer: user, auction: item})
+	const [bids, setBids] = useState<Bid[]>([])
+	const [bid, setBid] = useState<Bid>()
+	const [page, setPage] = useState(0)
+    const [showExpandTableButton, setShowExpandTableButton] = useState(true)
+	const [relatedAuctions, setRelatedAuctions] = useState<Auction[]>([])
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
@@ -46,15 +51,36 @@ const SingleProduct = (props: any) => {
 			})
 		
 		if (user) {
-			AuctionService.getBids(props.match.params.id, user.authenticationToken)
+			AuctionService.getBids(props.match.params.id, user.authenticationToken, page)
 				.then(response => {
 					if (response) {
-						setBids(response)
+						setBids(response.content)
+						setShowExpandTableButton(!response.last);
 					}
 				})
 		}
 		if (user) getUser()
 	}, [])
+
+	useEffect(() => {
+		AuctionService.getRelatedAuctions(item?.id, item?.category.id)
+			.then(response => {
+				if (response) {
+					setRelatedAuctions(response)
+				}
+			})
+	}, [item])
+
+	useEffect(() => {
+		const user = AuthService.getCurrentUser()
+		AuctionService.getBids(props.match.params.id, user.authenticationToken, page)
+			.then(response => {
+				if (response) {
+					setBids([...bids, ...response.content])
+					setShowExpandTableButton(!response.last);
+				}
+			})
+	}, [page])
 
 	const getUser = () => {
 		const currentUser = AuthService.getCurrentUser()
@@ -74,19 +100,23 @@ const SingleProduct = (props: any) => {
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
 
-		if (validateBidAmount(Number(bid.bidAmount), highestBid)){
+		if (validateBidAmount(Number(bid?.bidAmount), highestBid)){
 			const currentUser = AuthService.getCurrentUser()
-			
-			if (user){
-				bid!.buyer = user
-				bid!.auction = item
-			}
 
-			AuctionService.addBid(bid, currentUser.authenticationToken)
+			const finalBidData = {
+				...bid,
+				bidDate: new Date(),
+				bidder: user,
+				auction: item
+			};
+
+			console.log(finalBidData)
+
+			AuctionService.addBid(finalBidData, currentUser.authenticationToken)
 				.then(
 					() => {
 						toast.success("Congrats! You are the highest bidder!", { hideProgressBar: true });
-						window.location.reload();
+						window.location.replace("/my_account/bids");
 					}
 				)
 		} else {
@@ -139,7 +169,7 @@ const SingleProduct = (props: any) => {
 							{highestBid ?
 								<h4 className="prod-price">Start from <span>${highestBid}+</span></h4> : ''
 							}
-							{loggedUser ?
+							{loggedUser && user?.id !== item?.seller.id ?
 								<form onSubmit={handleSubmit}>
 									<div className="bid-section">
 										<input type="text" onChange={handleChange} value={bid?.bidAmount} name="bidAmount" placeholder="Enter your bid" required />
@@ -180,7 +210,16 @@ const SingleProduct = (props: any) => {
 			{loggedUser && bids && user?.email === item?.seller.email ?
 				<BiddersTable
 					bids={bids}
-				/> : ''
+					setPage={setPage}
+					showExpandTableButton={showExpandTableButton}
+				/> : 
+				<div className="related-auctions">
+					<div className="title">Related auctions</div>
+					<GridLayout 
+						auctions={relatedAuctions}
+						numOfCols={4} 
+					/>
+				</div>
 			}
 		</div>
 	)
