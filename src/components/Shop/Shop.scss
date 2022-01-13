@@ -1,6 +1,7 @@
 @import 'utils/Colors.scss';
 
 .shop-page {
+	margin-bottom: 50px;
 
 	.did-you-mean {
 		background-color: $extra-light-gray;
@@ -170,7 +171,7 @@
 					color: $black;
 					width: 260px;
 					text-align: left;
-					border: 2px solid $border-color;
+					border: 1px solid $border-color;
 					border-radius: 0;
 				}
 	

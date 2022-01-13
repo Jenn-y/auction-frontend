@@ -24,7 +24,7 @@ const ListView = (models: any) => {
 							</Col>
 							<Col xs={8} key={model} className="card-h">
 								<h3>{model.item.name}</h3>
-								<p className="description">{model.item.description}</p>
+								<p className="desc">{model.item.description}</p>
 								<p className="price">Start From ${model.startPrice}</p>
 								<div className="button-box">
 									<button className="button">Watchlist <FontAwesomeIcon icon={faHeart} className="icon" /></button>
