@@ -12,6 +12,7 @@ import { Category } from 'interfaces/Category';
 import { PriceInfo } from 'interfaces/PriceInfo';
 
 import './Shop.scss';
+import ItemService from 'services/ItemService';
 
 const Shop = (props: any) => {
     let search = new URLSearchParams(useLocation().search).get("searchText")
@@ -26,7 +27,6 @@ const Shop = (props: any) => {
     const [didYouMeanText, setDidYouMeanText] = useState("")
 
     useEffect(() => {
-        setDidYouMeanText("some")
         const categoryId = props.match.params.categoryId
 
         AuctionService.getPriceInfo()
@@ -55,6 +55,9 @@ const Shop = (props: any) => {
             })
 		
 		getFilteredAuctions()
+        if (search && auctions.length === 0) {
+            getDidYouMeanString()
+        }
     }, [])
 
     useEffect(() => {
@@ -85,6 +88,15 @@ const Shop = (props: any) => {
         } else {
             setOpenedCategories(openedCategories.filter((category: any) => category.id !== clickedCategory.id))
         }
+    }
+
+    const getDidYouMeanString = () => {
+        ItemService.getDidYouMeanString(searchText, 1)
+            .then(response => {
+                if (response) {
+                    setDidYouMeanText(response)
+                }
+            })
     }
 
     const onDidYouMeanClick = () => {
@@ -119,9 +131,11 @@ const Shop = (props: any) => {
     
     return (
         <div className="shop-page">
-            <div className="did-you-mean">
-                <p>Did you mean? <span onClick={onDidYouMeanClick}>{didYouMeanText}</span></p>
-            </div>
+            {search && auctions.length === 0 ? 
+                <div className="did-you-mean">
+                    <p>Did you mean? <span onClick={onDidYouMeanClick}>{didYouMeanText}</span></p>
+                </div> : ""
+            }
         
             <div className="container">
                 <div className="row">
