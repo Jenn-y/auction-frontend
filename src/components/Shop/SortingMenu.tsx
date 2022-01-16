@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 
-import AuctionService from 'services/AuctionService';
-
 const SortingMenu = (props: any) => {
 
 	const [selectedSort, setSelectedSort] = useState<string>("Default Sorting")

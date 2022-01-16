@@ -65,11 +65,12 @@ const Shop = (props: any) => {
     }, [])
 
     useEffect(() => {
+        setPage(0)
         getFilteredAuctions()
     }, [activeCategories, priceRange, sortType])
 
     const getFilteredAuctions = () => {
-        AuctionService.getFilteredAuctions(searchText, priceRange[0], priceRange[1], activeCategories.map(c => c.id), sortType, page)
+        AuctionService.getFilteredAuctions(searchText, priceRange[0], priceRange[1], activeCategories.map(c => c.id), sortType, 0)
             .then(response => {
                 if (response) {
                     setAuctions(response.content)
