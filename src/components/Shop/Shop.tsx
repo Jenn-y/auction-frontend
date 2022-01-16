@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import AuctionService from 'services/AuctionService';
 import CategoryService from 'services/CategoryService';
+import ItemService from 'services/ItemService';
 import GridLayout from 'shared/grid_layout/GridLayout';
 import PriceFilter from './PriceFilter';
 import SubcategoriesList from './SubcategoriesList';
@@ -12,7 +13,6 @@ import { Category } from 'interfaces/Category';
 import { PriceInfo } from 'interfaces/PriceInfo';
 
 import './Shop.scss';
-import ItemService from 'services/ItemService';
 
 const Shop = (props: any) => {
     let search = new URLSearchParams(useLocation().search).get("searchText")
