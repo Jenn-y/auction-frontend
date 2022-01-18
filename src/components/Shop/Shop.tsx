@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import AuctionService from 'services/AuctionService';
 import CategoryService from 'services/CategoryService';
+import ItemService from 'services/ItemService';
 import GridLayout from 'shared/grid_layout/GridLayout';
 import PriceFilter from './PriceFilter';
 import SubcategoriesList from './SubcategoriesList';
@@ -29,7 +30,6 @@ const Shop = (props: any) => {
     const [showExploreMoreButton, setShowExploreMoreButton] = useState(true)
 
     useEffect(() => {
-        setDidYouMeanText("some")
         const categoryId = props.match.params.categoryId
 
         AuctionService.getPriceInfo()
@@ -58,6 +58,9 @@ const Shop = (props: any) => {
             })
 		
 		getFilteredAuctions()
+        if (search && auctions.length === 0) {
+            getDidYouMeanString()
+        }
     }, [])
 
     useEffect(() => {
@@ -89,6 +92,15 @@ const Shop = (props: any) => {
         } else {
             setOpenedCategories(openedCategories.filter((category: any) => category.id !== clickedCategory.id))
         }
+    }
+
+    const getDidYouMeanString = () => {
+        ItemService.getDidYouMeanString(searchText, 1)
+            .then(response => {
+                if (response) {
+                    setDidYouMeanText(response)
+                }
+            })
     }
 
     const onDidYouMeanClick = () => {
@@ -134,9 +146,11 @@ const Shop = (props: any) => {
     
     return (
         <div className="shop-page">
-            <div className="did-you-mean">
-                <p>Did you mean? <span onClick={onDidYouMeanClick}>{didYouMeanText}</span></p>
-            </div>
+            {search && auctions.length === 0 ? 
+                <div className="did-you-mean">
+                    <p>Did you mean? <span onClick={onDidYouMeanClick}>{didYouMeanText}</span></p>
+                </div> : ""
+            }
         
             <div className="container">
                 <div className="row">

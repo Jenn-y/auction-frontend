@@ -48,6 +48,12 @@
 				cursor: pointer;
 				z-index: 10;
 			}
+
+			#close-icon {
+				color: $border-color;
+				margin-top: 8px;
+				margin-left: 18px;
+			}
 		}
 	}
 }
