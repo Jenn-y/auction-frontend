@@ -107,7 +107,7 @@ const SellerSection = (props: any) => {
 						})}
 						{auctions.length === 0 ? 
 							<td colSpan={7} className="no-items">
-								<img alt="shopping bag" src={shoppingCart} className="c-selling-item-list__shopping-bag-image" />
+								<img alt="shopping bag" src={shoppingCart} />
 								<p>You do not have any 
 									{active ? ' scheduled items for sale.' : ' sold items.'}
 								</p>

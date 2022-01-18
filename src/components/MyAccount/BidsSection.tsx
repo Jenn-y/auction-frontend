@@ -7,6 +7,8 @@ import { Bid } from 'interfaces/Bid';
 import AuctionService from 'services/AuctionService';
 import HighestBid from 'shared/helper_components/HighestBid';
 import NoOfBids from 'shared/helper_components/NoOfBids';
+import showPayButton from 'utils/helper_components/ShowPaymentOption';
+import ShowPaymentOption from 'utils/helper_components/ShowPaymentOption';
 
 const BidsSection = (props: any) => {
 	const [bids, setBids] = useState([])
@@ -60,14 +62,18 @@ const BidsSection = (props: any) => {
 										<HighestBid auctionId={bid.auction.id} bidAmount={bid.bidAmount} />
 									</td>
 									<td>
-										<Link to={`/auctions/${bid.auction.id}`} >VIEW</Link>
+										<ShowPaymentOption 
+											price={bid.bidAmount}
+											auctionId={bid.auction.id}
+											endDate={bid.auction.endDate}
+										/>
 									</td>
 								</tr>
 							)
 						})}
 						{bids.length === 0 ? 
 							<td colSpan={7} className="no-items">
-								<img alt="shopping bag" src={shoppingCart} className="c-selling-item-list__shopping-bag-image" />
+								<img alt="shopping bag" src={shoppingCart} />
 								<p>You do not have any items you bid on.</p>
 								<button><Link to="/shop/all">START BIDDING</Link></button>
 							</td> : ''
