@@ -1,6 +1,8 @@
 import { DATE_OF_BIRTH_EMPTY, EMAIL_EMPTY, EMAIL_INVALID, FIRST_NAME_EMPTY, GENDER_EMPTY, LAST_NAME_EMPTY, PASSWORD_EMPTY, PASSWORD_LENGTH, PHONE_NUMBER_EMPTY } from "constants/ErrorMessages";
 import { LoginError } from "interfaces/LoginError";
+import { PaymentDetails } from "interfaces/PaymentDetails";
 import { RegistrationError } from "interfaces/RegistrationError";
+import { ShippingDetails } from "interfaces/ShippingDetails";
 import moment from "moment";
 
 export const validateEmail = (email: string) => {
@@ -191,4 +193,22 @@ export const validateUserUpdateInfo = (userData: any) => {
 
 export const validateBidAmount = (bidAmount: number, highestBid: any) => {
 	return bidAmount > highestBid;
+}
+
+export const validateRequiredFields = (shippingInfo: any, paymentInfo: any) => {
+	if (shippingInfo === null || paymentInfo === null) {
+		return false
+	}
+	else if (!paymentInfo.cardName || paymentInfo.cardName.length === 0
+		|| !paymentInfo.cardNumber || !paymentInfo.expirationDate
+		|| !paymentInfo.verificationCode || paymentInfo.verificationCode.length === 0
+		|| !shippingInfo.streetName || shippingInfo.streetName.length === 0
+		|| !shippingInfo.city || shippingInfo.city.length === 0
+		|| !shippingInfo.zipCode || shippingInfo.zipCode.length === 0
+		|| !shippingInfo.country || shippingInfo.country.length === 0
+		|| !shippingInfo.state || shippingInfo.state.length === 0) {
+			return false
+		}
+	
+	return true
 }

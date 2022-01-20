@@ -87,7 +87,6 @@
 		}
 
 		.input_wrap {
-			// position: relative;
 			padding: 10px 50px;
 
 			.flex-date {
@@ -342,7 +341,7 @@
 			font-weight: bold;
 		}
 
-		a {
+		a, .pay-btn {
 			text-decoration: none;
 			padding: 5px 10px;
 			border: 1px solid $border-color;

@@ -1,0 +1,176 @@
+@import 'utils/Colors.scss';
+
+.payment-modal {
+
+	.modal-header {
+		background-color: $extra-light-gray;
+		text-align: center;
+
+		.modal-title {
+			font-size: 22px;
+			line-height: 27px;
+			color: $shadow;
+			text-transform: uppercase;
+		}
+	}
+
+	.table {
+
+		td,
+		th {
+			padding: 15px;
+			display: table-cell;
+		}
+
+		border: 1px solid $border-color;
+		padding: 20px;
+
+		tbody,
+		td,
+		tfoot,
+		th,
+		thead,
+		tr {
+			border: none;
+			vertical-align: middle;
+		}
+
+		thead {
+			background-color: $extra-light-gray;
+
+			th {
+				font-weight: 400;
+				font-size: 18px;
+				line-height: 27px;
+				color: $black;
+				border-bottom: none;
+			}
+		}
+	}
+
+	.expiration-date .input_wrap .input_field #dropdown-month select {
+		margin-right: 25px;
+	}
+
+	.input_wrap {
+		padding: 10px 50px;
+
+		.flex-date {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+
+			.cvv {
+				width: 150px;
+				height: 45px;
+			}
+
+			.cvv-label {
+				margin-right: 70px;
+			}
+		}
+
+		.input_wrap:last-child {
+			margin-bottom: 0;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+			font-size: 18px;
+			line-height: 27px;
+			color: $black;
+		}
+
+		.input, #dropdown-month select, #dropdown-day select, #dropdown-year select {
+			padding: 12px;
+			width: 100%;
+			font-size: 16px;
+			border: 1px solid $border-color;
+			outline: none;
+			background-color: $extra-light-gray;
+		}
+
+		#dropdown-month select, #dropdown-day select, #dropdown-year select {
+			width: 150px;
+		}
+
+		.credit-input {
+			p {
+				text-align: left;
+				margin-bottom: 10px;
+			}
+
+			.credit-cards img {
+				width: 50px;
+				height: 35px;
+				margin-right: 10px;
+			}
+		}
+
+		.radio-input {
+
+			input[type=radio] {
+				margin-right: 20px;
+				appearance: none;
+				background-color: $white;
+				font: inherit;
+				color: currentColor;
+				width: 1.15em;
+				height: 1.15em;
+				border: 0.15em solid $purple;
+				border-radius: 50%;
+				transform: translateY(-0.075em);
+				display: inline-grid;
+				  place-content: center;
+			}
+
+			input[type=radio]::before {
+				content: "";
+				width: 0.65em;
+				height: 0.65em;
+				border-radius: 50%;
+				transform: scale(0);
+				transition: 120ms transform ease-in-out;
+				box-shadow: inset 1em 1em $purple;
+				background-color: CanvasText;
+			}
+
+			input[type=radio]:checked::before {
+				transform: scale(1);
+			}
+
+			.radio-input + .radio-input {
+				margin-top: 1em;
+			}
+		}
+	}
+
+	.modal-footer {
+		justify-content: center;
+
+		.submit {
+			text-align: center;
+	
+			.submit-btn {
+				background-color: $white;
+				border: 1px solid $purple;
+				color: $purple;
+				width: 250px;
+				border-radius: 0;
+				font-weight: bold;
+			}
+	
+			.submit-btn:hover {
+				background-color: $purple;
+				color: $white;
+				transition: all 0.5s;
+			}
+		}
+	}
+
+	span {
+		color: $error-red;
+		font-weight: 500;
+	}
+}

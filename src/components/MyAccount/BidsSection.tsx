@@ -7,13 +7,16 @@ import { Bid } from 'interfaces/Bid';
 import AuctionService from 'services/AuctionService';
 import HighestBid from 'shared/helper_components/HighestBid';
 import NoOfBids from 'shared/helper_components/NoOfBids';
-import showPayButton from 'utils/helper_components/ShowPaymentOption';
 import ShowPaymentOption from 'utils/helper_components/ShowPaymentOption';
+import PaymentModal from './PaymentModal';
+import AuthService from 'services/AuthService';
 
 const BidsSection = (props: any) => {
+	const [user, setUser] = useState()
 	const [bids, setBids] = useState([])
 
 	useEffect(() => {
+		setUser(AuthService.getCurrentUser())
 		AuctionService.getBidsByBidderId(props.user.id, props.user.authenticationToken)
 			.then(response => {
 				if (response) {
@@ -66,6 +69,7 @@ const BidsSection = (props: any) => {
 											price={bid.bidAmount}
 											auctionId={bid.auction.id}
 											endDate={bid.auction.endDate}
+											user={user}
 										/>
 									</td>
 								</tr>
