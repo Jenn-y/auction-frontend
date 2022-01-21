@@ -166,23 +166,35 @@ const SingleProduct = (props: any) => {
 						</div>
 						<div className="col-12 col-sm-8 col-lg">
 							<h1 className="prod-title">{item?.item.name}</h1>
-							{highestBid ?
-								<h4 className="prod-price">Start from <span>${highestBid}+</span></h4> : ''
+							{highestBid && item?.status != 'SOLD' ?
+								<h4 className="prod-price">Start from <span>${highestBid}+</span></h4> : 
+								<div className="sold-item">
+									<p>This item has been sold.</p>
+								</div>
 							}
-							{loggedUser && user?.id !== item?.seller.id ?
+							{loggedUser && user?.id !== item?.seller.id && item?.status != 'SOLD' && new Date(item?.endDate).getTime() > Date.now() ?
 								<form onSubmit={handleSubmit}>
 									<div className="bid-section">
 										<input type="text" onChange={handleChange} value={bid?.bidAmount} name="bidAmount" placeholder="Enter your bid" required />
 										<button className="bid-btn" type="submit">PLACE BID <FontAwesomeIcon icon={faAngleRight} /></button>
 									</div>
-								</form> : ''
+								</form> : 
+								<>
+									{new Date(item?.endDate).getTime() < Date.now() && item?.status != 'SOLD' ?
+										<div className="auction-end">
+											<p>This auction has ended {moment(item.endDate).fromNow()}.</p>
+										</div> : ''
+									}
+								</>
 							}
 							<div className="bid-stats">
 								{highestBid ?
 									<p>Highest bid: <span>${highestBid}</span></p> : ''
 								}
 								<p>No of bids: <span>{bids.length}</span></p>
-								<p>Time left: <span>{moment(item.endDate).fromNow()}</span></p>
+								{new Date(item?.endDate).getTime() > Date.now() ?
+									<p>Time left: <span>{moment(item.endDate).fromNow()}</span></p> : ''
+								}
 							</div>
 							<div className="watchlist">
 								<button>Watchlist <FontAwesomeIcon icon={faHeart} className="heart" /></button>
