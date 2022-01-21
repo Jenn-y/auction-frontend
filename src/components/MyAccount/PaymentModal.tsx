@@ -54,19 +54,6 @@ const PaymentModal = (props: any) =>  {
 			},
             shippingDetails: shippingInfo
         }
-
-		// if (!errors && user && token) {
-		// 	AuthService.update(
-		// 		user?.id,
-		// 		finalUserData,
-		// 		token
-		// 	).then(
-		// 		() => {
-		// 			toast.success("Edit sucessful!", { hideProgressBar: true });
-		// 			window.location.replace("/my_account/profile")
-		// 		}
-		// 	)
-		// }
 		
 		const cardElement = elements?.getElement(CardNumberElement)
 		if (cardElement) {
