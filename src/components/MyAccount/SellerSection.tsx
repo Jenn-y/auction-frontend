@@ -29,8 +29,8 @@ const SellerSection = (props: any) => {
 			})
 	}
 
-	const getInactiveAuctions = () => {
-		AuctionService.getActiveAuctionsBySeller('INACTIVE', props.user.id, props.user.authenticationToken)
+	const getSoldAuctions = () => {
+		AuctionService.getActiveAuctionsBySeller('SOLD', props.user.id, props.user.authenticationToken)
 			.then(response => {
 				if (response) {
 					setAuctions(response)
@@ -48,7 +48,7 @@ const SellerSection = (props: any) => {
 			case "sold":
 				setActive(false)
 				setSold(true)
-				getInactiveAuctions()
+				getSoldAuctions()
 				break;
 		}
 	}
