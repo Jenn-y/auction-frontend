@@ -8,7 +8,6 @@ import AuctionService from 'services/AuctionService';
 import HighestBid from 'shared/helper_components/HighestBid';
 import NoOfBids from 'shared/helper_components/NoOfBids';
 import ShowPaymentOption from 'utils/helper_components/ShowPaymentOption';
-import PaymentModal from './PaymentModal';
 import AuthService from 'services/AuthService';
 
 const BidsSection = (props: any) => {
@@ -67,8 +66,7 @@ const BidsSection = (props: any) => {
 									<td>
 										<ShowPaymentOption 
 											price={bid.bidAmount}
-											auctionId={bid.auction.id}
-											endDate={bid.auction.endDate}
+											auction={bid.auction}
 											user={user}
 										/>
 									</td>

@@ -1,22 +1,31 @@
+import { CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useStripe } from '@stripe/react-stripe-js'
+import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react'
+import Modal from 'react-bootstrap/Modal'
+
 import { PaymentDetails } from 'interfaces/PaymentDetails'
 import { ShippingDetails } from 'interfaces/ShippingDetails'
 import { User } from 'interfaces/User'
-import moment from 'moment'
-import { useEffect, useState } from 'react'
-import Modal from 'react-bootstrap/Modal'
-import { MonthPicker, YearPicker } from 'react-dropdown-date'
 import AuthService from 'services/AuthService'
+import PaymentService from 'services/PaymentService'
 import { validateRequiredFields } from 'utils/Validations'
 
 import './PaymentModal.scss';
 
 const PaymentModal = (props: any) =>  {
 	const [user, setUser] = useState<User>()
+	const [token, setToken] = useState<string>()
 	const [paymentInfo, setPaymentInfo] = useState<PaymentDetails>()
 	const [shippingInfo, setShippingInfo] = useState<ShippingDetails>()
 	const [errors, setErrors] = useState(false)
+	const elements = useElements();
+    const stripe = useStripe();
 
 	useEffect(() => {
+		if (!elements || !stripe) {
+            return;
+        }
+
 		AuthService.getUserById(props.user.id, props.user.authenticationToken)
 		.then(response => {
 			if (response) {
@@ -26,23 +35,78 @@ const PaymentModal = (props: any) =>  {
 				setErrors(validateRequiredFields(response.shippingDetails, response.paymentDetails))
 			}
 		})
+
+		setToken(AuthService.getCurrentUser().authenticationToken)
 	}, [])
 
 	const handleClose = () => {
 		props.setOpenModal(false)
 	}
 
-	const handleSubmit = (e: any) => {
+	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 
 		const finalUserData = {
             ...user,
-            paymentDetails: paymentInfo,
+            paymentDetails: {
+				...paymentInfo,
+				paypal: false
+			},
             shippingDetails: shippingInfo
         }
 
-		console.log(finalUserData)
-		handleClose()
+		// if (!errors && user && token) {
+		// 	AuthService.update(
+		// 		user?.id,
+		// 		finalUserData,
+		// 		token
+		// 	).then(
+		// 		() => {
+		// 			toast.success("Edit sucessful!", { hideProgressBar: true });
+		// 			window.location.replace("/my_account/profile")
+		// 		}
+		// 	)
+		// }
+		
+		const cardElement = elements?.getElement(CardNumberElement)
+		if (cardElement) {
+			const result = await stripe?.createPaymentMethod({
+				type: 'card',
+				card: cardElement,
+				billing_details: {
+					email: user?.email,
+					name: user?.firstName,
+					address: {
+						city: shippingInfo?.city,
+						country: shippingInfo?.country,
+            			line1: shippingInfo?.streetName,
+						postal_code: shippingInfo?.zipCode,
+						state: shippingInfo?.state,
+					},
+				}
+			})
+
+			if(!result?.error && token) {
+				const payment = {
+					amount: props.price,
+					date: Date.now(),
+					paymentMethod: result?.paymentMethod.id,
+					buyer: finalUserData,
+					auction: props.auction
+				};
+
+				toast.info("Processing...", { hideProgressBar: true });
+				PaymentService.processPayment(payment, token)
+				.then(response => {
+					if (response && response === 'succeeded') {
+						toast.success("Payment successful!", { hideProgressBar: true });
+						window.location.replace("/my_account/bids");
+					} else {
+						toast.error("Payment invalid!", { hideProgressBar: true });
+					}
+				})
+			}
+		}
 	}
 
 	const handleShippingInfoChange = (e: any) => {
@@ -55,40 +119,11 @@ const PaymentModal = (props: any) =>  {
 		setErrors(validateRequiredFields(shippingInfo, paymentInfo))
 	}
 
-	const handlePaypalChange = (paypal: any) => {
-		setPaymentInfo(Object.assign({}, paymentInfo, { paypal: paypal }))
-		setErrors(validateRequiredFields(shippingInfo, paymentInfo))
-	}
-
-	const handleExpirationYearChange = (e: any) => {
-		let newDate = new Date()
-		newDate.setMonth(getMonth())
-		newDate.setFullYear(e)
-		setPaymentInfo(Object.assign({}, paymentInfo, { expirationDate: newDate }))
-		setErrors(validateRequiredFields(shippingInfo, paymentInfo))
-	}
-
-	const handleExpirationMonthChange = (e: any) => {
-		let newDate = new Date();
-		newDate.setMonth(e)
-		newDate.setFullYear(getYear())
-		setPaymentInfo(Object.assign({}, paymentInfo, { expirationDate: newDate }))
-		setErrors(validateRequiredFields(shippingInfo, paymentInfo))
-	}
-
-	const getMonth = () => {
-		return Number(moment(paymentInfo?.expirationDate).format("MM")) - 1
-	}
-
-	const getYear = () => {
-		return Number(moment(paymentInfo?.expirationDate).format("YYYY"))
-	}
-
 	return (
 	  <Modal size="lg" show={true} onHide={handleClose} contentClassName="payment-modal">
 		<form onSubmit={handleSubmit}>
 			<Modal.Header closeButton>
-			<Modal.Title>Payment Processing</Modal.Title>
+			<Modal.Title>Payment</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<table className="table">
@@ -102,19 +137,7 @@ const PaymentModal = (props: any) =>  {
 							<div className="row">
 								<div className="col-12 col-sm-12 col-lg">
 									<div className="input_wrap">
-										<div className="radio-input">
-											<label onClick={() => handlePaypalChange(true)}>
-												<input type="radio" checked={paymentInfo?.paypal}></input>
-												PayPal
-											</label>
-										</div>
 										<div className="credit-input">
-											<div className="radio-input">
-												<label onClick={() => handlePaypalChange(false)}>
-													<input type="radio" checked={!paymentInfo?.paypal}></input>
-													Credit Card
-												</label>
-											</div>
 											<p>We accept the following credit cards:</p>
 											<div className="credit-cards">
 												<img alt="visa" src="https://labvital.com.br/wp-content/plugins/woocommerce/assets/images/icons/credit-cards/visa.svg"></img>
@@ -132,35 +155,22 @@ const PaymentModal = (props: any) =>  {
 									</div>
 									<div className="input_wrap">
 										<label>Card number</label>
-										<div className="input_field">
-											<input onChange={handlePaymentInfoChange} value={paymentInfo?.cardNumber} name="cardNumber" type="text" className="input" placeholder="Enter card number" />
+										<div className="input">
+											<CardNumberElement />
 										</div>
 									</div>
 									<div className="expiration-date">
-										<div className="input_wrap">
-											<div className="flex-date">
+										<div className="flex-date">
+											<div className="input_wrap">
 												<label>Expiration Date</label>
-												<label className='cvv-label'>CVC/CVV</label>
+												<div className="input">
+													<CardExpiryElement />
+												</div>
 											</div>
-											<div className="input_field flex-date">
-												<div>
-													<MonthPicker value={getMonth()}
-																defaultValue={'MM'} 
-																onChange={handleExpirationMonthChange}
-																endYearGiven
-																year={getYear()}
-																classes={'input cvv'}/>
-												</div>
-												<div>
-													<YearPicker start={new Date().getFullYear()} 
-																end={new Date().getFullYear() + 10} 
-																value={getYear()} 
-																defaultValue={'YYYY'} 
-																onChange={handleExpirationYearChange} 
-																classes={'input cvv'}/>
-												</div>
-												<div>
-													<input onChange={handlePaymentInfoChange} value={paymentInfo?.verificationCode} name="verificationCode" type="text" className="input cvv" placeholder="Enter CVC/CVV" />
+											<div className="input_wrap">
+												<label className='cvv-label'>CVC/CVV</label>
+												<div className="input">
+													<CardCvcElement />
 												</div>
 											</div>
 										</div>

@@ -48,28 +48,9 @@
 		}
 	}
 
-	.expiration-date .input_wrap .input_field #dropdown-month select {
-		margin-right: 25px;
-	}
-
 	.input_wrap {
 		padding: 10px 50px;
-
-		.flex-date {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-
-			.cvv {
-				width: 150px;
-				height: 45px;
-			}
-
-			.cvv-label {
-				margin-right: 70px;
-			}
-		}
-
+	
 		.input_wrap:last-child {
 			margin-bottom: 0;
 		}
@@ -82,17 +63,13 @@
 			color: $black;
 		}
 
-		.input, #dropdown-month select, #dropdown-day select, #dropdown-year select {
+		.input {
 			padding: 12px;
 			width: 100%;
 			font-size: 16px;
 			border: 1px solid $border-color;
 			outline: none;
 			background-color: $extra-light-gray;
-		}
-
-		#dropdown-month select, #dropdown-day select, #dropdown-year select {
-			width: 150px;
 		}
 
 		.credit-input {
@@ -107,42 +84,15 @@
 				margin-right: 10px;
 			}
 		}
+	}
 
-		.radio-input {
+	.flex-date {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
 
-			input[type=radio] {
-				margin-right: 20px;
-				appearance: none;
-				background-color: $white;
-				font: inherit;
-				color: currentColor;
-				width: 1.15em;
-				height: 1.15em;
-				border: 0.15em solid $purple;
-				border-radius: 50%;
-				transform: translateY(-0.075em);
-				display: inline-grid;
-				  place-content: center;
-			}
-
-			input[type=radio]::before {
-				content: "";
-				width: 0.65em;
-				height: 0.65em;
-				border-radius: 50%;
-				transform: scale(0);
-				transition: 120ms transform ease-in-out;
-				box-shadow: inset 1em 1em $purple;
-				background-color: CanvasText;
-			}
-
-			input[type=radio]:checked::before {
-				transform: scale(1);
-			}
-
-			.radio-input + .radio-input {
-				margin-top: 1em;
-			}
+		div {
+			width: 100%;
 		}
 	}
 

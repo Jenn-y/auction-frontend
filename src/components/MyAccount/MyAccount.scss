@@ -341,7 +341,7 @@
 			font-weight: bold;
 		}
 
-		a, .pay-btn {
+		a, .pay-btn, .paid-btn {
 			text-decoration: none;
 			padding: 5px 10px;
 			border: 1px solid $border-color;
@@ -351,8 +351,15 @@
 
 		.pay-btn {
 			color: $white;
-			background-color: $green;
+			background-color: $purple;
 			padding: 5px 17px;
+		}
+
+		.paid-btn {
+			background-color: $green;
+			color: $white;
+			padding: 5px 15px;
+			cursor: default;
 		}
 	}
 
