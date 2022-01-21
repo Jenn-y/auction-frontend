@@ -110,8 +110,6 @@ const SingleProduct = (props: any) => {
 				auction: item
 			};
 
-			console.log(finalBidData)
-
 			AuctionService.addBid(finalBidData, currentUser.authenticationToken)
 				.then(
 					() => {
