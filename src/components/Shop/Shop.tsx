@@ -1,4 +1,4 @@
-import { faMinus, faPlus, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faTimesCircle, faTh, faThList } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -6,14 +6,16 @@ import { useLocation } from 'react-router-dom';
 import AuctionService from 'services/AuctionService';
 import CategoryService from 'services/CategoryService';
 import ItemService from 'services/ItemService';
-import GridLayout from 'shared/grid_layout/GridLayout';
-import PriceFilter from './PriceFilter';
-import SubcategoriesList from './SubcategoriesList';
+import { Auction } from 'interfaces/Auction';
 import { Category } from 'interfaces/Category';
 import { PriceInfo } from 'interfaces/PriceInfo';
+import GridView from 'shared/product_layout/GridView';
+import ListView from 'shared/product_layout/ListView';
+import PriceFilter from './PriceFilter';
+import SubcategoriesList from './SubcategoriesList';
+import SortingMenu from './SortingMenu';
 
 import './Shop.scss';
-import { Auction } from 'interfaces/Auction';
 
 const Shop = (props: any) => {
     let search = new URLSearchParams(useLocation().search).get("searchText")
@@ -25,6 +27,8 @@ const Shop = (props: any) => {
     const [openedCategories, setOpenedCategories] = useState<Category[]>([])
     const [priceInfo, setPriceInfo] = useState<PriceInfo>()
     const [priceRange, setPriceRange] = useState<number[]>([])
+    const [sortType, setSortType] = useState<string>("default")
+    const [gridView, setGridView] = useState(true)
     const [didYouMeanText, setDidYouMeanText] = useState("")
     const [page, setPage] = useState(0)
     const [showExploreMoreButton, setShowExploreMoreButton] = useState(true)
@@ -64,11 +68,12 @@ const Shop = (props: any) => {
     }, [])
 
     useEffect(() => {
+        setPage(0)
         getFilteredAuctions()
-    }, [activeCategories, priceRange])
+    }, [activeCategories, priceRange, sortType])
 
     const getFilteredAuctions = () => {
-        AuctionService.getFilteredAuctions(searchText, priceRange[0], priceRange[1], activeCategories.map(c => c.id), page)
+        AuctionService.getFilteredAuctions(searchText, priceRange[0], priceRange[1], activeCategories.map(c => c.id), sortType, 0)
             .then(response => {
                 if (response) {
                     setAuctions(response.content)
@@ -102,6 +107,9 @@ const Shop = (props: any) => {
                 }
             })
     }
+    const handleViewClick = () => {
+		setGridView(!gridView)
+	}
 
     const onDidYouMeanClick = () => {
         window.location.replace(`/shop/all?searchText=${didYouMeanText}`)
@@ -135,7 +143,7 @@ const Shop = (props: any) => {
 
     const nextPage = () => {
         setPage(page + 1)
-        AuctionService.getFilteredAuctions(searchText, priceRange[0], priceRange[1], activeCategories.map(c => c.id), page + 1)
+        AuctionService.getFilteredAuctions(searchText, priceRange[0], priceRange[1], activeCategories.map(c => c.id), sortType, page + 1)
             .then(response => {
                 if (response) {
                     setAuctions([...auctions, ...response.content])
@@ -184,6 +192,17 @@ const Shop = (props: any) => {
                         />
                     </div>
                     <div className="col-12 col-sm-9 col-lg product-view">
+                        <div className="sorting-view">
+                            <div>
+                                <SortingMenu sortType={sortType}
+                                            setSortType={setSortType}
+                                />
+                            </div>
+                            <div>
+                                <button className={gridView ? 'view-button active' : 'view-button'} onClick={handleViewClick}><FontAwesomeIcon icon={faTh} className="view-icon" />Grid</button>
+                                <button className={!gridView ? 'view-button active' : 'view-button'} onClick={handleViewClick}><FontAwesomeIcon icon={faThList} className="view-icon" />List</button>
+                            </div>
+                        </div>
                         <div className="tag-area">
                             {activeCategories.map((category: any) => {
                                 return (
@@ -194,11 +213,16 @@ const Shop = (props: any) => {
                                 <div className="clear-tags" onClick={onClearAllClick}>Clear all</div> : ''
                             }
                         </div>
-                        <div>
-                            <GridLayout 
-                                auctions={auctions}
-                                numOfCols={4}
-                            />
+                        <div> 
+                            {gridView ? 
+                                <GridView 
+                                    auctions={auctions}
+                                    numOfCols={4}
+                                /> :
+                                <ListView 
+                                    auctions={auctions}
+                                />
+                            }
                         </div>
                         {showExploreMoreButton ? 
                             <div className="expand">

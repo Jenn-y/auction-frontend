@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 import AuctionService from 'services/AuctionService'
 import CategoryService from 'services/CategoryService'
-import GridLayout from 'shared/grid_layout/GridLayout'
+import GridView from 'shared/product_layout/GridView'
 import HighestBid from 'utils/helper_components/HighestBid'
 
 import './LandingPage.scss'
@@ -109,7 +109,7 @@ const LandingPage = () => {
 						</div>
 					</div>
 				</div>
-				<GridLayout 
+				<GridView
 					auctions={auctions}
 					numOfCols={3}
 				/>

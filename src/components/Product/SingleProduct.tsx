@@ -11,10 +11,10 @@ import AuctionService from 'services/AuctionService'
 import AuthService from 'services/AuthService'
 import BiddersTable from 'components/Bidders/BiddersTable'
 import { validateBidAmount } from 'utils/Validations';
+import GridView from 'shared/product_layout/GridView';
 import { HIGHER_BID_EXIST } from 'constants/ErrorMessages';
 
 import './SingleProduct.scss'
-import GridLayout from 'shared/grid_layout/GridLayout';
 
 const SingleProduct = (props: any) => {
 
@@ -49,16 +49,7 @@ const SingleProduct = (props: any) => {
 					setHighestBid(response)
 				}
 			})
-		
-		if (user) {
-			AuctionService.getBids(props.match.params.id, user.authenticationToken, page)
-				.then(response => {
-					if (response) {
-						setBids(response.content)
-						setShowExpandTableButton(!response.last);
-					}
-				})
-		}
+
 		if (user) getUser()
 	}, [])
 
@@ -220,12 +211,13 @@ const SingleProduct = (props: any) => {
 			{loggedUser && bids && user?.email === item?.seller.email ?
 				<BiddersTable
 					bids={bids}
+					page={page}
 					setPage={setPage}
 					showExpandTableButton={showExpandTableButton}
 				/> : 
 				<div className="related-auctions">
 					<div className="title">Related auctions</div>
-					<GridLayout 
+					<GridView 
 						auctions={relatedAuctions}
 						numOfCols={4} 
 					/>
