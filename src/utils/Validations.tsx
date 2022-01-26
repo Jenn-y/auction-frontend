@@ -200,8 +200,6 @@ export const validateRequiredFields = (shippingInfo: any, paymentInfo: any) => {
 		return false
 	}
 	else if (!paymentInfo.cardName || paymentInfo.cardName.length === 0
-		|| !paymentInfo.cardNumber || !paymentInfo.expirationDate
-		|| !paymentInfo.verificationCode || paymentInfo.verificationCode.length === 0
 		|| !shippingInfo.streetName || shippingInfo.streetName.length === 0
 		|| !shippingInfo.city || shippingInfo.city.length === 0
 		|| !shippingInfo.zipCode || shippingInfo.zipCode.length === 0
