@@ -49,7 +49,6 @@ const SingleProduct = (props: any) => {
 					setHighestBid(response)
 				}
 			})
-
 		if (user) getUser()
 	}, [])
 
