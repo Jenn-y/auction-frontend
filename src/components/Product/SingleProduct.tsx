@@ -63,13 +63,15 @@ const SingleProduct = (props: any) => {
 
 	useEffect(() => {
 		const user = AuthService.getCurrentUser()
-		AuctionService.getBids(props.match.params.id, user.authenticationToken, page)
+		if (user) {
+			AuctionService.getBids(props.match.params.id, user.authenticationToken, page)
 			.then(response => {
 				if (response) {
 					setBids([...bids, ...response.content])
 					setShowExpandTableButton(!response.last);
 				}
 			})
+		}
 	}, [page])
 
 	const getUser = () => {
@@ -214,13 +216,17 @@ const SingleProduct = (props: any) => {
 					setPage={setPage}
 					showExpandTableButton={showExpandTableButton}
 				/> : 
-				<div className="related-auctions">
-					<div className="title">Related auctions</div>
-					<GridView 
-						auctions={relatedAuctions}
-						numOfCols={4} 
-					/>
-				</div>
+				<>
+					{relatedAuctions?.length > 0 ?
+						<div className="related-auctions">
+							<div className="title">Related auctions</div>
+							<GridView 
+								auctions={relatedAuctions}
+								numOfCols={4} 
+							/>
+						</div> : ''
+					}
+				</>
 			}
 		</div>
 	)
