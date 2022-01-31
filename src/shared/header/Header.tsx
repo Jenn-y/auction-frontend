@@ -1,7 +1,7 @@
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faInstagram, faSkype, faTwitter } from '@fortawesome/free-brands-svg-icons'
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCross, faSearch, faTimes, faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react'
 import { Dropdown } from 'react-bootstrap';
@@ -47,6 +47,10 @@ const Header = () => {
         window.location.replace(`/shop/all?searchText=${searchText}`)
     }
 
+	const handleRemoveSearch = () => {
+		window.location.replace("/shop/all")
+	}
+
 	return (
 		<>
 			<div className="header-area black-header">
@@ -80,6 +84,7 @@ const Header = () => {
 						<div className="col-4">
 							<div className="searchbar">
 								<input type="text" placeholder="Search ..." value={searchText} onChange={onSearchChange} onKeyDown={onEnterPressed}></input>
+								{ search ? <FontAwesomeIcon icon={faTimes} size="xs" id="close-icon" onClick={handleRemoveSearch}/> : "" }
 								<FontAwesomeIcon icon={faSearch} onClick={onSearch} />
 							</div>
 						</div>

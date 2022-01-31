@@ -192,3 +192,19 @@ export const validateUserUpdateInfo = (userData: any) => {
 export const validateBidAmount = (bidAmount: number, highestBid: any) => {
 	return bidAmount > highestBid;
 }
+
+export const validateRequiredFields = (shippingInfo: any, paymentInfo: any) => {
+	if (shippingInfo === null || paymentInfo === null) {
+		return false
+	}
+	else if (!paymentInfo.cardName || paymentInfo.cardName.length === 0
+		|| !shippingInfo.streetName || shippingInfo.streetName.length === 0
+		|| !shippingInfo.city || shippingInfo.city.length === 0
+		|| !shippingInfo.zipCode || shippingInfo.zipCode.length === 0
+		|| !shippingInfo.country || shippingInfo.country.length === 0
+		|| !shippingInfo.state || shippingInfo.state.length === 0) {
+			return false
+		}
+	
+	return true
+}

@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import AuctionService from 'services/AuctionService';
 import CategoryService from 'services/CategoryService';
+import ItemService from 'services/ItemService';
 import { Auction } from 'interfaces/Auction';
 import { Category } from 'interfaces/Category';
 import { PriceInfo } from 'interfaces/PriceInfo';
@@ -62,6 +63,9 @@ const Shop = (props: any) => {
             })
 		
 		getFilteredAuctions()
+        if (search && auctions.length === 0) {
+            getDidYouMeanString()
+        }
     }, [])
 
     useEffect(() => {
@@ -96,6 +100,14 @@ const Shop = (props: any) => {
         }
     }
 
+    const getDidYouMeanString = () => {
+        ItemService.getDidYouMeanString(searchText, 1)
+            .then(response => {
+                if (response) {
+                    setDidYouMeanText(response)
+                }
+            })
+    }
     const handleViewClick = () => {
 		setGridView(!gridView)
 	}
@@ -143,9 +155,11 @@ const Shop = (props: any) => {
     
     return (
         <div className="shop-page">
-            <div className="did-you-mean">
-                <p>Did you mean? <span onClick={onDidYouMeanClick}>{didYouMeanText}</span></p>
-            </div>
+            {search && auctions.length === 0 ? 
+                <div className="did-you-mean">
+                    <p>Did you mean? <span onClick={onDidYouMeanClick}>{didYouMeanText}</span></p>
+                </div> : ""
+            }
         
             <div className="container">
                 <div className="row">

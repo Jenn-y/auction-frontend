@@ -49,7 +49,6 @@ const SingleProduct = (props: any) => {
 					setHighestBid(response)
 				}
 			})
-
 		if (user) getUser()
 	}, [])
 
@@ -101,8 +100,6 @@ const SingleProduct = (props: any) => {
 				auction: item
 			};
 
-			console.log(finalBidData)
-
 			AuctionService.addBid(finalBidData, currentUser.authenticationToken)
 				.then(
 					() => {
@@ -125,8 +122,8 @@ const SingleProduct = (props: any) => {
 		setSellerInfo(true)
 	}
 
-	let images = [
-		'https://media1.popsugar-assets.com/files/thumbor/CHzF5iQ31LcGCjSPu1xF0wjTypg/0x0:1500x2024/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2021/04/20/773/n/1922564/c9ce4a74607f107ac3b225.06048116_/i/Best-Women-Sneakers.jpg'
+	let defaultImage = [
+		'https://sankosf.com/wp-content/themes/gecko/assets/images/placeholder.png'
 	]
 
 	return (
@@ -137,43 +134,55 @@ const SingleProduct = (props: any) => {
 						<div className="col-12 col-sm-4 col-lg">
 							<div className="row">
 								<div className="col-12 col-sm-12 col-lg">
-									<img src={images[0]} alt="person 1" className="main-img" />
+									<img src={item.item.imageLink ? item.item.imageLink : defaultImage[0]} className="main-img" />
 								</div>
 								<div className="row">
 									<div className="col-12 col-sm-3 col-lg">
-										<img src={images[0]} alt="person 1" className="secondary-img" />
+										<img src={item.item.imageLink ? item.item.imageLink : defaultImage[0]} className="secondary-img" />
 									</div>
 									<div className="col-12 col-sm-3 col-lg">
-										<img src={images[0]} alt="person 1" className="secondary-img" />
+										<img src={item.item.imageLink ? item.item.imageLink : defaultImage[0]} className="secondary-img" />
 									</div>
 									<div className="col-12 col-sm-3 col-lg">
-										<img src={images[0]} alt="person 1" className="secondary-img" />
+										<img src={item.item.imageLink ? item.item.imageLink : defaultImage[0]} className="secondary-img" />
 									</div>
 									<div className="col-12 col-sm-3 col-lg">
-										<img src={images[0]} alt="person 1" className="secondary-img" />
+										<img src={item.item.imageLink ? item.item.imageLink : defaultImage[0]} className="secondary-img" />
 									</div>
 								</div>
 							</div>
 						</div>
 						<div className="col-12 col-sm-8 col-lg">
 							<h1 className="prod-title">{item?.item.name}</h1>
-							{highestBid ?
-								<h4 className="prod-price">Start from <span>${highestBid}+</span></h4> : ''
+							{highestBid && item?.status != 'SOLD' ?
+								<h4 className="prod-price">Start from <span>${highestBid}+</span></h4> : 
+								<div className="sold-item">
+									<p>This item has been sold.</p>
+								</div>
 							}
-							{loggedUser && user?.id !== item?.seller.id ?
+							{loggedUser && user?.id !== item?.seller.id && item?.status != 'SOLD' && new Date(item?.endDate).getTime() > Date.now() ?
 								<form onSubmit={handleSubmit}>
 									<div className="bid-section">
 										<input type="text" onChange={handleChange} value={bid?.bidAmount} name="bidAmount" placeholder="Enter your bid" required />
 										<button className="bid-btn" type="submit">PLACE BID <FontAwesomeIcon icon={faAngleRight} /></button>
 									</div>
-								</form> : ''
+								</form> : 
+								<>
+									{new Date(item?.endDate).getTime() < Date.now() && item?.status != 'SOLD' ?
+										<div className="auction-end">
+											<p>This auction has ended {moment(item.endDate).fromNow()}.</p>
+										</div> : ''
+									}
+								</>
 							}
 							<div className="bid-stats">
 								{highestBid ?
 									<p>Highest bid: <span>${highestBid}</span></p> : ''
 								}
 								<p>No of bids: <span>{bids.length}</span></p>
-								<p>Time left: <span>{moment(item.endDate).fromNow()}</span></p>
+								{new Date(item?.endDate).getTime() > Date.now() ?
+									<p>Time left: <span>{moment(item.endDate).fromNow()}</span></p> : ''
+								}
 							</div>
 							<div className="watchlist">
 								<button>Watchlist <FontAwesomeIcon icon={faHeart} className="heart" /></button>
