@@ -11,10 +11,10 @@ import AuctionService from 'services/AuctionService'
 import AuthService from 'services/AuthService'
 import BiddersTable from 'components/Bidders/BiddersTable'
 import { validateBidAmount } from 'utils/Validations';
+import GridView from 'shared/product_layout/GridView';
 import { HIGHER_BID_EXIST } from 'constants/ErrorMessages';
 
 import './SingleProduct.scss'
-import GridLayout from 'shared/grid_layout/GridLayout';
 
 const SingleProduct = (props: any) => {
 
@@ -49,16 +49,7 @@ const SingleProduct = (props: any) => {
 					setHighestBid(response)
 				}
 			})
-		
-		if (user) {
-			AuctionService.getBids(props.match.params.id, user.authenticationToken, page)
-				.then(response => {
-					if (response) {
-						setBids(response.content)
-						setShowExpandTableButton(!response.last);
-					}
-				})
-		}
+
 		if (user) getUser()
 	}, [])
 
@@ -132,8 +123,8 @@ const SingleProduct = (props: any) => {
 		setSellerInfo(true)
 	}
 
-	let images = [
-		'https://media1.popsugar-assets.com/files/thumbor/CHzF5iQ31LcGCjSPu1xF0wjTypg/0x0:1500x2024/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2021/04/20/773/n/1922564/c9ce4a74607f107ac3b225.06048116_/i/Best-Women-Sneakers.jpg'
+	let defaultImage = [
+		'https://sankosf.com/wp-content/themes/gecko/assets/images/placeholder.png'
 	]
 
 	return (
@@ -144,20 +135,20 @@ const SingleProduct = (props: any) => {
 						<div className="col-12 col-sm-4 col-lg">
 							<div className="row">
 								<div className="col-12 col-sm-12 col-lg">
-									<img src={images[0]} alt="person 1" className="main-img" />
+									<img src={item.item.imageLink ? item.item.imageLink : defaultImage[0]} className="main-img" />
 								</div>
 								<div className="row">
 									<div className="col-12 col-sm-3 col-lg">
-										<img src={images[0]} alt="person 1" className="secondary-img" />
+										<img src={item.item.imageLink ? item.item.imageLink : defaultImage[0]} className="secondary-img" />
 									</div>
 									<div className="col-12 col-sm-3 col-lg">
-										<img src={images[0]} alt="person 1" className="secondary-img" />
+										<img src={item.item.imageLink ? item.item.imageLink : defaultImage[0]} className="secondary-img" />
 									</div>
 									<div className="col-12 col-sm-3 col-lg">
-										<img src={images[0]} alt="person 1" className="secondary-img" />
+										<img src={item.item.imageLink ? item.item.imageLink : defaultImage[0]} className="secondary-img" />
 									</div>
 									<div className="col-12 col-sm-3 col-lg">
-										<img src={images[0]} alt="person 1" className="secondary-img" />
+										<img src={item.item.imageLink ? item.item.imageLink : defaultImage[0]} className="secondary-img" />
 									</div>
 								</div>
 							</div>
@@ -220,12 +211,13 @@ const SingleProduct = (props: any) => {
 			{loggedUser && bids && user?.email === item?.seller.email ?
 				<BiddersTable
 					bids={bids}
+					page={page}
 					setPage={setPage}
 					showExpandTableButton={showExpandTableButton}
 				/> : 
 				<div className="related-auctions">
 					<div className="title">Related auctions</div>
-					<GridLayout 
+					<GridView 
 						auctions={relatedAuctions}
 						numOfCols={4} 
 					/>

@@ -1,6 +1,7 @@
 @import 'utils/Colors.scss';
 
 .shop-page {
+	margin-bottom: 50px;
 
 	.did-you-mean {
 		background-color: $extra-light-gray;
@@ -142,12 +143,74 @@
 			}
 		}
 	}
-	
+
 	.product-view {
 		min-width: 75%;
-		margin-bottom: 50px;
-		margin-top: 10px;
 	
+		.sorting-view {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+	
+			.sorting-menu {
+				margin: 40px 35px 0px;
+	
+				.btn-check:active+.btn-primary:focus, 
+				.btn-check:checked+.btn-primary:focus, 
+				.btn-primary.active:focus, 
+				.btn-primary:active:focus,
+				.btn-check:focus+.btn-primary, 
+				.btn-primary:focus,
+				.show>.btn-primary.dropdown-toggle:focus {
+					outline: none;
+					box-shadow: none;
+				}
+	
+				#dropdown-basic {
+					background-color: $white;
+					color: $black;
+					width: 260px;
+					text-align: left;
+					border: 1px solid $border-color;
+					border-radius: 0;
+				}
+	
+	
+				.dropdown-toggle::after {
+					text-align: right;
+					margin-left: 100px;
+				}
+	
+				.dropdown-menu {
+					width: 260px;
+					text-align: left;
+					border-radius: 0;
+					margin-top: -3px;
+	
+					.dropdown-item:focus, .dropdown-item:hover {
+						background-color: $purple;
+						color: $white;
+					}
+				}
+			}
+	
+			.view-button {
+				margin-right: 20px;
+				background-color: $white;
+				border: none;
+				color: $icon-color;
+				font-weight: bold;
+	
+				.view-icon {
+					margin-right: 8px;
+				}
+			}
+
+			.active, .view-button:hover {
+				color: $purple;
+			}
+		}
+		
 		.tag-area {
 			display: flex;
 			flex-wrap: wrap;
@@ -178,7 +241,7 @@
 				margin-top: 40px;
 			}
 		}
-
+	
 		.expand {
 			text-align: center;
 			margin-bottom: 80px;
@@ -194,14 +257,6 @@
 				border: 3px solid $white;
 				border-radius: 5px;
 			}
-		
-			.explore-btn:hover,
-			.explore-btn:focus {
-				background-color: $white;
-				border: 3px solid $purple;
-				color: $purple;
-				transition: all 0.3s;
-			}
 		}
-	}	
+	}
 }
