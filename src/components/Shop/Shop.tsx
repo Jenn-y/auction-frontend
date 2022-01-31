@@ -34,6 +34,7 @@ const Shop = (props: any) => {
     const [showExploreMoreButton, setShowExploreMoreButton] = useState(true)
 
     useEffect(() => {
+        setDidYouMeanText("some")
         const categoryId = props.match.params.categoryId
 
         AuctionService.getPriceInfo()

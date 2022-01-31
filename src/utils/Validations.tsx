@@ -1,8 +1,6 @@
 import { DATE_OF_BIRTH_EMPTY, EMAIL_EMPTY, EMAIL_INVALID, FIRST_NAME_EMPTY, GENDER_EMPTY, LAST_NAME_EMPTY, PASSWORD_EMPTY, PASSWORD_LENGTH, PHONE_NUMBER_EMPTY } from "constants/ErrorMessages";
 import { LoginError } from "interfaces/LoginError";
-import { PaymentDetails } from "interfaces/PaymentDetails";
 import { RegistrationError } from "interfaces/RegistrationError";
-import { ShippingDetails } from "interfaces/ShippingDetails";
 import moment from "moment";
 
 export const validateEmail = (email: string) => {

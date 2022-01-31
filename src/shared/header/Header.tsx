@@ -11,7 +11,6 @@ import logo from 'assets/logo.png'
 import { ENTER_KEY } from 'constants/KeyCodes';
 
 import './Header.scss'
-import { ENTER_KEY } from 'constants/KeyCodes';
 
 const Header = () => {
 	const [loggedUser, setIsLogged] = useState(false)
