@@ -7,6 +7,15 @@ const API_URL = process.env.NODE_ENV === "development" ? DEV_API : PROD_API
 
 class AuctionService {
 
+    getItem = (id: any) => {
+        return axios
+            .get(API_URL + `auctions/${id}`)
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the item."));
+    }
+
     getNewArrivals = () => {
         return axios
             .get(API_URL + "auctions/new_arrivals")
@@ -25,6 +34,15 @@ class AuctionService {
             .catch(() => console.error("An error occured while fetching the auctions"));
     }
 
+    getRelatedAuctions = (auctionId: any, categoryId: any) => {
+        return axios
+            .get(API_URL + `auctions/${auctionId}/category/${categoryId}`)
+            .then((response: any) => {
+                return response.data;
+            })
+            .catch(() => console.error("An error occured while fetching the related auctions"));
+    }
+
     getActiveAuctionsBySeller = (status: any, sellerId: string, token: string) => {
         return axios
             .get(API_URL + `auctions/${status}/${sellerId}`, HeaderConfig(token))
@@ -34,22 +52,13 @@ class AuctionService {
             .catch(() => console.error("An error occured while fetching the active auctions"));
     }
 
-    getFilteredAuctions = (search: string, minPrice: number, maxPrice: number, categories: any) => {
+    getFilteredAuctions = (search: string, minPrice: number, maxPrice: number, categories: any, sortType: any, page: number) => {
         return axios 
-            .get(API_URL + `auctions/categories/filter?search=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}&categories=${categories}`)
+            .get(API_URL + `auctions/categories/filter?search=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}&categories=${categories}&sortType=${sortType}&page=${page}`)
             .then((response: any) => {
                 return response.data;
             })
-            .catch(() => console.error("An error occured while fetching filtered auctions"))
-    }
-
-    getItem = (id: any) => {
-        return axios
-            .get(API_URL + `auctions/${id}`)
-            .then((response: any) => {
-                return response.data;
-            })
-            .catch(() => console.error("An error occured while fetching the item."));
+            .catch(() => console.error("An error occured while fetching filtered auctions."))
     }
 
     getCountBySubcategory = (subcategoryId: string) => {
@@ -79,6 +88,15 @@ class AuctionService {
             .catch(() => console.error("An error occured while fetching the count per price."))
     }
 
+    getHighestBid = (auctionId: any) => {
+		return axios
+			.get(API_URL + `bids/highestBid/${auctionId}`)
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.error("An error occured while fetching the highest bid."));
+	}
+    
     addAuction = (auction: any, token: string) => {
         return axios
             .post(API_URL + "auctions/new", auction, HeaderConfig(token))
@@ -88,9 +106,9 @@ class AuctionService {
             .catch(() => console.error("An error occured while saving the auction."));
     }
 
-    getBids = (auctionId: any, token: string) => {
+    getBids = (auctionId: any, token: string, page: number) => {
         return axios
-            .get(API_URL + `bids/${auctionId}`, HeaderConfig(token))
+            .get(API_URL + `bids/${auctionId}?page=${page}`, HeaderConfig(token))
             .then((response: any) => {
                 return response.data;
             })
@@ -104,15 +122,6 @@ class AuctionService {
                 return response.data;
             })
             .catch(() => console.error("An error occured while fetching the bids."));
-    }
-
-    getHighestBid = (auctionId: any) => {
-        return axios
-            .get(API_URL + `bids/highestBid/${auctionId}`)
-            .then((response: any) => {
-                return response.data;
-            })
-            .catch(() => console.error("An error occured while fetching the highest bid."));
     }
 
     getNoOfBids = (auctionId: any, token: string) => {

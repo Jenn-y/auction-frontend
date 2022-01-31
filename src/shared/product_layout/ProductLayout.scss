@@ -1,0 +1,114 @@
+@import 'utils/Colors.scss';
+
+.section {
+	margin: 40px 0 80px;
+	justify-content: flex-start;
+
+	h4, h3 {
+		font-weight: bold;
+		line-height: 29px;
+		letter-spacing: 0.84px;
+		color: $black;
+		margin: 0;
+	}
+
+	h4 {
+		font-size: 19px;
+	}
+
+	p {
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 19px;
+		letter-spacing: 0.84px;
+		color: $light-gray;
+		margin-bottom: 30px;
+	}
+
+	p span {
+		color: $purple;
+		font-weight: bold;
+	}
+
+	img:hover {
+		box-shadow: 0px 4px 9px 0px $light-gray;
+		transition: all 0.5s;
+	}
+
+	img {
+		width: 262px;
+		height: 262px;
+	}
+}
+
+.list-view {
+	margin-left: 12px;
+
+	.list-view-row {
+		margin-bottom: 20px;
+
+		h3 {
+			font-size: 24px;
+		}
+
+		.desc {
+			margin-top: 20px;
+			font-size: 16px;
+			line-height: 24px;
+			color: $light-gray;
+			margin-bottom: 18px;
+			min-height: 90px;
+			max-height: 90px;
+			overflow: hidden;
+		}
+
+		.price {
+			font-weight: normal;
+			font-size: 25px;
+			line-height: 51px;
+			color: $purple;
+			margin-bottom: 20px;
+		}
+		
+		.button-box .button:hover {
+			cursor: not-allowed;
+		}
+
+		.button {
+			background: $white;
+			border: 3px solid $border-color;
+			font-size: 15px;
+			color: $black;
+			letter-spacing: 0.52px;
+			line-height: 22px;
+			padding: 3px 20px;
+			margin-right: 10px;
+			width: 140px;
+		}
+
+		.icon {
+			color: $dirty-white;
+			margin-left: 5px;
+		}
+
+		#bid-button {
+			cursor: pointer;
+			border-color: $purple;
+			font-weight: bold;
+
+			.icon {
+				color: $purple;
+			}
+		}
+
+		#bid-button:hover {
+			background-color: $purple;
+			color: $white;
+			transition: all 0.3s;
+
+			.icon {
+				color: $white;
+			}
+		}
+	}
+}

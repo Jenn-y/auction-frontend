@@ -15,6 +15,9 @@ const SellerSection = (props: any) => {
 	const [active, setActive] = useState(true)
 	const [sold, setSold] = useState(false)
 	const [auctions, setAuctions] = useState<Auction[]>([])
+	let defaultImage = [
+		'https://sankosf.com/wp-content/themes/gecko/assets/images/placeholder.png'
+	]
 
 	useEffect(() => {
 		getActiveAuctions()
@@ -29,8 +32,8 @@ const SellerSection = (props: any) => {
 			})
 	}
 
-	const getInactiveAuctions = () => {
-		AuctionService.getActiveAuctionsBySeller('INACTIVE', props.user.id, props.user.authenticationToken)
+	const getSoldAuctions = () => {
+		AuctionService.getActiveAuctionsBySeller('SOLD', props.user.id, props.user.authenticationToken)
 			.then(response => {
 				if (response) {
 					setAuctions(response)
@@ -48,7 +51,7 @@ const SellerSection = (props: any) => {
 			case "sold":
 				setActive(false)
 				setSold(true)
-				getInactiveAuctions()
+				getSoldAuctions()
 				break;
 		}
 	}
@@ -81,7 +84,7 @@ const SellerSection = (props: any) => {
 								<tr className="bids-list" key={auction.id}>
 									<td className="title">
 										<div className="thumb">
-											<img className="img-fluid" src="https://media1.popsugar-assets.com/files/thumbor/CHzF5iQ31LcGCjSPu1xF0wjTypg/0x0:1500x2024/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2021/04/20/773/n/1922564/c9ce4a74607f107ac3b225.06048116_/i/Best-Women-Sneakers.jpg" alt="" />
+											<img className="img-fluid" src={auction.item.imageLink ? auction.item.imageLink : defaultImage[0]} alt="" />
 										</div>
 									</td>
 									<td>
@@ -107,7 +110,7 @@ const SellerSection = (props: any) => {
 						})}
 						{auctions.length === 0 ? 
 							<td colSpan={7} className="no-items">
-								<img alt="shopping bag" src={shoppingCart} className="c-selling-item-list__shopping-bag-image" />
+								<img alt="shopping bag" src={shoppingCart} />
 								<p>You do not have any 
 									{active ? ' scheduled items for sale.' : ' sold items.'}
 								</p>
