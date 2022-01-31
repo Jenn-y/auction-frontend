@@ -35,7 +35,7 @@ const Login = () => {
 				}
 			)
 				.catch(() => {
-					toast.error("Wrong email or password!", { hideProgressBar: true });
+					toast.error("Login invalid!", { hideProgressBar: true });
 				});
 		}
 
