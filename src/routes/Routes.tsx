@@ -10,6 +10,8 @@ import Registration from "components/Registration/Registration";
 import LandingPage from "pages/landing_page/LandingPage";
 import { ToastContainer } from "react-toastify";
 import Shop from "components/Shop/Shop";
+import MyAccount from "components/MyAccount/MyAccount";
+import AddAuction from "components/AddAuction/AddAuction";
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,9 +26,11 @@ const Routes = () => {
 				<Route exact path="/about" component={About} />
 				<Route exact path="/privacy_policy" component={Privacy_Policy} />
 				<Route exact path="/auctions/:id" component={SingleProduct} />
+				<Route exact path="/auctions/add/new" component={AddAuction} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Registration} />
 				<Route exact path="/shop/:categoryId" component={Shop} />
+				<Route exact path="/my_account/:section" component={MyAccount} />
 			</Switch>
 		</>
 	);

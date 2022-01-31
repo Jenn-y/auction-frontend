@@ -1,0 +1,425 @@
+@import 'utils/Colors.scss';
+
+.tabs {
+	display: flex;
+	margin: 30px 0;
+
+	button {
+		color: $black;
+		text-decoration: none;
+		font-size: 18px;
+		line-height: 27px;
+		padding: 8px;
+		background-color: $extra-light-gray;
+		margin-right: 15px;
+		width: 120px;
+		text-align: center;
+		border: none;
+
+		svg {
+			margin-right: 10px;
+		}
+	}
+
+	button:hover, .active {
+		background-color: $purple;
+		color: $white;
+		transition: all 0.3s;
+	}
+}
+
+.section {
+	margin: 30px 0;
+
+	.profile {
+
+		.image-box {
+			text-align: center;
+			max-width: 40%;
+
+			img {
+				width: 250px;
+				height: 250px;
+				border-radius: 50%;
+				border: 1px solid $border-color;
+			}
+
+			.change-image-btn {
+				letter-spacing: 0.63px;
+				padding: 10px;
+				margin-top: 30px;
+				background-color: $white;
+				border: 1px solid $purple;
+				color: $purple;
+				width: 70%;
+				border-radius: 0;
+				font-weight: bold;
+			}
+
+			.change-image-btn:hover {
+				background-color: $purple;
+				color: $white;
+				transition: all 0.5s;
+			}
+			
+			.input-file {
+				display: none;
+			}
+		}
+
+		.address-box {
+			display: flex;
+			justify-content: space-between;
+
+			:first-child {
+				padding-right: 0;
+				min-width: 230px;
+			}
+
+			:last-child {
+				padding-left: 0;
+				min-width: 230px;
+			}
+		}
+
+		.expiration-date .input_wrap .input_field #dropdown-month select {
+			margin-right: 25px;
+		}
+
+		.input_wrap {
+			padding: 10px 50px;
+
+			.flex-date {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+
+				.cvv {
+					width: 150px;
+					height: 45px;
+				}
+
+				.cvv-label {
+					margin-right: 70px;
+				}
+			}
+	
+			.input_wrap:last-child {
+				margin-bottom: 0;
+			}
+	
+			label {
+				display: block;
+				margin-bottom: 5px;
+				font-size: 18px;
+				line-height: 27px;
+				color: $black;
+			}
+	
+			.input, #dropdown-month select, #dropdown-day select, #dropdown-year select {
+				padding: 12px;
+				width: 100%;
+				font-size: 16px;
+				border: 1px solid $border-color;
+				outline: none;
+				background-color: $extra-light-gray;
+			}
+
+			#dropdown-month select, #dropdown-day select, #dropdown-year select {
+				width: 150px;
+			}
+
+			.credit-input {
+				p {
+					text-align: left;
+					margin-bottom: 10px;
+				}
+
+				.credit-cards img {
+					width: 50px;
+					height: 35px;
+					margin-right: 10px;
+				}
+			}
+
+			.radio-input {
+
+				input[type=radio] {
+					margin-right: 20px;
+					appearance: none;
+					background-color: $white;
+					font: inherit;
+					color: currentColor;
+					width: 1.15em;
+					height: 1.15em;
+					border: 0.15em solid $purple;
+					border-radius: 50%;
+					transform: translateY(-0.075em);
+					display: inline-grid;
+  					place-content: center;
+				}
+
+				input[type=radio]::before {
+					content: "";
+					width: 0.65em;
+					height: 0.65em;
+					border-radius: 50%;
+					transform: scale(0);
+					transition: 120ms transform ease-in-out;
+					box-shadow: inset 1em 1em $purple;
+					background-color: CanvasText;
+				}
+
+				input[type=radio]:checked::before {
+					transform: scale(1);
+				}
+
+				.radio-input + .radio-input {
+					margin-top: 1em;
+				}
+			}
+		}
+
+		.submit {
+			text-align: right;
+			padding-right: 0;
+
+			.submit-btn {
+				background-color: $white;
+				border: 1px solid $purple;
+				color: $purple;
+				width: 30%;
+				border-radius: 0;
+				font-weight: bold;
+				margin-left: 10px;
+			}
+	
+			.submit-btn:hover {
+				background-color: $purple;
+				color: $white;
+				transition: all 0.5s;
+			}
+		}
+
+		span {
+			color: $error-red;
+			font-weight: 500;
+		}
+	}
+
+	.seller-button {
+		width: 70px;
+		border: 1px solid $border-color;
+		color: $black;
+		background-color: $extra-light-gray;
+		padding: 5px 10px;
+	}
+
+	.seller-button:hover, .active {
+		background-color: $purple;
+		color: $white;
+		transition: all 0.3s;
+	}
+
+	.add-button {
+		width: 130px;
+		border: 1px solid $border-color;
+		color: $purple;
+		background-color: $extra-light-gray;
+		padding: 5px 10px;
+		font-weight: bold;
+
+		svg {
+			margin-right: 10px;
+		}
+	}
+
+	.add-button:hover {
+		background-color: $purple;
+		color: $white;
+		transition: all 0.3s;
+	}
+
+	.table {
+
+		td,
+		th {
+			padding: 15px;
+			display: table-cell;
+		}
+
+		border: 1px solid $border-color;
+		padding: 20px;
+
+		tbody,
+		td,
+		tfoot,
+		th,
+		thead,
+		tr {
+			border: none;
+			vertical-align: middle;
+		}
+
+		thead {
+			background-color: $extra-light-gray;
+
+			th {
+				font-weight: 400;
+				font-size: 18px;
+				line-height: 27px;
+				color: $black;
+				border-bottom: none;
+			}
+		}
+
+		.no-items {
+			text-align: center;
+			
+			img {
+				width: 180px;
+				height: 120px;
+			}
+
+			img:hover {
+				box-shadow: none;
+			}
+
+			p {
+				color: $black;
+			}
+
+			button {
+				text-transform: uppercase;
+				font-weight: bold;
+				font-size: 17px;
+				line-height: 30px;
+				background-color: $white;
+				border: 1px solid $purple;
+				color: $purple;
+				width: 30%;
+				border-radius: 0;
+				margin-bottom: 15px;
+
+				a {
+					text-decoration: none;
+					color: $purple;
+				}
+			}
+
+			button:hover {
+				background-color: $purple;
+				color: $white;
+				transition: all 0.5s;
+
+				a {
+					color: $white;
+				}
+			}
+		}
+	}
+
+	.bids-list {
+		
+		.img-fluid {
+			width: 80px;
+			height: 80px;
+		}
+
+		p {
+			margin: 0;
+			color: $black;
+		}
+
+		p.green {
+			color: $green;
+			font-weight: bold;
+		}
+
+		p.blue {
+			color: $blue;
+			font-weight: bold;
+		}
+
+		a, .pay-btn, .paid-btn {
+			text-decoration: none;
+			padding: 5px 10px;
+			border: 1px solid $border-color;
+			color: $purple;
+			font-weight: bold;
+		}
+
+		.pay-btn {
+			color: $white;
+			background-color: $purple;
+			padding: 5px 17px;
+		}
+
+		.paid-btn {
+			background-color: $green;
+			color: $white;
+			padding: 5px 15px;
+			cursor: default;
+		}
+	}
+
+	.settings {
+		margin-left: 0;
+
+		.info-check {
+			text-align: left;
+
+			label {
+				font-weight: normal;
+				font-size: 16px;
+				line-height: 17px;
+				color: $light-gray;
+				cursor: pointer;
+			}
+	
+			input[type=checkbox] {
+				background-color: $white;
+				outline: 1px solid $purple;
+				border-radius: 3px;
+				-webkit-appearance: none;
+				width: 17px;
+				height: 17px;
+				cursor: pointer;
+				position: relative;
+				top: 3px;
+				margin-right: 5px;
+			}
+	
+			input[type=checkbox]:checked {
+				background: $purple url("data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==") 3px 3px no-repeat;
+			}
+		}
+
+		.account {
+			max-width: 50%;
+
+			.deactivate-btn {
+				background-color: $white;
+				border: 1px solid $purple;
+				color: $purple;
+				width: 30%;
+				border-radius: 0;
+				font-weight: bold;
+				margin-left: 10px;
+			}
+	
+			.deactivate-btn:hover {
+				background-color: $purple;
+				color: $white;
+				transition: all 0.5s;
+			}
+		}
+
+		p {
+			font-weight: bold;
+			color: $black;
+			text-align: left;
+			margin-bottom: 10px;
+		}
+	}
+}

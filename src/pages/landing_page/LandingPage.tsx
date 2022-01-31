@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom'
 
 import AuctionService from 'services/AuctionService'
 import CategoryService from 'services/CategoryService'
-import GridLayout from 'shared/grid_layout/GridLayout'
+import GridView from 'shared/product_layout/GridView'
+import HighestBid from 'utils/helper_components/HighestBid'
 
 import './LandingPage.scss'
 
@@ -57,8 +58,8 @@ const LandingPage = () => {
 			})
 	}
 
-	let images = [
-		'https://media1.popsugar-assets.com/files/thumbor/CHzF5iQ31LcGCjSPu1xF0wjTypg/0x0:1500x2024/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2021/04/20/773/n/1922564/c9ce4a74607f107ac3b225.06048116_/i/Best-Women-Sneakers.jpg'
+	let defaultImage = [
+		'https://sankosf.com/wp-content/themes/gecko/assets/images/placeholder.png'
 	]
 
 	return (
@@ -75,7 +76,7 @@ const LandingPage = () => {
 											<li key={category.id}><div className="category"><Link to={`/shop/${category.id}`}>{category.name}</Link></div></li>
 										)
 									})} 
-									<li><div className="category"><Link to={`/shop/all`}>All Categories</Link></div></li>
+									<li><div className="category"><Link to="/shop/all">All Categories</Link></div></li>
 								</ul> : '' 
 							}
 						</div>
@@ -83,14 +84,14 @@ const LandingPage = () => {
 							{highlightedProduct ?
 								<>
 									<h4 className="prod-title">{highlightedProduct?.item.name}</h4>
-									<h4 className="price">Start from ${highlightedProduct?.startPrice}</h4>
+									<h4 className="price">Start from ${<HighestBid id={highlightedProduct.id} />}</h4>
 									<p>{highlightedProduct?.item.description}</p>
 									<Link to={`/auctions/${highlightedProduct.id}`} className="bid-btn">BID NOW <FontAwesomeIcon icon={faAngleRight} /></Link>
 								</> : ''
 							}
 						</div>
 						<div className="col-12 col-sm-4 col-lg">
-							<img src={images[0]} alt="sneakers" />
+							<img src={highlightedProduct?.item.imageLink ? highlightedProduct.item.imageLink : defaultImage[0]} alt="sneakers" />
 						</div>
 					</div>
 				</div>
@@ -108,7 +109,7 @@ const LandingPage = () => {
 						</div>
 					</div>
 				</div>
-				<GridLayout 
+				<GridView
 					auctions={auctions}
 					numOfCols={3}
 				/>
