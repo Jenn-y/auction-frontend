@@ -4,4 +4,5 @@ export interface Item {
 	description: string;
 	name: string;
 	size: number;
+	imageLink: string;
 }

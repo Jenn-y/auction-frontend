@@ -15,6 +15,46 @@
 	.row {
 		align-items: center;
 		justify-content: space-between;
+
+		.searchbar {
+			background: $white;
+			border: 1px solid $border-color;
+			width: 495px;
+			display: flex;
+			justify-content: space-between;
+			padding: 5px 10px;
+			margin-left: 12px;
+			border-radius: 3px;
+		
+			input[type=text] {
+				font-size: 16px;
+				color: $black;
+				letter-spacing: 0.63px;
+				border: none;
+				width: 85%;
+			}
+		
+			::placeholder {
+				color: $light-gray;
+			}
+		
+			input:focus-visible {
+				outline: none;
+			}
+		
+			svg {
+				margin: 6px 4px;
+				color: $purple;
+				cursor: pointer;
+				z-index: 10;
+			}
+
+			#close-icon {
+				color: $border-color;
+				margin-top: 8px;
+				margin-left: 18px;
+			}
+		}
 	}
 }
 
@@ -109,7 +149,11 @@
 		font-size: 16px;
 		line-height: 19px;
 		color: $black;
-		margin-left: 45px;
+		margin-left: 35px;
+	}
+
+	#my-account-navlink {
+		margin-left: 23px;
 	}
 
 	a:hover,
