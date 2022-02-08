@@ -5,6 +5,6 @@ export interface Bid {
 	id: string;
 	bidAmount: number;
 	bidDate: Date;
-	buyer: User;
+	bidder: User;
 	auction: Auction;
 }

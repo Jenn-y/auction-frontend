@@ -5,7 +5,9 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import AuctionService from 'services/AuctionService'
-import GridLayout from 'shared/grid_layout/GridLayout'
+import CategoryService from 'services/CategoryService'
+import GridView from 'shared/product_layout/GridView'
+import HighestBid from 'utils/helper_components/HighestBid'
 
 import './LandingPage.scss'
 
@@ -15,10 +17,21 @@ const LandingPage = () => {
 	const [lastChanceActive, setLastChanceActive] = useState(false)
 	const [auctions, setAuctions] = useState([])
 	const [highlightedProduct, setHighlightedProduct] = useState<Auction>()
+	const [categories, setCategories] = useState([])
 
 	useEffect(() => {
+		getCategories()
 		handleNewArrivals()
 	}, [])
+
+	const getCategories = () => {
+		CategoryService.getLandingPageCategories()
+			.then(response => {
+				if (response) {
+					setCategories(response)
+				}
+			})
+	}
 
 	const handleNewArrivals = () => {
 		setNewArrivalsActive(true)
@@ -45,8 +58,8 @@ const LandingPage = () => {
 			})
 	}
 
-	let images = [
-		'https://media1.popsugar-assets.com/files/thumbor/CHzF5iQ31LcGCjSPu1xF0wjTypg/0x0:1500x2024/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2021/04/20/773/n/1922564/c9ce4a74607f107ac3b225.06048116_/i/Best-Women-Sneakers.jpg'
+	let defaultImage = [
+		'https://sankosf.com/wp-content/themes/gecko/assets/images/placeholder.png'
 	]
 
 	return (
@@ -56,31 +69,29 @@ const LandingPage = () => {
 					<div className="row highlight">
 						<div className="col-12 col-sm-4 col-lg">
 							<h6 className="cat-title">CATEGORIES</h6>
-							<ul className="cat-list">
-								<li><div className="category"><a>Fashion</a></div></li>
-								<li><div className="category"><a>Accesories</a></div></li>
-								<li><div className="category"><a>Jewelry</a></div></li>
-								<li><div className="category"><a>Shoes</a></div></li>
-								<li><div className="category"><a>Sportware</a></div></li>
-								<li><div className="category"><a>Home</a></div></li>
-								<li><div className="category"><a>Electronics</a></div></li>
-								<li><div className="category"><a>Mobile</a></div></li>
-								<li><div className="category"><a>Computer</a></div></li>
-								<li><div className="category"><a>All Categories</a></div></li>
-							</ul>
+							{categories ? 
+								<ul className="cat-list">
+									{categories.map((category: any) => {
+										return (
+											<li key={category.id}><div className="category"><Link to={`/shop/${category.id}`}>{category.name}</Link></div></li>
+										)
+									})} 
+									<li><div className="category"><Link to="/shop/all">All Categories</Link></div></li>
+								</ul> : '' 
+							}
 						</div>
 						<div className="col-12 col-sm-4 col-lg product-desc">
 							{highlightedProduct ?
 								<>
 									<h4 className="prod-title">{highlightedProduct?.item.name}</h4>
-									<h4 className="price">Start from ${highlightedProduct?.startPrice}</h4>
+									<h4 className="price">Start from ${<HighestBid id={highlightedProduct.id} />}</h4>
 									<p>{highlightedProduct?.item.description}</p>
 									<Link to={`/auctions/${highlightedProduct.id}`} className="bid-btn">BID NOW <FontAwesomeIcon icon={faAngleRight} /></Link>
 								</> : ''
 							}
 						</div>
 						<div className="col-12 col-sm-4 col-lg">
-							<img src={images[0]} alt="sneakers" />
+							<img src={highlightedProduct?.item.imageLink ? highlightedProduct.item.imageLink : defaultImage[0]} alt="sneakers" />
 						</div>
 					</div>
 				</div>
@@ -98,7 +109,10 @@ const LandingPage = () => {
 						</div>
 					</div>
 				</div>
-				<GridLayout auctions={auctions} />
+				<GridView
+					auctions={auctions}
+					numOfCols={3}
+				/>
 			</div>
 		</>
 	)

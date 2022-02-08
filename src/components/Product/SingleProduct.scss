@@ -36,6 +36,34 @@
 		margin: 25px 0;
 	}
 
+	.sold-item {
+		background-color: $light-purple;
+		padding: 10px;
+		color: $white;
+		text-align: center;
+		margin-bottom: 20px;
+		margin-top: 30px;
+
+		p {
+			margin: 0;
+			font-weight: bold;
+		}
+	}
+
+	.auction-end {
+		background-color: $orange;
+		padding: 10px;
+		color: $white;
+		text-align: center;
+		margin-bottom: 20px;
+		margin-top: 30px;
+
+		p {
+			margin: 0;
+			font-weight: bold;
+		}
+	}
+
 	.bid-section {
 		margin: 64px 0px;
 
@@ -142,5 +170,17 @@
 
 	.item-details {
 		color: $black;
+	}
+}
+
+.related-auctions {
+	font-weight: bold;
+	font-size: 20px;
+	color: $purple;
+	text-align: center;
+
+	.title {
+		padding: 10px;
+		border-bottom: 1px solid $border-color;
 	}
 }

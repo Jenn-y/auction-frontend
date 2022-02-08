@@ -3,12 +3,11 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 import AuthService from 'services/AuthService';
+import { RegistrationError } from 'interfaces/RegistrationError';
 import { isValidRegisterInput, validateRegisterData } from 'utils/Validations';
-import { EMAIL_UNAVAILABLE } from 'constants/ErrorMessages';
 
 import './../common_style/Form.scss'
 import './Registration.scss'
-import { RegistrationError } from 'interfaces/RegistrationError';
 
 const Registration = () => {
 
@@ -35,20 +34,14 @@ const Registration = () => {
 				user.password
 			).then(
 				response => {
-					toast.success(JSON.stringify(response.data), { hideProgressBar: true });
-					window.location.replace("/login")
+					if (response.status) {
+						toast.success(JSON.stringify(response.message), { hideProgressBar: true });
+						window.location.replace("/login")
+					} else {
+						toast.error(JSON.stringify(response.message), { hideProgressBar: true });
+					}
 				}
 			)
-				.catch(() => {
-					toast.error("User registration unsuccessful!", { hideProgressBar: true });
-					setErrors({
-						firstName: '',
-						lastName: '',
-						email: EMAIL_UNAVAILABLE,
-						password: '',
-						isError: true
-					})
-				});
 		}
 	};
 

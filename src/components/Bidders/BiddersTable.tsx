@@ -4,7 +4,12 @@ import { Bid } from 'interfaces/Bid';
 
 import './BiddersTable.scss'
 
-const BiddersTable = (bids: any) => {
+const BiddersTable = (props: any) => {
+
+	const onExpandMore = () => {
+		props.setPage(props.page + 1)
+	}
+
     return (
         <div className="row bidders">
 			<div className="col-md-12">
@@ -18,7 +23,7 @@ const BiddersTable = (bids: any) => {
 							</tr>
 						</thead>
 						<tbody>
-							{bids.bids.map((bid: Bid) => {
+							{props.bids.map((bid: Bid) => {
 								return (
 									<tr className="bidders-list" key={bid.id}>
 										<td className="title">
@@ -27,7 +32,7 @@ const BiddersTable = (bids: any) => {
 											</div>
 											<div className="bidder-details">
 												<div className="bidder-list-title">
-													<h5>{bid.buyer.firstName} {bid.buyer.lastName}</h5>
+													<h5>{bid.bidder.firstName} {bid.bidder.lastName}</h5>
 												</div>
 											</div>
 										</td>
@@ -43,6 +48,11 @@ const BiddersTable = (bids: any) => {
 						</tbody>
 					</table>
 				</div>
+				{props.showExpandTableButton ? 
+					<div className="expand">
+						<button className="expand-btn" onClick={onExpandMore}>Expand Table</button>
+					</div> : ""
+				}
 			</div>
 		</div>
     );

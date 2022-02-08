@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import HeaderConfig from "utils/HeaderConfig";
 import { DEV_API, PROD_API } from "./ApiConstants";
 
@@ -33,12 +34,17 @@ class AuthService {
 	}
 
 	register = async (firstName: string, lastName: string, email: string, password: string) => {
-		return axios.post(API_URL + "auth/register", {
-			firstName,
-			lastName,
-			email,
-			password
-		});
+		return axios
+			.post(API_URL + "auth/register", {
+				firstName,
+				lastName,
+				email,
+				password
+			})
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.error("An error occured while registering the user."));
 	}
 
 	getUser = async (email: string, token: string) => {
@@ -47,7 +53,43 @@ class AuthService {
 			.then((response: any) => {
 				return response.data;
 			})
-			.catch(() => console.log("An error occured while fetching the bidders."));
+			.catch(() => console.error("An error occured while fetching the user."));
+	}
+
+	getUserById = async (id: string, token: string) => {
+		return axios
+			.get(API_URL + `users/id/${id}`, HeaderConfig(token))
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.error("An error occured while fetching the user."));
+	}
+
+	isEmailAvailable = async (email: string, token: string) => {
+		return axios
+			.get(API_URL + `users/available/${email}`, HeaderConfig(token))
+			.then((response: any) => {
+				return response.data;
+			})
+			.catch(() => console.error("An error occured while checking if email " + email + " is available."));
+	}
+
+	deactivate = (id: string, user: any, token: string) => {
+		return axios
+			.put(API_URL + `users/deactivate/${id}`, user, HeaderConfig(token))
+			.then(() => {
+				return;
+			})
+			.catch(() => console.error("An error occured while deactivating the account."));
+	}
+
+	update = (id: string, user: any, token: string) => {
+		return axios
+			.put(API_URL + `users/update/${id}`, user, HeaderConfig(token))
+			.then(() => {
+				return;
+			})
+			.catch(() => console.error("An error occured while updating the account."));
 	}
 }
 
