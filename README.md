@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+<p align="center">
+  <img width="100" height="100" src="https://media.glassdoor.com/sqll/1172252/atlantbh-squarelogo-1508334484095.png">
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Bid.ba 
 
-## Available Scripts
+A web auction platform for vintage items developed during [Atlantbh](https://www.atlantbh.com/) Internship (October 2021 - February 2022).
+Monthly tasks were tracked via [Trello](https://trello.com/) and the development progress was presented at the end of each month. I have collaborated with a QA intern and a dedicated mentor to ensure the successful implementation of the platform. <br/><br/> 
+Check it out --> <a href="https://bidba.herokuapp.com/" target="_blank">https://bidba.herokuapp.com</a> <br/><br/> 
 
-In the project directory, you can run:
+## Tech stack for frontend
 
-### `yarn start`
+- **React** - Open-source front-end JavaScript library for building user interfaces or UI components
+- **Typescript** - A strongly typed programming language that builds on JavaScript, giving better tooling at any scale
+- **Heroku** - A platform as a service (PaaS) that enables developers to build, run, and operate applications in the cloud (used for hosting)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<p>
+<img align="left" width="100" height="100" src="https://nextsoftware.io/files/images/logos/main/reactjs-logo.png">
+<img align="left" width="100" height="100" src="https://miro.medium.com/max/816/1*TpbxEQy4ckB-g31PwUQPlg.png">
+<img align="left" width="100" height="100" src="https://gluonhq.com/wp-content/uploads/2018/05/heroku-logotype-vertical-purple-253x300@2x.png">
+</p><br/><br/><br/><br/>  
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<br/><br/>
+## Starting the app
+**Inside** the directory, you can run several commands:
 
-### `yarn test`
+### **`npm start`**
+Starts the development server. You can open http://localhost:3000/ in your browser after the command is run, to make and view edits just refresh the page. <br/>
+### **`npm build`** 
+Bundles the app into static files for production. The app is ready to be deployed. <br/> 
+### **`npm test`** 
+Starts the test runner. <br/> 
+### **`npm eject`** 
+Removes this tool and copies build dependencies, configuration files and scripts into the app directory. If you do this, you can't go back!<br/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Main functionality
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Navbar and footer with static pages
+- Login and registration with field validations
+- Landing page 
+- Single product page with distiction for seller, buyer and a guest user
+- Bidding process with amount validation
+- Shop page:
+- - Filtering by category, subcategory, price range
+- - Sorting options
+- - Grid/List view switch
+- - Pagination
+- - Search by product name
+- - 'Did you mean...?' functionality
+- User profile page with 4 tabs:
+- - Edit Profile
+- - Bids
+- - Sell
+- - Settings with profile deactivation
+- Adding new product for auction
+- Payment processing with Stripe
+- Deployment
