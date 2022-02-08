@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { toast } from 'react-toastify';
 
 import AuthService from 'services/AuthService';
+import { LoginError } from 'interfaces/LoginError';
 import { isValidLoginInput, validateLoginData } from 'utils/Validations';
 
 import './Login.scss';
 import '../common_style/Form.scss'
-import { LoginError } from 'interfaces/LoginError';
 
 const Login = () => {
 	const [user, setUser] = useState({ email: '', password: '' })

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User } from "interfaces/User";
+
 import HeaderConfig from "utils/HeaderConfig";
 import { DEV_API, PROD_API } from "./ApiConstants";
 

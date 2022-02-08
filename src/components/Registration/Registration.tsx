@@ -3,12 +3,11 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 import AuthService from 'services/AuthService';
+import { RegistrationError } from 'interfaces/RegistrationError';
 import { isValidRegisterInput, validateRegisterData } from 'utils/Validations';
-import { EMAIL_UNAVAILABLE } from 'constants/ErrorMessages';
 
 import './../common_style/Form.scss'
 import './Registration.scss'
-import { RegistrationError } from 'interfaces/RegistrationError';
 
 const Registration = () => {
 
